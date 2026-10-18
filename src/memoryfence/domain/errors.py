@@ -48,6 +48,9 @@ class ReasonCode(StrEnum):
     SCRIPT_TIMEOUT = "error.script_timeout"
     STEP_LIMIT = "error.step_limit"
     UNKNOWN_TOOL = "denied.unknown_tool"
+    DEFENSE_POLICY = "denied.defense_policy"
+    DEFENSE_LINEAGE = "denied.defense_lineage"
+    DEFENSE_FAILED = "error.defense_failed"
 
     @property
     def is_denial(self) -> bool:

@@ -211,6 +211,35 @@ class ToolStage(StrEnum):
     EXECUTE = "execute"
 
 
+class DefenseId(StrEnum):
+    """Protocol defense conditions. ``DF4`` is ``DF2`` and ``DF3`` together, not a synonym."""
+
+    NONE = "DF0"
+    PROMPT = "DF1"
+    RETRIEVAL = "DF2"
+    ACTION = "DF3"
+    COMBINED = "DF4"
+    LINEAGE = "DF5"
+
+
+class RetrievalVariant(StrEnum):
+    """The two ``DF2`` variants. ``label`` annotates; ``exclude`` removes."""
+
+    LABEL = "label"
+    EXCLUDE = "exclude"
+
+
+class PolicySource(StrEnum):
+    """Where a ``DF3`` allowlist comes from.
+
+    ``generated`` reads only the requester's task text. ``oracle`` is an injected
+    allowlist and is an upper bound, not the main result.
+    """
+
+    GENERATED = "generated"
+    ORACLE = "oracle"
+
+
 class EventCategory(StrEnum):
     DIRECTORY = "directory"
     SOURCE = "source"
@@ -221,6 +250,7 @@ class EventCategory(StrEnum):
     MODEL = "model"
     AGENT = "agent"
     SANDBOX = "sandbox"
+    DEFENSE = "defense"
 
 
 class Operation(StrEnum):
@@ -247,6 +277,7 @@ class Operation(StrEnum):
     MODEL_COMPLETE = "model.complete"
     SANDBOX_EXECUTE = "sandbox.execute"
     AGENT_STEP = "agent.step"
+    DEFENSE_DECIDE = "defense.decide"
 
 
 class EventOutcome(StrEnum):

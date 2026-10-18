@@ -7,10 +7,17 @@ tool names outside its allowlist even if both permissions were granted.
 
 import re
 
+from memoryfence.defenses.suite import DefenseSuite
 from memoryfence.domain.base import DomainModel
 from memoryfence.domain.enums import ToolStage
 from memoryfence.domain.errors import AuthorizationDenied, ReasonCode
-from memoryfence.domain.ids import ProposalIdField, SandboxIdField, SourceId, WorkspaceId
+from memoryfence.domain.ids import (
+    MemoryId,
+    ProposalIdField,
+    SandboxIdField,
+    SourceId,
+    WorkspaceId,
+)
 from memoryfence.domain.principals import PrincipalRef
 from memoryfence.domain.tools import ToolName
 from memoryfence.tools.sandbox import Sandbox
@@ -27,9 +34,15 @@ class ToolGatewayResult(DomainModel):
 
 
 class ToolGateway:
-    def __init__(self, tools: ToolService, sandbox: Sandbox) -> None:
+    def __init__(
+        self,
+        tools: ToolService,
+        sandbox: Sandbox,
+        defense: DefenseSuite | None = None,
+    ) -> None:
         self._tools = tools
         self._sandbox = sandbox
+        self._defense = defense
 
     def submit(
         self,
@@ -39,6 +52,8 @@ class ToolGateway:
         arguments: tuple[tuple[str, str], ...],
         *,
         target_source_id: SourceId | None = None,
+        task: str = "",
+        context_ids: tuple[MemoryId, ...] = (),
     ) -> ToolGatewayResult:
         try:
             proposed = self._tools.authorize(
@@ -69,6 +84,22 @@ class ToolGateway:
                 propose_reason=ReasonCode.ALLOWED,
                 execute_reason=error.code,
             )
+        if self._defense is not None:
+            decision = self._defense.authorize_action(
+                actor,
+                workspace_id,
+                task,
+                tool_name,
+                arguments,
+                context_ids,
+            )
+            if decision is not ReasonCode.OK:
+                return ToolGatewayResult(
+                    proposal_id=proposed.proposal_id,
+                    tool_name=_tool_or_none(tool_name),
+                    propose_reason=ReasonCode.ALLOWED,
+                    execute_reason=decision,
+                )
         try:
             effect = self._sandbox.execute(
                 actor, workspace_id, proposed.proposal_id, tool_name, arguments

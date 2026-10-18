@@ -129,6 +129,7 @@ forbidden_modules = [
   "memoryfence.harness",
   "memoryfence.cli",
   "memoryfence.benchmark",
+  "memoryfence.defenses",
 ]
 
 [[tool.importlinter.contracts]]
@@ -145,6 +146,7 @@ source_modules = [
   "memoryfence.tools",
   "memoryfence.authorization",
   "memoryfence.agents",
+  "memoryfence.defenses",
 ]
 forbidden_modules = ["memoryfence.groundtruth"]
 
@@ -169,5 +171,17 @@ source_modules = [
   "memoryfence.tools",
   "memoryfence.authorization",
   "memoryfence.agents",
+  "memoryfence.defenses",
 ]
 forbidden_modules = ["memoryfence.benchmark"]
+
+[[tool.importlinter.contracts]]
+name = "Defenses cannot import evaluator-only modules"
+type = "forbidden"
+source_modules = ["memoryfence.defenses"]
+forbidden_modules = [
+  "memoryfence.groundtruth",
+  "memoryfence.benchmark",
+  "memoryfence.harness",
+  "memoryfence.llm",
+]

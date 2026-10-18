@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 4 (scripted memory-poisoning benchmark).** The research design from Phase 1 is unchanged. The repository contains the Phase 2 core, the Phase 3 offline episode, and a versioned catalog of synthetic scenarios with deterministic replay. **Every stage label is a fixture result. It is not a language-model measurement, and no empirical attack rate exists.** Defenses and statistical analysis are not implemented.
+> **Project status: Phase 5 (defense baselines).** The research design from Phase 1 is unchanged. The repository contains the offline episode, the scripted scenario catalog, and defense conditions `DF0` through `DF5`. **Every stage label is a fixture result. It is not a language-model measurement, and a passing fixture is not evidence that a defense works on a real model.** Statistical analysis is not implemented.
 
 ## Contents
 
@@ -137,7 +137,7 @@ flowchart LR
     SRC[("Shared sources")]:::implemented --> TRN["Transformations"]:::implemented --> MEM[("Memories and<br/>recorded provenance")]:::implemented
     MEM --> RET["Retrieval"]:::implemented --> AGT["Agent"]:::implemented --> AUTH["Authorization<br/>gateway"]:::implemented --> SBX["Sandbox tools"]:::implemented
     DEL["Deletion policies"]:::implemented -.-> MEM
-    DEF["Defenses"]:::planned -. "hooks" .-> RET
+    DEF["Defenses DF0-DF5"]:::implemented -. "hooks" .-> RET
     DEF -. "hooks" .-> AUTH
     TRN -. "lineage events" .-> GT[("Ground truth<br/>(evaluator only)")]:::harness
     BENCH["Scripted scenarios<br/>and replay"]:::implemented --> AGT
@@ -197,6 +197,7 @@ make setup          # uv sync --frozen, then install pre-commit hooks
 uv run memoryfence demo --directory /tmp/memoryfence-demo
 uv run memoryfence benchmark validate
 uv run memoryfence benchmark run --scenario clean-note --directory /tmp/memoryfence-clean
+uv run memoryfence benchmark run --scenario direct-note --defense DF2 --retrieval exclude --directory /tmp/memoryfence-df2
 ```
 
 Neither command needs credentials or a network. `demo` prints one JSON trace of a scripted episode. `benchmark run` writes `benchmark-result.json` and `events.jsonl` for one synthetic scenario. Both are mechanics checks. Stage labels are fixture results, not model-susceptibility measurements.
@@ -232,8 +233,8 @@ Tests cover authorization, workspace isolation, provenance degradation, the five
 | 1 | Research foundation and engineering architecture | **Merged** |
 | 2 | Core domain, access control, provenance, and storage | **Merged** |
 | 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | **Merged** |
-| 4 | Scripted scenarios and replay benchmark | **In review** |
-| 5 | Defenses | Planned |
+| 4 | Scripted scenarios and replay benchmark | **Merged** |
+| 5 | Defense baselines `DF0`–`DF5` | **In review** |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
 | 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
 | 8 | Analysis, report, and audit | Planned |
@@ -250,7 +251,8 @@ See [`docs/roadmap.md`](docs/roadmap.md) for each phase's objective, deliverable
 ## Current limitations
 
 - The agent, transformations, and scenario outcomes are scripted fixtures. They do not measure language-model behavior, and no empirical results exist.
-- Defenses, a development/evaluation template split, an audited judge, and statistical analysis are not implemented.
+- Defenses are deterministic approximations of the protocol. On the scripted backend, `DF1` and `DF2-label` do not change the fixture's tool call.
+- A development/evaluation template split, an audited judge, and statistical analysis are not implemented.
 - Most of the literature review is abstract-level, and the closest related work consists of recent preprints.
 - The proposed contribution is incremental relative to concurrent work and is framed accordingly.
 - The planned evaluation uses a simulated workspace, a small number of models, and English-only text.

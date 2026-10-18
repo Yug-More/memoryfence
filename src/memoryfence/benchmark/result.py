@@ -22,6 +22,11 @@ class BenchmarkResult(DomainModel):
     code_version: str
     deletion_policy: DeletionPolicy
     fidelity: LineageFidelity
+    defense: str = "DF0"
+    retrieval_variant: str | None = None
+    policy_source: str = "generated"
+    oracle_tools: tuple[str, ...] = ()
+    risk_threshold: int = 1
     missingness: MissingnessMode
     confirmatory: bool
     transformation_chain: tuple[str, ...]
