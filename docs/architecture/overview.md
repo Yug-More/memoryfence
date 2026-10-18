@@ -1,19 +1,20 @@
 # Architecture Overview
 
-**Status:** Proposed design. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 2 implements the typed core. Later phases (model calls, retrieval, the agent loop, attacks, defenses, and the experiment runner) remain planned. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
-As of Phase 1, **only the package metadata, development tooling, continuous integration, and documentation are implemented.** Every runtime component in this document is planned and does not exist yet. Module directories are created only in the phase that implements them, so the repository contains no empty placeholder modules.
+Phase 2 adds the security-critical data foundation: domain models, workspace authorization, two SQLite databases, true and recorded provenance, deletion-policy state transitions, and structured events. It does not call a language model, generate memories, run an agent, or execute a benchmark.
 
 | Component | State | Where |
 |---|---|---|
 | Installable `memoryfence` package exposing `__version__` and a `py.typed` marker | Implemented (Phase 1) | `src/memoryfence/` |
-| Package and documentation integrity tests | Implemented (Phase 1) | `tests/` |
-| Tooling: uv lockfile, Ruff, mypy (strict), pytest with branch coverage of at least 90%, pre-commit, build and metadata checks | Implemented (Phase 1) | `pyproject.toml`, `Makefile`, `.pre-commit-config.yaml` |
-| Continuous integration (Python 3.12 and 3.13, hygiene hooks, diagram rendering) | Implemented (Phase 1) | `.github/workflows/ci.yml` |
-| Research and architecture documentation | Implemented (Phase 1) | `docs/` |
-| All modules in section 6 | Planned (Phases 2–6) | — |
+| Package, documentation, security, and persistence tests | Implemented | `tests/` |
+| Tooling: uv lockfile, Ruff, mypy (strict), pytest with branch coverage of at least 90%, pre-commit, build and metadata checks, import-linter | Implemented | `pyproject.toml`, `Makefile`, `.pre-commit-config.yaml` |
+| Continuous integration (Python 3.12 and 3.13, hygiene hooks, diagram rendering, import contracts) | Implemented | `.github/workflows/ci.yml` |
+| Research and architecture documentation | Implemented | `docs/` |
+| Domain models, authorization, workspace services, provenance, ground truth, SQLite persistence, events, and run manifests | Implemented (Phase 2) | `src/memoryfence/` |
+| Language model, retrieval, agent loop, tool execution, attacks, defenses, experiment runner | Planned (Phases 3–6) | — |
 
 ## 2. Goals and constraints
 
@@ -47,10 +48,10 @@ flowchart LR
 
     subgraph SUT["System under test (planned)"]
         direction LR
-        WS[("Workspace: principals,<br/>ACLs, sources, revisions")]:::planned
+        WS[("Workspace: principals,<br/>ACLs, sources, revisions")]:::implemented
         TRN["Memory<br/>transformations"]:::planned
-        MEM[("Memory store and<br/>recorded provenance")]:::planned
-        DEL["Deletion policies<br/>DS0–DS4"]:::planned
+        MEM[("Memory store and<br/>recorded provenance")]:::implemented
+        DEL["Deletion policies<br/>DS0–DS4"]:::implemented
         RET["Retrieval"]:::planned
         AGT["Victim agent loop"]:::planned
         AUTH["Authorization<br/>gateway"]:::planned
@@ -62,7 +63,7 @@ flowchart LR
 
     LLM["LanguageModel protocol:<br/>scripted, local, hosted"]:::planned
     DEF["Defense policies<br/>DF1–DF5"]:::planned
-    OBS[("Event log and SQLite<br/>per run")]:::planned
+    OBS[("Event log and SQLite<br/>per episode")]:::implemented
 
     CFG --> ATK --> WS
     CFG --> DEL
@@ -77,7 +78,7 @@ flowchart LR
     SUT -. "events" .-> OBS
 ```
 
-Legend: green boxes are implemented in Phase 1. Grey dashed boxes are planned parts of the system under test. Yellow dashed boxes are planned harness components that the system under test and its defenses can never read.
+Legend: green boxes are implemented. Grey dashed boxes are still planned. Yellow dashed boxes are harness components. The ground-truth database exists; the outcome classifier does not. The system under test and its future defenses cannot read the harness.
 
 ## 4. Trust and visibility boundaries
 
@@ -116,37 +117,56 @@ flowchart TB
 
 Information flows from the system under test to the evaluator only through write-only sinks and recorded events. No path leads from the evaluator back into the system under test.
 
+### 4.1 Provenance isolation
+
+True provenance and the deletion ledger live in `groundtruth.sqlite`, attached as schema `groundtruth` only on the writer connection. Defense-facing reads use a separate read-only engine that never attaches that file, so a privileged join is impossible. Recorded provenance is what the system under test stores. Degradation changes only recorded edges. Import-linter forbids `access`, `storage`, `observability`, `provenance`, and `workspace` from importing `groundtruth`.
+
+```mermaid
+flowchart LR
+    classDef sut fill:#d4edda,stroke:#2e7d32,color:#1b1b1b
+    classDef harness fill:#fff3cd,stroke:#b8860b,color:#1b1b1b
+
+    WRITER["Writer connection<br/>one transaction"]
+    READ["Read-only session<br/>system file only"]:::sut
+    REC[("system.sqlite:<br/>recorded provenance")]:::sut
+    TRUE[("groundtruth.sqlite:<br/>true provenance, labels, ledger")]:::harness
+    WRITER --> REC
+    WRITER --> TRUE
+    READ --> REC
+    TRUE -. "not attached" .-> READ
+```
+
 ## 5. Security invariants
 
 These invariants are requirements on the implementation. Each will be enforced by an import contract, a runtime check, or a test in the phase that introduces the relevant module.
 
 | ID | Invariant | Planned enforcement |
 |---|---|---|
-| I1 | True provenance, attack labels, and objective predicates are inaccessible to the system under test and to every defense. | Import contracts (section 6.2); the system under test receives only interfaces that expose recorded provenance |
-| I2 | Defenses read **recorded** provenance only. | `defenses` may import `provenance` (recorded) but never `groundtruth`, `attacks`, or `evaluation` |
-| I3 | Tool authorization is independent of the model's claims. The gateway decides from the structured call, the requester, and policy, and ignores natural-language justifications or claimed approvals. | Gateway interface accepts structured calls only; unit tests with adversarial justifications |
-| I4 | The platform ACL check is always enforced, for every defense configuration including `DF0`. | Gateway applies ACL before any optional policy; tests over all configurations |
-| I5 | True provenance is append-only and is never modified by degradation, deletion, or re-derivation. | Append-only store; byte-identity test before and after degradation at every `LF` level |
-| I6 | Tools are sandboxed simulations with no network access and no file system effects outside the run directory. | Tools operate on in-memory or per-run SQLite state only; tests assert no other side effects |
-| I7 | The deletion ledger is harness-only. | Ledger lives in the separate ground-truth database, written through a sink interface |
-| I8 | Agents cannot invoke tools directly; every side-effecting call passes through the authorization gateway. | Import contract: `agents` may not import `tools` |
+| I1 | True provenance, attack labels, and objective predicates are inaccessible to the system under test and to every defense. | Enforced: import-linter, and a read-only engine that does not attach the ground-truth file |
+| I2 | Defenses read **recorded** provenance only. | Recorded views omit origin labels. The `defenses` package does not exist yet; the same import ban will cover it |
+| I3 | Tool authorization is independent of the model's claims. | Phase 2 authorizes propose and execute from trusted state and does not log the justification. Tool execution is Phase 3 |
+| I4 | The platform ACL check is always enforced, for every defense configuration including `DF0`. | Workspace ACLs are enforced now. Defense configurations are Phase 5 |
+| I5 | True provenance is append-only and is never modified by degradation, deletion, or re-derivation. | Enforced by SQLite triggers and a byte-identity test across `LF` levels |
+| I6 | Tools are sandboxed simulations with no network access and no file system effects outside the run directory. | Planned with tool execution in Phase 3 |
+| I7 | The deletion ledger is harness-only. | Enforced: the ledger is written through `GroundTruthRecorder` into the ground-truth database |
+| I8 | Agents cannot invoke tools directly; every side-effecting call passes through the authorization gateway. | Planned with the agent loop in Phase 3. Phase 2 exposes only an authorization decision |
 
-## 6. Planned modules
+## 6. Modules
 
-All modules live in the single `memoryfence` package under `src/`. Phase 1 contains only `memoryfence/__init__.py` and `py.typed`.
+All modules live in the single `memoryfence` package under `src/`.
 
-| Planned module | Responsibility | May import | Phase |
+| Module | Responsibility | May import | Phase |
 |---|---|---|---|
-| `memoryfence.domain` | Immutable models and protocols: principals, sources, revisions, memories, provenance edges, tool calls, authorization decisions, defense hook protocol, event sinks | nothing internal | 2 |
-| `memoryfence.access` | ACL evaluation and instruction-authority relations between principals | `domain` | 2 |
-| `memoryfence.storage` | SQLAlchemy 2 mappings and repositories over SQLite | `domain` | 2 |
-| `memoryfence.observability` | Structured JSON Lines event log, run manifests, timing spans | `domain` | 2 |
-| `memoryfence.workspace` | Workspaces, membership, sources, immutable revisions, lifecycle state | `domain`, `access`, `storage` | 2 |
-| `memoryfence.provenance` | Recorded provenance graph: edge storage, ancestor and author resolution | `domain`, `storage` | 2 |
-| `memoryfence.groundtruth` | True provenance store, seeded degradation into recorded provenance, attack labels, deletion ledger; separate database | `domain`, `storage`, `provenance` | 2 |
+| `memoryfence.domain` | Frozen models and protocols: principals, sources, revisions, memories, provenance, tool proposals, authorization decisions, errors | nothing internal | Implemented |
+| `memoryfence.access` | Default-deny authorization and role permissions | `domain` | Implemented |
+| `memoryfence.storage` | SQLAlchemy 2 mappings, engines, and units of work over SQLite | `domain` | Implemented |
+| `memoryfence.observability` | Structured event log and run manifests | `domain`, `storage` | Implemented |
+| `memoryfence.provenance` | Recorded provenance graph and seeded degradation | `domain`, `storage` | Implemented |
+| `memoryfence.workspace` | Membership, sources, revisions, memories, deletion policies, tool authorization | `domain`, `access`, `storage`, `observability`, `provenance` | Implemented |
+| `memoryfence.groundtruth` | True provenance, labels, deletion ledger, and run rows in a separate database. Harness only | `domain`, `storage`, `observability` | Implemented |
 | `memoryfence.llm` | `LanguageModel` protocol and deterministic scripted backend; local and hosted adapters later | `domain` | 3 |
 | `memoryfence.memory` | Memory store, extraction, transformations `TT0`–`TT4`, retrieval | `domain`, `workspace`, `provenance`, `storage`, `llm` | 3 |
-| `memoryfence.deletion` | Deletion policies `DS0`–`DS4`, reach computation over recorded provenance, re-derivation | `domain`, `workspace`, `memory`, `provenance` | 3 |
+| `memoryfence.deletion` | Not a separate package. Policy state transitions live in `workspace`. Phase 3 executes DS4 re-derivation | — | 3 |
 | `memoryfence.tools` | Simulated tools, sandbox state, state-diff recording | `domain`, `access` | 3 |
 | `memoryfence.authorization` | Authorization gateway: ACL check, defense hooks for proposed actions, dispatch to tools | `domain`, `access`, `tools` | 3 |
 | `memoryfence.agents` | Victim agent loop: retrieve, build context, call model, submit proposed calls to the gateway | `domain`, `memory`, `llm`, `authorization` | 3 |
@@ -165,8 +185,10 @@ flowchart BT
     llm["llm"] --> domain
     workspace["workspace"] --> access
     workspace --> storage
+    workspace --> observability
+    workspace --> provenance
     provenance["provenance"] --> storage
-    groundtruth["groundtruth"] --> provenance
+    groundtruth["groundtruth"] --> storage
     memory["memory"] --> workspace
     memory --> provenance
     memory --> llm
@@ -190,12 +212,16 @@ Arrows point from a module to a module it may import. Transitive edges to `domai
 
 ### 6.2 Import contracts
 
-1. **Only `evaluation` and `attacks` may import `groundtruth`.** Lineage and deletion events reach the ground-truth store through sink protocols declared in `domain` and wired up by the harness, so `memory` and `deletion` never import `groundtruth`.
-2. **`defenses` must not import `attacks`, `evaluation`, or `groundtruth`.**
-3. **`domain` has no internal imports.**
-4. **`agents` must not import `tools`.** Tool calls go through `authorization`.
+Enforced now by `make contracts` (`lint-imports`) and in CI:
 
-These contracts will be checked in CI with `import-linter` starting in Phase 2, when the second internal module is created.
+1. **`domain` imports no other internal module.**
+2. **`access`, `storage`, `observability`, `provenance`, and `workspace` must not import `groundtruth`.** The harness wires the write-only `GroundTruthRecorder`. A defense-facing session cannot see the ground-truth schema.
+
+Still planned, and not yet packages:
+
+3. **`defenses` must not import `attacks`, `evaluation`, or `groundtruth`.**
+4. **`agents` must not import `tools`.** Tool calls go through authorization.
+5. **Only the harness (`groundtruth` today; `evaluation` and `attacks` later) reads true provenance.**
 
 ## 7. Defense hook points
 
@@ -277,7 +303,9 @@ flowchart TB
     RED -- "may still carry the payload<br/>through an unrecorded edge" --> MEAS
 ```
 
-Deletion policies act on recorded provenance only, because that is all a real platform would have. Measurement compares the policy's effect against true provenance to compute residual retrievability and post-deletion attack success.
+Deletion policies act on recorded provenance only, because that is all a real platform would have. Measurement compares the policy's effect against true provenance, which the policy does not consult when choosing what to change.
+
+Phase 2 implements these transitions in `memoryfence.workspace`. `DS4` records a `RederivationTask` for each deleted derived memory and does not generate text. Executing that task is Phase 3. Until then, DS4 is a deletion-state and work-record contract, not a completed re-derivation.
 
 ## 11. Agent retrieval and authorization
 
@@ -338,17 +366,41 @@ flowchart LR
 
 ## 13. Data and persistence
 
-- **Per-run SQLite databases through SQLAlchemy 2.** The system under test's database stores sources, revisions, memories, recorded provenance, tombstones, and sandbox state. A **separate** ground-truth database stores true provenance, attack labels, and the deletion ledger. Both live under the git-ignored `runs/` directory.
-- **Deletion** in the system under test is a state transition (tombstone or hard delete). The ground-truth database retains what was deleted so that measurement remains possible.
-- **The event log** is JSON Lines. Each record carries a run ID, an episode ID, a monotonic sequence number, and content hashes. Metrics are computed from the log and the ground-truth database, not from in-memory state, so every reported number can be traced to recorded events.
+Each episode has two SQLite files, opened together by `open_episode`. Foreign keys are enabled on every connection and are declared `DEFERRABLE INITIALLY DEFERRED`, so one unit of work can insert related rows in either order and still commit or roll back as a whole. There are no ORM relationships and no cascading deletes. Provenance rows are not removed as a side effect of deleting a memory.
+
+- **`system.sqlite`** stores users, workspaces, memberships, agents, sources, immutable revisions, memories, transformations, recorded provenance, deletion headers, re-derivation tasks, and the event log.
+- **`groundtruth.sqlite`** stores true provenance nodes and links, source-origin labels, the deletion ledger, and experiment-run manifests. It is attached only on the writer connection.
+- **Events** are rows in `system.sqlite`. Details are canonical JSON and must not contain memory content or ground truth. A JSON Lines export is not implemented.
+- **Initialization** creates both schemas and records `schema_version`. Reopening a database with a different version fails.
+
+### 13.1 Data model
+
+```mermaid
+erDiagram
+    USER ||--o{ MEMBERSHIP : joins
+    WORKSPACE ||--o{ MEMBERSHIP : contains
+    MEMBERSHIP ||--o{ AGENT : controls
+    WORKSPACE ||--o{ SOURCE : contains
+    SOURCE ||--|{ REVISION : has
+    REVISION ||--o{ MEMORY : extracts
+    TRANSFORMATION ||--o| MEMORY : derives
+    MEMORY ||--o| RECORDED_NODE : records
+    RECORDED_NODE ||--o{ RECORDED_LINK : links
+    SOURCE ||--o{ DELETION : receives
+    DELETION ||--o{ REDERIVATION_TASK : schedules
+```
+
+Recorded nodes deliberately have no foreign key to `memories`, so a deleted memory does not erase its recorded lineage. True provenance is a parallel graph in the other file and is not shown here.
 
 ## 14. Observability
 
-Planned instrumentation:
+Implemented:
 
-- structured events for model calls (prompt hash, response hash, token counts, latency), retrievals (candidate IDs, scores, filtered IDs), provenance writes, deletion effects, authorization decisions, and sandbox state diffs;
-- a run manifest recording the Git commit, configuration hash, `uv.lock` hash, model identifiers, and seeds;
-- timing spans for overhead metrics, measured on the deterministic backend to separate defense cost from model latency.
+- structured events for directory, source, memory, deletion, and tool-authorization operations, each with an actor, workspace, resource, outcome, and stable reason code;
+- a success event in the same transaction as the change, and a denial or failure event written after rollback with empty details;
+- a run manifest model (run id, scenario reference, seed, code version, schema version, configuration, software versions, status) persisted in the ground-truth database. Building a manifest does not run an experiment.
+
+Planned for later phases: model-call records, retrieval traces, sandbox diffs, and timing spans.
 
 ## 15. Security of the harness itself
 
