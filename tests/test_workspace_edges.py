@@ -257,8 +257,12 @@ def test_database_files_and_schema_version(tmp_path: Path) -> None:
     )
     database.initialize()
     database.dispose()
-    with sqlite3.connect(tmp_path / "system.sqlite") as connection:
+    connection = sqlite3.connect(tmp_path / "system.sqlite")
+    try:
         connection.execute("UPDATE schema_info SET value = '999' WHERE key = 'schema_version'")
+        connection.commit()
+    finally:
+        connection.close()
     mismatch = EpisodeDatabase(
         system_path=tmp_path / "system.sqlite",
         ground_truth_path=tmp_path / "groundtruth.sqlite",

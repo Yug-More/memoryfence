@@ -71,10 +71,16 @@ def test_injected_commit_failure_rolls_back_both_databases(tmp_path: Path) -> No
         database.dispose()
 
     assert seen["commit"] == 1
-    with sqlite3.connect(tmp_path / "system.sqlite") as connection:
-        users = connection.execute("SELECT COUNT(*) FROM users").fetchone()
-    with sqlite3.connect(tmp_path / "groundtruth.sqlite") as connection:
-        nodes = connection.execute("SELECT COUNT(*) FROM true_provenance_nodes").fetchone()
+    # sqlite3's context manager commits but does not close. Python 3.13 warns if
+    # the connection is left for the garbage collector.
+    system = sqlite3.connect(tmp_path / "system.sqlite")
+    ground_truth = sqlite3.connect(tmp_path / "groundtruth.sqlite")
+    try:
+        users = system.execute("SELECT COUNT(*) FROM users").fetchone()
+        nodes = ground_truth.execute("SELECT COUNT(*) FROM true_provenance_nodes").fetchone()
+    finally:
+        system.close()
+        ground_truth.close()
     assert users is not None
     assert users[0] == 0
     assert nodes is not None
