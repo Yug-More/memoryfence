@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Status:** Phase 5 adds defense conditions `DF0` through `DF5` on the scripted simulation. Decisions use recorded provenance and the requester's task. Stage labels remain fixture results, not language-model measurements. Statistics and an audited judge remain planned. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 6 adds a scripted experiment runner, Wilson intervals, and exact McNemar. Defense conditions `DF0` through `DF5` stay on recorded provenance and the requester's task. Stage labels remain fixture results, not language-model measurements. Mixed-effects models, an audited judge, and confirmatory tests are not implemented. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
@@ -17,7 +17,8 @@ Phase 2 adds the security-critical data foundation: domain models, workspace aut
 | Scripted model backend, ingestion, transformations, lexical retrieval, DS4 execution, agent loop, sandbox tools, offline demo | Implemented (Phase 3) | `llm`, `memory`, `tools`, `authorization`, `agents`, `harness`, `cli` |
 | Versioned synthetic scenarios, four-stage scoring, deterministic replay, and the benchmark CLI | Implemented (Phase 4) | `benchmark`, `cli` |
 | Defense conditions `DF0`–`DF5` | Implemented (Phase 5) | `defenses` |
-| Experiment statistics and an audited judge | Planned (Phase 6) | — |
+| Scripted experiment matrix, Wilson intervals, and exact McNemar | Implemented (Phase 6) | `evaluation`, `cli` |
+| Mixed-effects models, cluster bootstrap, trend and equivalence tests, and an audited judge | Planned | — |
 
 ## 2. Goals and constraints
 
@@ -122,7 +123,7 @@ Information flows from the system under test to the evaluator only through write
 
 ### 4.1 Provenance isolation
 
-True provenance and the deletion ledger live in `groundtruth.sqlite`, attached as schema `groundtruth` only on the writer connection. One unit of work is one `BEGIN IMMEDIATE` transaction on that connection. SQLite commits attached databases atomically, including across a crash, only in rollback-journal mode, using a master journal. The writer forces `journal_mode=DELETE` and `synchronous=FULL` and refuses any other mode. WAL mode does not provide that multi-file guarantee. Defense-facing reads use a separate read-only engine that never attaches the ground-truth file, so a privileged join is impossible. Recorded provenance is what the system under test stores. Degradation changes only recorded edges. Import-linter forbids the system-under-test packages, including `llm`, `memory`, `tools`, `authorization`, and `agents`, from importing `groundtruth` or `benchmark`.
+True provenance and the deletion ledger live in `groundtruth.sqlite`, attached as schema `groundtruth` only on the writer connection. One unit of work is one `BEGIN IMMEDIATE` transaction on that connection. SQLite commits attached databases atomically, including across a crash, only in rollback-journal mode, using a master journal. The writer forces `journal_mode=DELETE` and `synchronous=FULL` and refuses any other mode. WAL mode does not provide that multi-file guarantee. The failure-injection test raises before the database commit API is invoked. It shows that an aborted transaction leaves both files empty. It does not demonstrate atomicity across a crash during the commit syscall. Defense-facing reads use a separate read-only engine that never attaches the ground-truth file, so a privileged join is impossible. Recorded provenance is what the system under test stores. Degradation changes only recorded edges. Import-linter forbids the system-under-test packages, including `llm`, `memory`, `tools`, `authorization`, and `agents`, from importing `groundtruth` or `benchmark`.
 
 ```mermaid
 flowchart LR
@@ -174,10 +175,9 @@ All modules live in the single `memoryfence` package under `src/`.
 | `memoryfence.agents` | One bounded step: retrieve, call the backend, submit a tool call to the gateway | `domain`, `memory`, `authorization` | Implemented |
 | `memoryfence.harness` | Opens both databases and runs the offline demo. Harness code, not a defense | `groundtruth` and the packages above | Implemented |
 | `memoryfence.benchmark` | Versioned synthetic scenarios, evaluator-only labels, four-stage scoring, and deterministic replay | `domain`, `groundtruth`, `harness`, and the simulation packages | Implemented |
-| `memoryfence.cli` | `memoryfence demo` and `memoryfence benchmark` | `harness`, `benchmark` | Implemented |
+| `memoryfence.cli` | `memoryfence demo`, `benchmark`, and `experiment` | `harness`, `benchmark`, `evaluation` | Implemented |
 | `memoryfence.defenses` | `DF0`–`DF5`. Recorded lineage, instruction authority, and the task text only | `domain`, `provenance`, `memory`, `observability`, `storage` | Implemented |
-| `memoryfence.defenses` | Implementations of the defense hook protocol, `DF1`–`DF5` | `domain`, `access`, `provenance` | 5 |
-| `memoryfence.evaluation` | Configuration schemas, episode runner, outcome classifier, metrics, statistics, reports | all of the above | 6 |
+| `memoryfence.evaluation` | Versioned experiment configuration, matrix, scripted runner, Wilson intervals, exact McNemar, and reports | `benchmark`, `defenses`, `groundtruth` through the benchmark | Implemented |
 
 ### 6.1 Dependency diagram
 
@@ -225,11 +225,10 @@ Enforced now by `make contracts` (`lint-imports`) and in CI:
 2. **`access`, `storage`, `observability`, `provenance`, `workspace`, `llm`, `memory`, `tools`, `authorization`, and `agents` must not import `groundtruth`.** The harness wires the write-only `GroundTruthRecorder`. A defense-facing session cannot see the ground-truth schema.
 3. **`agents` must not import `tools` directly.** Tool calls go through `authorization`. Indirect use via the gateway is allowed.
 4. **The same system-under-test packages, including `defenses`, must not import `benchmark`.** Scenario origins and the followed-instruction marker stay in the evaluator.
-5. **`defenses` must not import `groundtruth`, `benchmark`, `harness`, or `llm`.** `DF3` is a pure function of the task and the tool call.
+5. **`defenses` must not import `groundtruth`, `benchmark`, `harness`, `llm`, or `evaluation`.** `DF3` is a pure function of the task and the tool call.
+6. **The system under test, including `benchmark`, must not import `evaluation`.** Held-out templates stay out of the development catalog. `evaluation` may read ground truth through the benchmark scorer.
 
-Still planned, and not yet a package:
-
-6. **Only the harness (`groundtruth`, `harness`, and `benchmark` today; `evaluation` later) reads true provenance.** `defenses` is not part of that harness.
+`evaluation` is harness code. It is not a defense.
 
 ## 7. Defense hook points
 

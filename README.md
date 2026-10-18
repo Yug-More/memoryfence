@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 5 (defense baselines).** The research design from Phase 1 is unchanged. The repository contains the offline episode, the scripted scenario catalog, and defense conditions `DF0` through `DF5`. **Every stage label is a fixture result. It is not a language-model measurement, and a passing fixture is not evidence that a defense works on a real model.** Statistical analysis is not implemented.
+> **Project status: Phase 6 (scripted experiment runner).** The research design from Phase 1 is unchanged. The repository contains the offline episode, the scripted scenario catalog, defense conditions `DF0` through `DF5`, and an offline experiment runner. **Every stage label is a fixture result. It is not a language-model measurement, and a passing fixture is not evidence that a defense works on a real model.** Wilson intervals and exact McNemar are implemented. Mixed-effects models and confirmatory tests are not.
 
 ## Contents
 
