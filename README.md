@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 6 (scripted experiment runner).** The research design from Phase 1 is unchanged. The repository contains the offline episode, the scripted scenario catalog, defense conditions `DF0` through `DF5`, and an offline experiment runner. **Every stage label is a fixture result. It is not a language-model measurement, and a passing fixture is not evidence that a defense works on a real model.** Wilson intervals and exact McNemar are implemented. Mixed-effects models and confirmatory tests are not.
+> **Project status: Phase 7 (local model adapter).** The research design from Phase 1 is unchanged. Scripted experiments still run with no model installed. A loopback-only Ollama adapter can run a development pilot when a local model is already present. **No hosted inference is used. No confirmatory evaluation has been run. Scripted stage labels are not language-model measurements.**
 
 ## Contents
 
