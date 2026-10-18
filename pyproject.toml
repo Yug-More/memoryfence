@@ -128,6 +128,7 @@ forbidden_modules = [
   "memoryfence.agents",
   "memoryfence.harness",
   "memoryfence.cli",
+  "memoryfence.benchmark",
 ]
 
 [[tool.importlinter.contracts]]
@@ -153,3 +154,20 @@ type = "forbidden"
 source_modules = ["memoryfence.agents"]
 forbidden_modules = ["memoryfence.tools"]
 allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "System under test cannot import the benchmark"
+type = "forbidden"
+source_modules = [
+  "memoryfence.access",
+  "memoryfence.storage",
+  "memoryfence.observability",
+  "memoryfence.provenance",
+  "memoryfence.workspace",
+  "memoryfence.llm",
+  "memoryfence.memory",
+  "memoryfence.tools",
+  "memoryfence.authorization",
+  "memoryfence.agents",
+]
+forbidden_modules = ["memoryfence.benchmark"]
