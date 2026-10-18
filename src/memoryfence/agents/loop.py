@@ -6,6 +6,7 @@ The loop does not start another step from tool output. ``max_steps`` is the numb
 """
 
 from memoryfence.authorization.gateway import ToolGateway, ToolGatewayResult
+from memoryfence.defenses.suite import DefenseSuite
 from memoryfence.domain.base import DomainModel
 from memoryfence.domain.enums import EventCategory, ModelPurpose, Operation
 from memoryfence.domain.errors import DomainValidationError, MemoryFenceError, ReasonCode
@@ -51,6 +52,7 @@ class AgentLoop:
         *,
         seed: int,
         max_steps: int = 1,
+        defense: DefenseSuite | None = None,
     ) -> None:
         if max_steps < 1 or max_steps > _MAX_STEPS:
             raise DomainValidationError("agent step limit must be from 1 to 8")
@@ -62,6 +64,7 @@ class AgentLoop:
         self._seed = seed
         self._max_steps = max_steps
         self._used = 0
+        self._defense = defense
 
     def run(
         self,
@@ -77,9 +80,14 @@ class AgentLoop:
             raise MemoryFenceError(ReasonCode.STEP_LIMIT, "agent step limit reached")
         self._used += 1
         retrieved = self._retrieval.retrieve(actor, workspace_id, task, top_k=top_k)
-        context = tuple(
-            ContextMemory(memory_id=hit.memory_id, content=hit.content) for hit in retrieved.hits
-        )
+        hits = retrieved.hits
+        if self._defense is None:
+            context = tuple(
+                ContextMemory(memory_id=hit.memory_id, content=hit.content) for hit in hits
+            )
+        else:
+            hits = self._defense.filter_retrieval(actor, workspace_id, hits)
+            context = self._defense.render_context(actor, workspace_id, hits)
         request = ModelRequest(
             purpose=ModelPurpose.AGENT,
             seed=self._seed,
@@ -105,7 +113,13 @@ class AgentLoop:
             ),
         )
         outcome = _submit(
-            self._gateway, actor, workspace_id, response.tool_name, response.arguments
+            self._gateway,
+            actor,
+            workspace_id,
+            response.tool_name,
+            response.arguments,
+            task=task,
+            context_ids=tuple(item.memory_id for item in context),
         )
         step = AgentStep(
             task=task,
@@ -146,10 +160,20 @@ def _submit(
     workspace_id: WorkspaceId,
     tool_name: str | None,
     arguments: tuple[tuple[str, str], ...],
+    *,
+    task: str,
+    context_ids: tuple[MemoryIdField, ...],
 ) -> ToolGatewayResult:
     if tool_name is None:
         return ToolGatewayResult(propose_reason=ReasonCode.OK)
     try:
-        return gateway.submit(actor, workspace_id, tool_name, arguments)
+        return gateway.submit(
+            actor,
+            workspace_id,
+            tool_name,
+            arguments,
+            task=task,
+            context_ids=context_ids,
+        )
     except MemoryFenceError as error:
         return ToolGatewayResult(propose_reason=error.code, tool_name=None)

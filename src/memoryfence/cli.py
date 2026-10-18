@@ -5,10 +5,19 @@ import json
 import sys
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from memoryfence.benchmark.catalog import list_scenarios, validate_catalog
 from memoryfence.benchmark.result import canonical_outcome
 from memoryfence.benchmark.runner import RESULT_NAME, load_events, load_result, replay, run_scenario
-from memoryfence.domain.enums import DeletionPolicy, LineageFidelity
+from memoryfence.domain.defenses import DefenseConfiguration
+from memoryfence.domain.enums import (
+    DefenseId,
+    DeletionPolicy,
+    LineageFidelity,
+    PolicySource,
+    RetrievalVariant,
+)
 from memoryfence.domain.errors import DomainValidationError
 from memoryfence.domain.serialization import canonical_json
 from memoryfence.harness.episode import run_demo
@@ -29,6 +38,13 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--policy", choices=[item.value for item in DeletionPolicy])
     run.add_argument("--fidelity", choices=[item.value for item in LineageFidelity])
     run.add_argument("--marked", action="store_true")
+    run.add_argument("--defense", choices=[item.value for item in DefenseId], default="DF0")
+    run.add_argument("--retrieval", choices=[item.value for item in RetrievalVariant])
+    run.add_argument(
+        "--policy-source", choices=[item.value for item in PolicySource], default="generated"
+    )
+    run.add_argument("--oracle-tool", action="append", default=[])
+    run.add_argument("--risk-threshold", type=int, default=1)
     run.add_argument("--code-version", default="unspecified")
     again = bench.add_parser("replay", help="run a saved scenario again and compare")
     again.add_argument("--directory", type=Path, required=True)
@@ -71,6 +87,7 @@ def _dispatch(args: argparse.Namespace) -> int:
             policy=None if args.policy is None else DeletionPolicy(args.policy),
             fidelity=None if args.fidelity is None else LineageFidelity(args.fidelity),
             marked=args.marked,
+            defense=_defense_config(args),
             code_version=args.code_version,
         )
         sys.stdout.write(canonical_json(json.loads(result.model_dump_json())) + "\n")
@@ -92,3 +109,17 @@ def _dispatch(args: argparse.Namespace) -> int:
         )
         return 0
     return 2
+
+
+def _defense_config(args: argparse.Namespace) -> DefenseConfiguration:
+    tools = tuple(sorted(set(args.oracle_tool)))
+    try:
+        return DefenseConfiguration(
+            defense=DefenseId(args.defense),
+            retrieval_variant=None if args.retrieval is None else RetrievalVariant(args.retrieval),
+            policy_source=PolicySource(args.policy_source),
+            oracle_tools=tools,
+            risk_threshold=args.risk_threshold,
+        )
+    except ValidationError as error:
+        raise DomainValidationError("defense configuration is invalid") from error

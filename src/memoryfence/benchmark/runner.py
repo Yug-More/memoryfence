@@ -14,14 +14,19 @@ from memoryfence.benchmark.labels import EvaluationKey
 from memoryfence.benchmark.result import BenchmarkResult
 from memoryfence.benchmark.score import StageRecord, legitimate_succeeded, score_stages
 from memoryfence.benchmark.spec import ScenarioSpec
+from memoryfence.defenses.suite import DefenseSuite
+from memoryfence.domain.defenses import DefenseConfiguration
 from memoryfence.domain.deletion import DeletionOutcome, DeletionRequest
 from memoryfence.domain.enums import (
+    DefenseId,
     DeletionPolicy,
     DeletionScenario,
     LineageFidelity,
     MissingnessMode,
     ModelPurpose,
     Permission,
+    PolicySource,
+    RetrievalVariant,
     RunStatus,
     SourceOrigin,
     SourceVisibility,
@@ -69,6 +74,7 @@ def run_scenario(
     policy: DeletionPolicy | None = None,
     fidelity: LineageFidelity | None = None,
     marked: bool = False,
+    defense: DefenseConfiguration | None = None,
     code_version: str,
 ) -> BenchmarkResult:
     spec, key = load_scenario(scenario_id)
@@ -79,6 +85,7 @@ def run_scenario(
         policy=policy,
         fidelity=fidelity,
         marked=marked,
+        defense=defense,
         code_version=code_version,
     )
 
@@ -91,6 +98,7 @@ def run_case(
     policy: DeletionPolicy | None = None,
     fidelity: LineageFidelity | None = None,
     marked: bool = False,
+    defense: DefenseConfiguration | None = None,
     code_version: str,
 ) -> BenchmarkResult:
     """Execute ``spec`` in a fresh directory. ``key`` is not passed to the agent."""
@@ -98,6 +106,7 @@ def run_case(
         raise DomainValidationError("evaluation key does not match the scenario")
     chosen_policy = spec.deletion_policy if policy is None else policy
     chosen_fidelity = spec.fidelity if fidelity is None else fidelity
+    chosen_defense = DefenseConfiguration() if defense is None else defense
     if chosen_policy is not DeletionPolicy.NO_DELETION and spec.deletion_source_key is None:
         raise DomainValidationError("this scenario has no source to delete")
     directory.mkdir(parents=True, exist_ok=False)
@@ -119,6 +128,13 @@ def run_case(
                 "deletion_policy": chosen_policy.value,
                 "fidelity": chosen_fidelity.value,
                 "missingness": missingness.value,
+                "defense": chosen_defense.defense.value,
+                "retrieval_variant": (
+                    None
+                    if chosen_defense.retrieval_variant is None
+                    else chosen_defense.retrieval_variant.value
+                ),
+                "policy_source": chosen_defense.policy_source.value,
                 "seed": spec.seed,
             },
             started_at=clock.now(),
@@ -134,6 +150,7 @@ def run_case(
             policy=chosen_policy,
             fidelity=chosen_fidelity,
             missingness=missingness,
+            defense=chosen_defense,
             code_version=code_version,
             directory=directory,
         )
@@ -145,6 +162,7 @@ def run_case(
             policy=chosen_policy,
             fidelity=chosen_fidelity,
             missingness=missingness,
+            defense=chosen_defense,
             code_version=code_version,
             directory=directory,
             stages=None,
@@ -170,6 +188,7 @@ def replay(
         policy=previous.deletion_policy,
         fidelity=previous.fidelity,
         marked=previous.missingness is MissingnessMode.MARKED,
+        defense=_defense_from_result(previous),
         code_version=code_version,
     )
     return previous, fresh
@@ -199,6 +218,7 @@ def _episode(
     policy: DeletionPolicy,
     fidelity: LineageFidelity,
     missingness: MissingnessMode,
+    defense: DefenseConfiguration,
     code_version: str,
     directory: Path,
 ) -> tuple[BenchmarkResult, list[dict[str, JsonValue]]]:
@@ -270,14 +290,17 @@ def _episode(
             RederivationExecutor(database, auditor, degradation, backend, seed=spec.seed).execute(
                 PrincipalRef.user(owner.id), deletion.deletion_id
             )
+    suite = None if defense.defense.value == "DF0" else DefenseSuite(defense, auditor)
+    gateway = ToolGateway(ToolService(auditor), Sandbox(auditor), suite)
     loop = AgentLoop(
         RetrievalService(auditor),
         backend,
-        ToolGateway(ToolService(auditor), Sandbox(auditor)),
+        gateway,
         ModelCallLog(auditor),
         auditor,
         seed=spec.seed,
         max_steps=len(spec.actions),
+        defense=suite,
     )
     actor = PrincipalRef.agent(agent.id)
     steps = tuple(loop.run(actor, workspace.id, action.task) for action in spec.actions)
@@ -294,6 +317,7 @@ def _episode(
         policy=policy,
         fidelity=fidelity,
         missingness=missingness,
+        defense=defense,
         code_version=code_version,
         directory=directory,
         stages=stages,
@@ -372,6 +396,17 @@ def _replies(spec: ScenarioSpec) -> tuple[ScriptedReply, ...]:
     return tuple(replies)
 
 
+def _defense_from_result(result: BenchmarkResult) -> DefenseConfiguration:
+    variant = result.retrieval_variant
+    return DefenseConfiguration(
+        defense=DefenseId(result.defense),
+        retrieval_variant=None if variant is None else RetrievalVariant(variant),
+        policy_source=PolicySource(result.policy_source),
+        oracle_tools=result.oracle_tools,
+        risk_threshold=result.risk_threshold,
+    )
+
+
 def _attacker_memories(database: EpisodeDatabase, _key: EvaluationKey) -> set[str]:
     """Reach of sources labeled attacker. The in-memory key is not consulted."""
     attacker: set[str] = set()
@@ -390,6 +425,7 @@ def _result(
     policy: DeletionPolicy,
     fidelity: LineageFidelity,
     missingness: MissingnessMode,
+    defense: DefenseConfiguration,
     code_version: str,
     directory: Path,
     stages: StageRecord | None,
@@ -410,6 +446,13 @@ def _result(
         code_version=code_version,
         deletion_policy=policy,
         fidelity=fidelity,
+        defense=defense.defense.value,
+        retrieval_variant=(
+            None if defense.retrieval_variant is None else defense.retrieval_variant.value
+        ),
+        policy_source=defense.policy_source.value,
+        oracle_tools=defense.oracle_tools,
+        risk_threshold=defense.risk_threshold,
         missingness=missingness,
         confirmatory=missingness is MissingnessMode.SILENT,
         transformation_chain=tuple(step.transformation.value for step in spec.transforms),
