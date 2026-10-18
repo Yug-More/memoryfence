@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  If you refer to MemoryFence, please cite it using the metadata below.
+  MemoryFence is in its research-design phase and has not produced experimental results.
+type: software
+title: "MemoryFence: A Research Framework for Evaluating Persistent Memory Poisoning, Provenance, and Deletion Security in Collaborative AI Agents"
+abstract: >-
+  MemoryFence is a research framework, currently in design, for measuring under what
+  conditions attacker-origin instructions persist in derived AI memories after transformations
+  or original-source deletion, and how deletion handling, provenance completeness, and defense
+  mechanisms influence unauthorized downstream agent behavior in collaborative AI agents.
+authors:
+  - given-names: Yug Amol
+    family-names: More
+    alias: Yug-More
+version: 0.1.0.dev0
+repository-code: "https://github.com/Yug-More/memoryfence"
+keywords:
+  - AI security
+  - LLM agents
+  - memory poisoning
+  - prompt injection
+  - provenance
+  - machine unlearning
+  - access control
