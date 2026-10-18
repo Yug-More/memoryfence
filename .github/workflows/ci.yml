@@ -54,6 +54,9 @@ jobs:
       - name: Validate citation metadata
         run: make citation
 
+      - name: Import contracts
+        run: make contracts
+
   hygiene:
     name: Repository hygiene hooks
     runs-on: ubuntu-latest

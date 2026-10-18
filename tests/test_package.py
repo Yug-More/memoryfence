@@ -1,3 +1,4 @@
+import re
 import tomllib
 from importlib.metadata import metadata, version
 from pathlib import Path
@@ -25,5 +26,11 @@ def test_package_is_marked_as_typed() -> None:
     assert (package_dir / "py.typed").is_file()
 
 
-def test_phase_one_declares_no_runtime_dependencies() -> None:
-    assert metadata("memoryfence").get_all("Requires-Dist") is None
+def test_runtime_dependencies_are_the_phase_two_foundation() -> None:
+    """Pydantic and SQLAlchemy are the only runtime dependencies, added with Phase 2."""
+    requires = metadata("memoryfence").get_all("Requires-Dist")
+    assert requires is not None
+    names = sorted(
+        re.split(r"[^A-Za-z0-9_.-]", requirement, maxsplit=1)[0] for requirement in requires
+    )
+    assert names == ["pydantic", "sqlalchemy"]

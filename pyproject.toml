@@ -27,9 +27,11 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
   "Typing :: Typed",
 ]
-# Phase 1 ships no code paths that need third-party packages.
-# Pydantic and SQLAlchemy are added in Phase 2 together with the code that uses them.
-dependencies = []
+# Pydantic validates domain and boundary models; SQLAlchemy maps them to SQLite.
+dependencies = [
+  "pydantic>=2.14,<3",
+  "sqlalchemy>=2.1,<3",
+]
 
 [project.urls]
 Repository = "https://github.com/Yug-More/memoryfence"
@@ -39,6 +41,7 @@ Documentation = "https://github.com/Yug-More/memoryfence/tree/main/docs"
 [dependency-groups]
 dev = [
   "check-jsonschema>=0.38",
+  "import-linter>=2.15",
   "mypy>=1.15",
   "pre-commit>=4.0",
   "pytest>=8.3",
@@ -100,3 +103,31 @@ source = ["memoryfence"]
 show_missing = true
 skip_covered = false
 fail_under = 90
+
+[tool.importlinter]
+root_packages = ["memoryfence"]
+
+[[tool.importlinter.contracts]]
+name = "Domain does not depend on other internal modules"
+type = "forbidden"
+source_modules = ["memoryfence.domain"]
+forbidden_modules = [
+  "memoryfence.access",
+  "memoryfence.storage",
+  "memoryfence.observability",
+  "memoryfence.provenance",
+  "memoryfence.workspace",
+  "memoryfence.groundtruth",
+]
+
+[[tool.importlinter.contracts]]
+name = "System under test cannot import ground truth"
+type = "forbidden"
+source_modules = [
+  "memoryfence.access",
+  "memoryfence.storage",
+  "memoryfence.observability",
+  "memoryfence.provenance",
+  "memoryfence.workspace",
+]
+forbidden_modules = ["memoryfence.groundtruth"]

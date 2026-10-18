@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 1 (research foundation and engineering architecture).** This repository contains the research design, threat model, experimental protocol, architecture, and development tooling. **No agent, memory pipeline, attack, defense, or evaluation code is implemented yet, and no experimental results exist.** Everything described as *planned* is unbuilt.
+> **Project status: Phase 2 (core domain, authorization, provenance, and persistence).** The research design from Phase 1 is unchanged. The repository now contains typed domain models, workspace authorization, SQLite persistence, separate true and recorded provenance, and the five deletion-policy state transitions. **No language-model calls, agent loop, attack replay, defense evaluation, or experimental results exist.** DS4 records re-derivation work and does not generate text.
 
 ## Contents
 
@@ -130,12 +130,13 @@ MemoryFence is designed as a **modular monolith**: one typed Python package whos
 
 ```mermaid
 flowchart LR
+    classDef implemented fill:#d4edda,stroke:#2e7d32,color:#1b1b1b
     classDef planned fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray:4 3,color:#1b1b1b
     classDef harness fill:#fff3cd,stroke:#b8860b,stroke-dasharray:4 3,color:#1b1b1b
 
-    SRC[("Shared sources")]:::planned --> TRN["Transformations"]:::planned --> MEM[("Memories and<br/>recorded provenance")]:::planned
+    SRC[("Shared sources")]:::implemented --> TRN["Transformations"]:::planned --> MEM[("Memories and<br/>recorded provenance")]:::implemented
     MEM --> RET["Retrieval"]:::planned --> AGT["Agent"]:::planned --> AUTH["Authorization<br/>gateway"]:::planned --> SBX["Sandbox tools"]:::planned
-    DEL["Deletion policies"]:::planned -.-> MEM
+    DEL["Deletion policies"]:::implemented -.-> MEM
     DEF["Defenses"]:::planned -. "hooks" .-> RET
     DEF -. "hooks" .-> AUTH
     TRN -. "lineage events" .-> GT[("Ground truth<br/>(evaluator only)")]:::harness
@@ -143,7 +144,7 @@ flowchart LR
     GT --> EVAL
 ```
 
-All components shown are **planned**. The [architecture overview](docs/architecture/overview.md) has the full set of diagrams (architecture, trust boundaries, lifecycle, lineage, deletion, retrieval and authorization, experimental pipeline), the security invariants, and the import contracts. [ADR-0001](docs/architecture/decisions/ADR-0001-architecture.md) records the rationale.
+Green boxes are implemented. Grey dashed boxes are planned. The [architecture overview](docs/architecture/overview.md) has the data model, provenance isolation, lifecycle, lineage, deletion, and the import contracts. [ADR-0001](docs/architecture/decisions/ADR-0001-architecture.md) records the rationale.
 
 ## Technology stack
 
@@ -158,17 +159,17 @@ All components shown are **planned**. The [architecture overview](docs/architect
 | Git hooks | pre-commit | In use |
 | CI | GitHub Actions on Python 3.12 and 3.13, actions pinned by SHA | In use |
 | Diagrams | Mermaid, render-checked with mermaid-cli in CI | In use |
-| Domain models | Pydantic v2 | Planned (Phase 2) |
-| Persistence | SQLite through SQLAlchemy 2 | Planned (Phase 2) |
-| Import contracts | import-linter | Planned (Phase 2) |
+| Domain models | Pydantic v2 | In use |
+| Persistence | SQLite through SQLAlchemy 2 | In use |
+| Import contracts | import-linter | In use |
 | Model access | Deterministic scripted backend first; optional local and hosted adapters | Planned (Phases 3 and 7) |
 
 ## Repository structure
 
 ```text
 memoryfence/
-├── src/memoryfence/          # Python package (Phase 1: version metadata and py.typed only)
-├── tests/                    # Package and documentation integrity tests
+├── src/memoryfence/          # Domain, authorization, storage, provenance, workspace, events
+├── tests/                    # Security, persistence, provenance, and documentation tests
 ├── docs/
 │   ├── research/             # Literature review, problem, threat model, hypotheses, protocol, limitations
 │   ├── architecture/         # Architecture overview and ADRs
@@ -196,12 +197,12 @@ make setup          # uv sync --frozen, then install pre-commit hooks
 ## Quality checks
 
 ```bash
-make check          # lint, format check, mypy, tests with coverage, build, citation validation
+make check          # lint, format, mypy, coverage, build, citation, import contracts
 make pre-commit     # repository hygiene hooks
 make diagrams       # render-check every Mermaid diagram (requires Node.js)
 ```
 
-The current tests check package metadata and documentation integrity: required documents exist, links and anchors resolve, condition codes are defined, and the required diagrams are present. They do **not** test research functionality, because none exists yet. See [`docs/development.md`](docs/development.md).
+Tests cover authorization, workspace isolation, provenance degradation, the five deletion policies, and SQLite transactions, in addition to package metadata and documentation integrity. They do not call a model or run an experiment. See [`docs/development.md`](docs/development.md).
 
 ## Documentation map
 
@@ -221,9 +222,9 @@ The current tests check package metadata and documentation integrity: required d
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 | Research foundation and engineering architecture | **In review** |
-| 2 | Core domain, access control, provenance, and storage | Planned |
-| 3 | Memory, deletion, model backend, tools, gateway, and agent loop | Planned |
+| 1 | Research foundation and engineering architecture | **Merged** |
+| 2 | Core domain, access control, provenance, and storage | **In review** |
+| 3 | Memory simulation, model backend, tools, gateway, and agent loop | Planned |
 | 4 | Attack scenarios and replay benchmark | Planned |
 | 5 | Defenses | Planned |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |

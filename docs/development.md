@@ -41,7 +41,8 @@ uv run --frozen pre-commit install
 | `make coverage` | `uv run --frozen pytest --cov --cov-report=term-missing` | Tests with branch coverage; fails below 90% |
 | `make build` | `uv build`, then `twine check --strict dist/*` | Build the sdist and wheel and validate their metadata |
 | `make citation` | `check-jsonschema --builtin-schema vendor.citation-file-format CITATION.cff` | Validate citation metadata |
-| `make check` | `lint`, `format-check`, `typecheck`, `coverage`, `build`, `citation` | **Everything the CI quality job runs** |
+| `make contracts` | `uv run --frozen lint-imports` | Forbid `domain` from importing other internal modules, and forbid the system under test from importing `groundtruth` |
+| `make check` | `lint`, `format-check`, `typecheck`, `coverage`, `build`, `citation`, `contracts` | **Everything the CI quality job runs** |
 | `make pre-commit` | `uv run --frozen pre-commit run --all-files` | Repository hygiene hooks |
 | `make diagrams` | `npx @mermaid-js/mermaid-cli@12.0.0` on every Markdown file containing Mermaid | Render-check all diagrams into `.diagrams/` |
 | `make clean` | — | Remove caches and build artifacts |
@@ -52,8 +53,10 @@ Run `make help` for the list with descriptions.
 
 | Check | What it verifies |
 |---|---|
-| `tests/test_package.py` | The package imports; `memoryfence.__version__` matches the installed metadata and `pyproject.toml`; `__all__` is explicit; the `py.typed` marker ships; there are no runtime dependencies |
+| `tests/test_package.py` | The package imports; `memoryfence.__version__` matches the installed metadata and `pyproject.toml`; `__all__` is explicit; the `py.typed` marker ships; the runtime dependencies are exactly Pydantic and SQLAlchemy |
 | `tests/test_docs.py` | Required documents exist and are non-empty; every relative Markdown link and heading anchor resolves; condition codes used in the research documents are defined in the protocol; the architecture overview contains the required diagrams |
+| `tests/test_authorization.py`, `tests/test_lifecycle.py`, `tests/test_provenance.py`, `tests/test_persistence.py` | Authorization, deletion policies, provenance isolation and degradation, and SQLite transactions |
+| `tests/test_imports.py` | The import-linter contracts |
 | Ruff | Style, import order, common bugs, naming, annotations, and security lint rules (flake8-bandit) |
 | mypy `--strict` | Complete type annotations and no implicit `Any` |
 | `make build` | The package builds as sdist and wheel, and its metadata passes `twine check --strict` |
@@ -61,7 +64,7 @@ Run `make help` for the list with descriptions.
 | pre-commit | Whitespace, end-of-file newlines, YAML and TOML syntax, merge-conflict markers, large files, private keys, Ruff, mypy, citation schema, workflow schema |
 | `make diagrams` | Every Mermaid block in the README and `docs/` renders without syntax errors |
 
-The Phase 1 tests check repository integrity only. They do not test research functionality, because none is implemented yet.
+Phase 2 tests exercise the authorization boundary, provenance split, and database transactions directly. They do not call a language model or start an experiment.
 
 ### Mermaid diagrams
 
@@ -91,7 +94,7 @@ Phase 1 reads no environment variables. [`.env.example`](../.env.example) docume
 ## Conventions
 
 - **Layout:** `src/memoryfence/` for the package, `tests/` mirroring package modules, and `docs/` for research and architecture.
-- **Modules** are created only when they contain working, tested code. Planned modules are documented in [`architecture/overview.md`](architecture/overview.md#6-planned-modules), not scaffolded as empty files.
+- **Modules** are created only when they contain working, tested code. Planned modules are documented in [`architecture/overview.md`](architecture/overview.md#6-modules), not scaffolded as empty files.
 - **Import contracts** in the architecture overview are binding from Phase 2 and will be checked in CI.
 - **Commits** follow Conventional Commits (see [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
 - **Architecture decisions** are recorded as ADRs in [`architecture/decisions/`](architecture/decisions/).
