@@ -7,8 +7,8 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | 1 | Research foundation and engineering architecture | Merged |
 | 2 | Core domain, access control, provenance, and storage | Merged |
 | 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | Merged |
-| 4 | Scripted scenarios and replay benchmark | In review |
-| 5 | Defenses | Planned |
+| 4 | Scripted scenarios and replay benchmark | Merged |
+| 5 | Defense baselines | In review |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
 | 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
 | 8 | Analysis, report, and audit | Planned |
@@ -48,16 +48,16 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Dependencies:** Phase 3.
 - **Acceptance criteria:** each scenario validates before it runs; stage labels are computed from persisted ground truth and the event log, not from the agent's copy of the scenario; replay of a saved directory reproduces the canonical outcome; recipients use the `.invalid` domain; the system under test cannot import the benchmark.
 - **Validation:** `tests/test_benchmark.py` covers the catalog, stage separation, controls, deletion and fidelity sweeps, timeout failure, replay, and the CLI. Coverage stays at least 90%.
-- **Status:** In review.
+- **Status:** Merged.
 
-## Phase 5: Defenses
+## Phase 5: Defense baselines
 
-- **Objective:** Implement the defense configurations behind the hook protocol.
-- **Deliverables:** `DF1` prompt-level delimiting; `DF2` provenance-aware retrieval (label and exclude); `DF3` independent action authorization (generated and oracle policy); `DF4` combined; `DF5` lineage-gated authorization; overhead instrumentation.
+- **Objective:** Implement the protocol's defense conditions on the scripted benchmark without giving them true provenance.
+- **Deliverables:** `DF0` platform ACL only; `DF1` prompt delimiting and recorded-author labels; `DF2` provenance-aware retrieval in `label` and `exclude` variants; `DF3` task-derived action authorization, with an injected oracle allowlist reported separately; `DF4` `DF2` and `DF3` together; `DF5` lineage-gated authorization. Decisions are structured events. The benchmark accepts `--defense`.
 - **Dependencies:** Phases 3 and 4.
-- **Acceptance criteria:** defenses read recorded provenance only and pass the import contracts; the `DF3` policy step cannot see retrieved content; each defense behaves as specified on replayed episodes, including legitimate-instruction controls.
-- **Validation:** unit tests per defense; replay-benchmark runs reporting stage rates and false positives on the scripted backend; overhead measured on the deterministic backend.
-- **Status:** Planned.
+- **Acceptance criteria:** defenses read recorded provenance only and pass the import contracts; the `DF3` policy step cannot see retrieved content; missing recorded edges are not repaired from true provenance; each condition is selectable without reusing episode state.
+- **Validation:** `tests/test_defenses.py` and the existing benchmark suite. Scripted stage labels are fixture results, not empirical defense effectiveness.
+- **Status:** In review.
 
 ## Phase 6: Evaluation runner, metrics, and reproducibility
 

@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Status:** Phase 4 adds a versioned catalog of synthetic scenarios and a deterministic replay runner on the Phase 3 simulation. Stage labels are fixture results, not language-model measurements. Defenses, statistics, and an audited judge remain planned. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 5 adds defense conditions `DF0` through `DF5` on the scripted simulation. Decisions use recorded provenance and the requester's task. Stage labels remain fixture results, not language-model measurements. Statistics and an audited judge remain planned. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
@@ -16,7 +16,8 @@ Phase 2 adds the security-critical data foundation: domain models, workspace aut
 | Domain models, authorization, workspace services, provenance, ground truth, SQLite persistence, events, and run manifests | Implemented (Phase 2) | `src/memoryfence/` |
 | Scripted model backend, ingestion, transformations, lexical retrieval, DS4 execution, agent loop, sandbox tools, offline demo | Implemented (Phase 3) | `llm`, `memory`, `tools`, `authorization`, `agents`, `harness`, `cli` |
 | Versioned synthetic scenarios, four-stage scoring, deterministic replay, and the benchmark CLI | Implemented (Phase 4) | `benchmark`, `cli` |
-| Defenses, experiment statistics, and an audited judge | Planned (Phases 5–6) | — |
+| Defense conditions `DF0`–`DF5` | Implemented (Phase 5) | `defenses` |
+| Experiment statistics and an audited judge | Planned (Phase 6) | — |
 
 ## 2. Goals and constraints
 
@@ -64,7 +65,7 @@ flowchart LR
     end
 
     LLM["LanguageModel protocol:<br/>scripted backend"]:::implemented
-    DEF["Defense policies<br/>DF1–DF5"]:::planned
+    DEF["Defense policies<br/>DF0-DF5"]:::implemented
     OBS[("Event log and SQLite<br/>per episode")]:::implemented
 
     CFG --> ATK --> WS
@@ -174,6 +175,7 @@ All modules live in the single `memoryfence` package under `src/`.
 | `memoryfence.harness` | Opens both databases and runs the offline demo. Harness code, not a defense | `groundtruth` and the packages above | Implemented |
 | `memoryfence.benchmark` | Versioned synthetic scenarios, evaluator-only labels, four-stage scoring, and deterministic replay | `domain`, `groundtruth`, `harness`, and the simulation packages | Implemented |
 | `memoryfence.cli` | `memoryfence demo` and `memoryfence benchmark` | `harness`, `benchmark` | Implemented |
+| `memoryfence.defenses` | `DF0`–`DF5`. Recorded lineage, instruction authority, and the task text only | `domain`, `provenance`, `memory`, `observability`, `storage` | Implemented |
 | `memoryfence.defenses` | Implementations of the defense hook protocol, `DF1`–`DF5` | `domain`, `access`, `provenance` | 5 |
 | `memoryfence.evaluation` | Configuration schemas, episode runner, outcome classifier, metrics, statistics, reports | all of the above | 6 |
 
@@ -201,6 +203,7 @@ flowchart BT
     agents["agents"] --> memory
     agents --> llm
     agents --> authorization
+    defenses["defenses"] --> provenance
     benchmark["benchmark"] --> groundtruth
     benchmark --> agents
     defenses["defenses"] --> access
@@ -221,12 +224,12 @@ Enforced now by `make contracts` (`lint-imports`) and in CI:
 1. **`domain` imports no other internal module.**
 2. **`access`, `storage`, `observability`, `provenance`, `workspace`, `llm`, `memory`, `tools`, `authorization`, and `agents` must not import `groundtruth`.** The harness wires the write-only `GroundTruthRecorder`. A defense-facing session cannot see the ground-truth schema.
 3. **`agents` must not import `tools` directly.** Tool calls go through `authorization`. Indirect use via the gateway is allowed.
-4. **The same system-under-test packages must not import `benchmark`.** Scenario origins and the followed-instruction marker stay in the evaluator.
+4. **The same system-under-test packages, including `defenses`, must not import `benchmark`.** Scenario origins and the followed-instruction marker stay in the evaluator.
+5. **`defenses` must not import `groundtruth`, `benchmark`, `harness`, or `llm`.** `DF3` is a pure function of the task and the tool call.
 
-Still planned, and not yet packages:
+Still planned, and not yet a package:
 
-5. **`defenses` must not import `benchmark`, `evaluation`, or `groundtruth`.**
-6. **Only the harness (`groundtruth`, `harness`, and `benchmark` today; `evaluation` later) reads true provenance.**
+6. **Only the harness (`groundtruth`, `harness`, and `benchmark` today; `evaluation` later) reads true provenance.** `defenses` is not part of that harness.
 
 ## 7. Defense hook points
 

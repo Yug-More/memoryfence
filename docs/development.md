@@ -91,6 +91,22 @@ uv run memoryfence benchmark export --directory /tmp/memoryfence-direct
 
 The catalog has eighteen versioned fixtures. Families A–H cover a direct note, summary, merge, multi-round derivation, post-deletion retrieval, cross-user visibility, an unauthorized proposal, and an executed sandbox tool. Protocol families are `SF1`–`SF5`. Controls are `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, and `C-UCC`. Scoring records four separate booleans: S1 Retrieved, S2 Followed, S3 Proposed, and S4 Executed. A failed scripted call stores `stages: null` and a failure reason. Public scenario objects and exported results omit source origins and the followed-instruction marker. Those stay in the evaluator. A stage label from this runner is a fixture result, not an attack rate.
 
+### Defense conditions
+
+```bash
+uv run memoryfence benchmark run \
+  --scenario direct-note --defense DF2 --retrieval exclude \
+  --directory /tmp/memoryfence-df2
+uv run memoryfence benchmark run \
+  --scenario executed-proposal --defense DF3 \
+  --directory /tmp/memoryfence-df3
+uv run memoryfence benchmark run \
+  --scenario executed-proposal --defense DF3 --policy-source oracle \
+  --oracle-tool create_ticket --directory /tmp/memoryfence-oracle
+```
+
+`DF0` is the platform ACL with no extra defense. `DF1` delimits retrieved text and labels recorded authors. `DF2-label` annotates those authors. `DF2-exclude` drops a memory when any recorded author is neither the requester nor a user with instruction authority over the requester. `DF3` allows a standing sandbox tool only when the task text names it and every argument token appears in the task. The oracle source is an injected tool list and is not the main result. `DF4` applies `DF2` and `DF3` together. `DF5` blocks a tool at or above the risk threshold when retrieved context has an untrusted recorded author. Missing recorded edges are not filled from true provenance. The scripted backend does not read the delimited prompt, so `DF1` does not change its tool call.
+
 Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere.
 
 ### Mermaid diagrams
