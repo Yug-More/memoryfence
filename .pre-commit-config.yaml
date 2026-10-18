@@ -1,0 +1,39 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  # These hooks run from the project environment so that their versions come from uv.lock.
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run --frozen mypy
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: check-citation-file-format
+        name: Validate CITATION.cff
+        entry: uv run --frozen check-jsonschema --builtin-schema vendor.citation-file-format
+        language: system
+        files: ^CITATION\.cff$
+      - id: check-github-workflows
+        name: Validate GitHub workflows
+        entry: uv run --frozen check-jsonschema --builtin-schema vendor.github-workflows
+        language: system
+        files: ^\.github/workflows/[^/]+\.ya?ml$

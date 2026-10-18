@@ -1,0 +1,102 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "memoryfence"
+version = "0.1.0.dev0"
+description = "Research framework for evaluating persistent memory poisoning, provenance, and deletion security in collaborative AI agents."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Yug Amol More" }]
+keywords = [
+  "ai-security",
+  "llm-agents",
+  "memory-poisoning",
+  "prompt-injection",
+  "provenance",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+# Phase 1 ships no code paths that need third-party packages.
+# Pydantic and SQLAlchemy are added in Phase 2 together with the code that uses them.
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Yug-More/memoryfence"
+Issues = "https://github.com/Yug-More/memoryfence/issues"
+Documentation = "https://github.com/Yug-More/memoryfence/tree/main/docs"
+
+[dependency-groups]
+dev = [
+  "check-jsonschema>=0.38",
+  "mypy>=1.15",
+  "pre-commit>=4.0",
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.17",
+  "twine>=6.1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/memoryfence"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/memoryfence", "tests", "README.md", "CITATION.cff"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "F",    # pyflakes
+  "I",    # isort
+  "B",    # flake8-bugbear
+  "UP",   # pyupgrade
+  "SIM",  # flake8-simplify
+  "C4",   # flake8-comprehensions
+  "PTH",  # flake8-use-pathlib
+  "RUF",  # ruff-specific
+  "S",    # flake8-bandit
+  "N",    # pep8-naming
+  "ANN",  # flake8-annotations
+  "PT",   # flake8-pytest-style
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
+xfail_strict = true
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = ["memoryfence"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 90
