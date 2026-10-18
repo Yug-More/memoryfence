@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Status:** Phase 7 adds a loopback-only Ollama adapter beside the scripted backend. Defense conditions `DF0` through `DF5` stay on recorded provenance and the requester's task. Scripted stage labels remain fixture results. Rubric-v1 can abstain and is not a reliability study. Mixed-effects models and confirmatory tests are not implemented. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 7B adds a free Colab notebook that runs the existing loopback-only Ollama adapter inside that temporary runtime. It does not add a remote endpoint. Defense conditions `DF0` through `DF5` stay on recorded provenance and the requester's task. Scripted stage labels remain fixture results. Rubric-v1 can abstain and is not a reliability study. Mixed-effects models and confirmatory tests are not implemented. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
@@ -16,6 +16,7 @@ Phase 2 adds the security-critical data foundation: domain models, workspace aut
 | Domain models, authorization, workspace services, provenance, ground truth, SQLite persistence, events, and run manifests | Implemented (Phase 2) | `src/memoryfence/` |
 | Scripted model backend, ingestion, transformations, lexical retrieval, DS4 execution, agent loop, sandbox tools, offline demo | Implemented (Phase 3) | `llm`, `memory`, `tools`, `authorization`, `agents`, `harness`, `cli` |
 | Loopback-only Ollama adapter and rubric-v1 | Implemented (Phase 7). No confirmatory runs | `llm`, `benchmark` |
+| Free Colab pilot session checks | Implemented (Phase 7B). The live pilot is not in this repository | `colab` |
 | Versioned synthetic scenarios, four-stage scoring, deterministic replay, and the benchmark CLI | Implemented (Phase 4) | `benchmark`, `cli` |
 | Defense conditions `DF0`–`DF5` | Implemented (Phase 5) | `defenses` |
 | Scripted experiment matrix, Wilson intervals, and exact McNemar | Implemented (Phase 6) | `evaluation`, `cli` |
@@ -169,16 +170,17 @@ All modules live in the single `memoryfence` package under `src/`.
 | `memoryfence.provenance` | Recorded provenance graph and seeded degradation | `domain`, `storage` | Implemented |
 | `memoryfence.workspace` | Membership, sources, revisions, memories, deletion policies, tool authorization | `domain`, `access`, `storage`, `observability`, `provenance` | Implemented |
 | `memoryfence.groundtruth` | True provenance, labels, deletion ledger, and run rows in a separate database. Harness only | `domain`, `storage`, `observability` | Implemented |
-| `memoryfence.llm` | `LanguageModel` protocol and deterministic scripted backend. No keyword fallback and no ground truth | `domain` | Implemented |
+| `memoryfence.llm` | `LanguageModel` protocol, deterministic scripted backend, and loopback-only Ollama adapter. No ground truth | `domain` | Implemented |
 | `memoryfence.memory` | Ingestion, scripted `TT1`–`TT4`, lexical retrieval, DS4 task execution | `domain`, `workspace`, `provenance`, `storage` | Implemented |
 | `memoryfence.tools` | Synthetic ticket, task, and note tools. Unknown names are denied | `domain`, `workspace` | Implemented |
 | `memoryfence.authorization` | Propose, then independently authorize execution, then call the sandbox. No justification argument | `domain`, `tools`, `workspace` | Implemented |
 | `memoryfence.agents` | One bounded step: retrieve, call the backend, submit a tool call to the gateway | `domain`, `memory`, `authorization` | Implemented |
 | `memoryfence.harness` | Opens both databases and runs the offline demo. Harness code, not a defense | `groundtruth` and the packages above | Implemented |
 | `memoryfence.benchmark` | Versioned synthetic scenarios, evaluator-only labels, four-stage scoring, and deterministic replay | `domain`, `groundtruth`, `harness`, and the simulation packages | Implemented |
-| `memoryfence.cli` | `memoryfence demo`, `benchmark`, and `experiment` | `harness`, `benchmark`, `evaluation` | Implemented |
+| `memoryfence.cli` | `memoryfence demo`, `benchmark`, `experiment`, and `model` | `harness`, `benchmark`, `evaluation` | Implemented |
 | `memoryfence.defenses` | `DF0`–`DF5`. Recorded lineage, instruction authority, and the task text only | `domain`, `provenance`, `memory`, `observability`, `storage` | Implemented |
 | `memoryfence.evaluation` | Versioned experiment configuration, matrix, scripted runner, Wilson intervals, exact McNemar, and reports | `benchmark`, `defenses`, `groundtruth` through the benchmark | Implemented |
+| `memoryfence.colab` | Checkout pin, loopback Ollama startup checks, one approved model tag, and pilot archive. No model download | `evaluation`, `llm` | Implemented |
 
 ### 6.1 Dependency diagram
 
@@ -214,6 +216,8 @@ flowchart BT
     evaluation --> benchmark
     evaluation --> defenses
     evaluation --> observability
+    colab["colab"] --> evaluation
+    colab --> llm
 ```
 
 Arrows point from a module to a module it may import. Transitive edges to `domain` and `storage` are omitted for readability.
@@ -227,7 +231,7 @@ Enforced now by `make contracts` (`lint-imports`) and in CI:
 3. **`agents` must not import `tools` directly.** Tool calls go through `authorization`. Indirect use via the gateway is allowed.
 4. **The same system-under-test packages, including `defenses`, must not import `benchmark`.** Scenario origins and the followed-instruction marker stay in the evaluator.
 5. **`defenses` must not import `groundtruth`, `benchmark`, `harness`, `llm`, or `evaluation`.** `DF3` is a pure function of the task and the tool call.
-6. **The system under test, including `benchmark`, must not import `evaluation`.** Held-out templates stay out of the development catalog. `evaluation` may read ground truth through the benchmark scorer.
+6. **The system under test, including `benchmark`, must not import `evaluation` or `colab`.** Held-out templates stay out of the development catalog. `evaluation` may read ground truth through the benchmark scorer. The Colab helper may call the runner; the victim model may not import that helper.
 
 `evaluation` is harness code. It is not a defense.
 

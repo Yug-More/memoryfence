@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 7 (local model adapter).** The research design from Phase 1 is unchanged. Scripted experiments still run with no model installed. A loopback-only Ollama adapter can run a development pilot when a local model is already present. **No hosted inference is used. No confirmatory evaluation has been run. Scripted stage labels are not language-model measurements.**
+> **Project status: Phase 7B (free Colab pilot workflow).** The research design from Phase 1 is unchanged. Scripted experiments still run with no model installed. A loopback-only Ollama adapter can run a development pilot when a local model is already present. A notebook can run that same pilot inside a free Google Colab runtime so the model is not downloaded onto a machine that lacks disk space. **No hosted inference is used. The live Colab pilot has not been executed in this repository. No confirmatory evaluation has been run. Scripted stage labels are not language-model measurements.**
 
 ## Contents
 
@@ -164,7 +164,7 @@ Green boxes are implemented. Grey dashed boxes are planned. Yellow dashed boxes 
 | Domain models | Pydantic v2 | In use |
 | Persistence | SQLite through SQLAlchemy 2 | In use |
 | Import contracts | import-linter | In use |
-| Model access | Deterministic scripted backend; optional local and hosted adapters later | Scripted backend in use. Adapters are Phase 7 |
+| Model access | Scripted backend and a loopback-only Ollama adapter | In use. A free Colab notebook can host the adapter. No hosted API |
 
 ## Repository structure
 
@@ -172,11 +172,14 @@ Green boxes are implemented. Grey dashed boxes are planned. Yellow dashed boxes 
 memoryfence/
 ├── src/memoryfence/          # Domain, authorization, storage, provenance, simulation, benchmark, CLI
 ├── tests/                    # Security, simulation, benchmark, persistence, provenance, and documentation tests
+├── notebooks/                # Free Colab development pilot
+├── configs/                  # Scripted and Ollama experiment configurations
 ├── docs/
 │   ├── research/             # Literature review, problem, threat model, hypotheses, protocol, limitations
 │   ├── architecture/         # Architecture overview and ADRs
+│   ├── guides/               # Colab pilot guide
 │   ├── development.md        # Developer guide
-│   └── roadmap.md            # Nine-phase plan
+│   └── roadmap.md            # Phased plan
 ├── .github/                  # CI workflow and pull-request template
 ├── pyproject.toml            # Package metadata and tool configuration
 ├── uv.lock                   # Locked development dependencies
@@ -202,6 +205,12 @@ uv run memoryfence benchmark run --scenario direct-note --defense DF2 --retrieva
 
 Neither command needs credentials or a network. `demo` prints one JSON trace of a scripted episode. `benchmark run` writes `benchmark-result.json` and `events.jsonl` for one synthetic scenario. Both are mechanics checks. Stage labels are fixture results, not model-susceptibility measurements.
 
+To run the four-cell Ollama pilot without installing a model on this computer, open the notebook in a free Colab runtime:
+
+[Open the Colab pilot](https://colab.research.google.com/github/Yug-More/memoryfence/blob/main/notebooks/memoryfence_colab_pilot.ipynb)
+
+The notebook and the click-by-click steps are in [`notebooks/memoryfence_colab_pilot.ipynb`](notebooks/memoryfence_colab_pilot.ipynb) and [`docs/guides/google-colab-pilot.md`](docs/guides/google-colab-pilot.md). Colab downloads the model into that temporary runtime. This repository does not contain those observations.
+
 ## Quality checks
 
 ```bash
@@ -224,6 +233,7 @@ Tests cover authorization, workspace isolation, provenance degradation, the five
 | [`limitations.md`](docs/research/limitations.md) | Known limitations of the design and the repository |
 | [`overview.md`](docs/architecture/overview.md) | Architecture, invariants, and diagrams |
 | [`development.md`](docs/development.md) | Setup, checks, and conventions |
+| [`google-colab-pilot.md`](docs/guides/google-colab-pilot.md) | Free Colab runtime for the four-cell development pilot |
 | [`roadmap.md`](docs/roadmap.md) | Phases, acceptance criteria, and open decisions |
 
 ## Roadmap
@@ -234,9 +244,10 @@ Tests cover authorization, workspace isolation, provenance degradation, the five
 | 2 | Core domain, access control, provenance, and storage | **Merged** |
 | 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | **Merged** |
 | 4 | Scripted scenarios and replay benchmark | **Merged** |
-| 5 | Defense baselines `DF0`–`DF5` | **In review** |
-| 6 | Evaluation runner, metrics, and reproducibility | Planned |
-| 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
+| 5 | Defense baselines `DF0`–`DF5` | **Merged** |
+| 6 | Evaluation runner, metrics, and reproducibility | **Merged** |
+| 7 | Local Ollama adapter and mocked pilot path | **Merged** |
+| 7B | Free Colab workflow for the development pilot | **In review** |
 | 8 | Analysis, report, and audit | Planned |
 | 9 | Release audit | Planned |
 
@@ -250,9 +261,10 @@ See [`docs/roadmap.md`](docs/roadmap.md) for each phase's objective, deliverable
 
 ## Current limitations
 
-- The agent, transformations, and scenario outcomes are scripted fixtures. They do not measure language-model behavior, and no empirical results exist.
+- The agent, transformations, and scenario outcomes shipped in this repository are scripted fixtures, plus a loopback Ollama adapter exercised with mocked responses. They do not yet include observations from a live model.
 - Defenses are deterministic approximations of the protocol. On the scripted backend, `DF1` and `DF2-label` do not change the fixture's tool call.
-- A development/evaluation template split, an audited judge, and statistical analysis are not implemented.
+- The development catalog and two held-out templates are separate. Rubric-v1 can abstain and has not been checked by a second rater. Mixed-effects models, cluster bootstrap, Cochran–Armitage, and TOST are not implemented.
+- A free Colab notebook can run the four-cell development pilot later. Free-tier GPU, session length, and disk are not guaranteed. Those runs are not confirmatory.
 - Most of the literature review is abstract-level, and the closest related work consists of recent preprints.
 - The proposed contribution is incremental relative to concurrent work and is framed accordingly.
 - The planned evaluation uses a simulated workspace, a small number of models, and English-only text.

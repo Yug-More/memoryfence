@@ -8,9 +8,10 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | 2 | Core domain, access control, provenance, and storage | Merged |
 | 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | Merged |
 | 4 | Scripted scenarios and replay benchmark | Merged |
-| 5 | Defense baselines | In review |
-| 6 | Evaluation runner, metrics, and reproducibility | Planned |
-| 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
+| 5 | Defense baselines | Merged |
+| 6 | Evaluation runner, metrics, and reproducibility | Merged |
+| 7 | Model integration, pilots, preregistration, and confirmatory study | Merged |
+| 7B | Free Colab workflow for the development pilot | In review |
 | 8 | Analysis, report, and audit | Planned |
 | 9 | Release audit | Planned |
 
@@ -75,6 +76,15 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Dependencies:** Phase 6.
 - **Acceptance criteria:** CI passes with mocked HTTP and does not require Ollama; the scripted fingerprint of the smoke configuration is unchanged; remote endpoints are rejected; a model sentence is not authorization; confirmatory evaluation is not run.
 - **Validation:** `tests/test_ollama.py`. A machine without Ollama and without enough free disk for a model is reported as integration-complete and empirical-pilot-pending.
+- **Status:** Merged.
+
+## Phase 7B: Free Colab workflow for the development pilot
+
+- **Objective:** Run the existing four-cell Ollama pilot inside a free Google Colab runtime, without downloading a model onto a machine that lacks disk space and without opening a public inference endpoint.
+- **Deliverables:** `notebooks/memoryfence_colab_pilot.ipynb`; `memoryfence.colab` checks for a pinned checkout, a loopback Ollama process, one approved model tag, and a zip of the experiment directory; [`guides/google-colab-pilot.md`](guides/google-colab-pilot.md). The notebook calls the existing experiment runner. Transformations in the pilot stay scripted.
+- **Dependencies:** Phase 7.
+- **Acceptance criteria:** CI does not install Colab, Ollama, or a model; the scripted backend and the loopback adapter still pass; the notebook refuses a remote endpoint and a second model; held-out scenarios are not used; no live model call is claimed unless one was recorded.
+- **Validation:** `tests/test_colab.py`. A development machine that cannot open a Colab session is reported as Colab integration complete, with the live pilot awaiting the user.
 - **Status:** In review.
 
 ## Phase 8: Analysis, report, and audit

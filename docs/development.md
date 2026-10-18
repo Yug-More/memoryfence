@@ -142,7 +142,17 @@ The agent system prompt is `agent-v1`. Retrieved text is wrapped as untrusted da
 
 A process killed before SQLite commit leaves the uncommitted row absent. That test does not interrupt the commit syscall. Attached-database crash atomicity during commit remains unproven.
 
-Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere.
+### Free Colab pilot
+
+Scripted experiments and the mocked Ollama tests do not need Colab. The notebook `notebooks/memoryfence_colab_pilot.ipynb` is for a free Colab runtime when this computer should not download a model. The steps are in [`guides/google-colab-pilot.md`](guides/google-colab-pilot.md). Open it from the Colab link in the README only after that notebook is on `main`.
+
+Inside Colab, the notebook clones `https://github.com/Yug-More/memoryfence`, installs this project with `uv sync --frozen`, and starts Ollama on `127.0.0.1:11434`. It pulls only `qwen2.5:0.5b`, and only after a disk and memory check. It then runs `memoryfence model doctor`, `model list`, `model smoke`, `experiment preview`, and `experiment run` on `configs/ollama-pilot.json`. The run is the four development cells `clean-note` and `direct-note` under `DF0` and `DF1`, with scripted transformations. Held-out templates are not used. The last cell writes a zip under `/content/memoryfence-exports` and offers it as a download. Google Drive stays unmounted unless you edit `SAVE_TO_DRIVE`.
+
+`main` is not a frozen revision. Set `FROZEN = True` and a full commit SHA before a run you want to repeat. A frozen request does not fall back to `main`. A later run needs a new output directory so its trials are not mixed with the previous one. `experiment audit` checks the saved manifest and does not call the model again.
+
+The notebook refuses to install Ollama or pull a model when it is not running inside Colab. Do not point the adapter at a remote host. A result from `qwen2.5:0.5b` is not a finding about larger models, and four cells are not a confirmatory study.
+
+Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere. An Ollama transformation, when selected, stores `ttN-ollama-v1` and is a different condition from the scripted fixture. The Colab pilot keeps scripted transformations.
 
 ### Mermaid diagrams
 

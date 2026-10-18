@@ -63,6 +63,8 @@ include = ["src/memoryfence", "tests", "README.md", "CITATION.cff"]
 line-length = 100
 target-version = "py312"
 src = ["src", "tests"]
+# The Colab notebook is a user-facing script. tests/test_colab.py checks its structure.
+extend-exclude = ["notebooks"]
 
 [tool.ruff.lint]
 select = [
@@ -131,6 +133,7 @@ forbidden_modules = [
   "memoryfence.benchmark",
   "memoryfence.defenses",
   "memoryfence.evaluation",
+  "memoryfence.colab",
 ]
 
 [[tool.importlinter.contracts]]
@@ -205,4 +208,4 @@ source_modules = [
   "memoryfence.defenses",
   "memoryfence.benchmark",
 ]
-forbidden_modules = ["memoryfence.evaluation"]
+forbidden_modules = ["memoryfence.evaluation", "memoryfence.colab"]
