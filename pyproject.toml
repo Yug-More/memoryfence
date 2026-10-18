@@ -33,6 +33,9 @@ dependencies = [
   "sqlalchemy>=2.1,<3",
 ]
 
+[project.scripts]
+memoryfence = "memoryfence.cli:main"
+
 [project.urls]
 Repository = "https://github.com/Yug-More/memoryfence"
 Issues = "https://github.com/Yug-More/memoryfence/issues"
@@ -118,6 +121,13 @@ forbidden_modules = [
   "memoryfence.provenance",
   "memoryfence.workspace",
   "memoryfence.groundtruth",
+  "memoryfence.llm",
+  "memoryfence.memory",
+  "memoryfence.tools",
+  "memoryfence.authorization",
+  "memoryfence.agents",
+  "memoryfence.harness",
+  "memoryfence.cli",
 ]
 
 [[tool.importlinter.contracts]]
@@ -129,5 +139,17 @@ source_modules = [
   "memoryfence.observability",
   "memoryfence.provenance",
   "memoryfence.workspace",
+  "memoryfence.llm",
+  "memoryfence.memory",
+  "memoryfence.tools",
+  "memoryfence.authorization",
+  "memoryfence.agents",
 ]
 forbidden_modules = ["memoryfence.groundtruth"]
+
+[[tool.importlinter.contracts]]
+name = "Agents do not call sandbox tools directly"
+type = "forbidden"
+source_modules = ["memoryfence.agents"]
+forbidden_modules = ["memoryfence.tools"]
+allow_indirect_imports = true

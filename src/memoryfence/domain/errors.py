@@ -44,6 +44,10 @@ class ReasonCode(StrEnum):
     LINEAGE_MALFORMED = "error.lineage_malformed"
     PERSISTENCE_FAILURE = "error.persistence_failure"
     SCHEMA_VERSION_MISMATCH = "error.schema_version_mismatch"
+    SCRIPT_MISS = "error.script_miss"
+    SCRIPT_TIMEOUT = "error.script_timeout"
+    STEP_LIMIT = "error.step_limit"
+    UNKNOWN_TOOL = "denied.unknown_tool"
 
     @property
     def is_denial(self) -> bool:
@@ -90,4 +94,12 @@ class ProvenanceIntegrityError(MemoryFenceError):
 
 class PersistenceError(MemoryFenceError):
     def __init__(self, message: str, code: ReasonCode = ReasonCode.PERSISTENCE_FAILURE) -> None:
+        super().__init__(code, message)
+
+
+class ModelScriptError(MemoryFenceError):
+    """The scripted backend has no fixture for this call, or the fixture simulates a failure."""
+
+    def __init__(self, message: str, *, timeout: bool = False) -> None:
+        code = ReasonCode.SCRIPT_TIMEOUT if timeout else ReasonCode.SCRIPT_MISS
         super().__init__(code, message)

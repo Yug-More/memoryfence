@@ -1,8 +1,8 @@
 """Tool-proposal and tool-execution authorization.
 
 Decisions use the structured call, the requester, and trusted workspace state. The
-proposal's justification is not an input and is not written to the event log. Phase 2
-does not execute tools.
+proposal's justification is not an input and is not written to the event log or the
+proposal row. Execution of an allowed call is the sandbox, not this service.
 """
 
 from pydantic import ValidationError
@@ -12,8 +12,10 @@ from memoryfence.domain.enums import EventCategory, Operation, Permission, Resou
 from memoryfence.domain.errors import AuthorizationDenied, DomainValidationError, ReasonCode
 from memoryfence.domain.ids import IdPrefix, ProposalId, SourceId, WorkspaceId
 from memoryfence.domain.principals import PrincipalRef
+from memoryfence.domain.serialization import canonical_json
 from memoryfence.domain.tools import ToolArgument, ToolAuthorizationDecision, ToolProposal
 from memoryfence.observability import Auditor
+from memoryfence.storage.schema import ToolProposalRow
 from memoryfence.workspace.authority import Authorizer
 
 
@@ -75,6 +77,22 @@ class ToolService:
                 )
             except ValidationError:
                 raise DomainValidationError("tool proposal is invalid") from None
+            if stage is ToolStage.PROPOSE:
+                scope.uow.session.add(
+                    ToolProposalRow(
+                        id=proposal.id,
+                        workspace_id=workspace_id,
+                        proposer_kind=actor.kind,
+                        proposer_id=actor.id,
+                        tool_name=proposal.tool_name,
+                        arguments_json=canonical_json(
+                            [[argument.name, argument.value] for argument in proposal.arguments]
+                        ),
+                        target_source_id=target_source_id,
+                        proposed_at=proposal.proposed_at,
+                    )
+                )
+                scope.uow.session.flush()
             scope.resource = ResourceRef(kind=ResourceKind.TOOL_PROPOSAL, id=proposal.id)
             scope.details["stage"] = stage.value
             scope.details["tool_name"] = tool_name

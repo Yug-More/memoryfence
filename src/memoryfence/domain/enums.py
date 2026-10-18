@@ -172,11 +172,19 @@ class DeletionEffect(StrEnum):
 
 
 class RederivationStatus(StrEnum):
-    """``pending``: awaiting execution by the Phase 3 transformation pipeline.
+    """``pending``: awaiting execution. ``completed``: a replacement memory was written.
     ``not_regenerated``: no recorded input survives, so the protocol does not regenerate."""
 
     PENDING = "pending"
+    COMPLETED = "completed"
     NOT_REGENERATED = "not_regenerated"
+
+
+class ModelPurpose(StrEnum):
+    """Why a model backend was called. The scripted backend matches this exactly."""
+
+    TRANSFORM = "transform"
+    AGENT = "agent"
 
 
 class SourceOrigin(StrEnum):
@@ -209,6 +217,10 @@ class EventCategory(StrEnum):
     MEMORY = "memory"
     DELETION = "deletion"
     TOOL = "tool"
+    RETRIEVAL = "retrieval"
+    MODEL = "model"
+    AGENT = "agent"
+    SANDBOX = "sandbox"
 
 
 class Operation(StrEnum):
@@ -229,6 +241,12 @@ class Operation(StrEnum):
     MEMORY_DERIVE = "memory.derive"
     MEMORY_READ = "memory.read"
     TOOL_AUTHORIZE = "tool.authorize"
+    SOURCE_INGEST = "source.ingest"
+    MEMORY_RETRIEVE = "memory.retrieve"
+    MEMORY_REDERIVE = "memory.rederive"
+    MODEL_COMPLETE = "model.complete"
+    SANDBOX_EXECUTE = "sandbox.execute"
+    AGENT_STEP = "agent.step"
 
 
 class EventOutcome(StrEnum):

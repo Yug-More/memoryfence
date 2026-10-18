@@ -2,8 +2,8 @@
 
 Reach is the source's primary memories plus the transitive closure of *recorded*
 derivation edges. True provenance is copied into the deletion ledger and is not used to
-decide which memories change. ``DS4`` records re-derivation work for Phase 3 and does
-not generate replacement text.
+decide which memories change. ``DS4`` records re-derivation work here and does not
+generate replacement text; ``memoryfence.memory`` executes those tasks later.
 """
 
 from datetime import datetime
@@ -237,6 +237,7 @@ def _apply(
                 surviving_input_ids=canonical_json(list(task.surviving_input_ids)),
                 depends_on_task_ids=canonical_json(list(task.depends_on_task_ids)),
                 status=task.status,
+                replacement_memory_id=None,
                 created_at=task.created_at,
             )
         )

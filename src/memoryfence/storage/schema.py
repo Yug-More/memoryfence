@@ -34,6 +34,7 @@ from memoryfence.domain.enums import (
     MemoryState,
     MemoryType,
     MemoryVisibility,
+    ModelPurpose,
     Operation,
     Permission,
     PrincipalKind,
@@ -47,7 +48,7 @@ from memoryfence.domain.enums import (
 from memoryfence.domain.errors import ReasonCode
 from memoryfence.storage.types import UtcDateTime, enum_column, fk
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 NAMING_CONVENTION = {
     "ix": "ix_%(table_name)s_%(column_0_N_name)s",
@@ -340,6 +341,81 @@ class RederivationTaskRow(SutBase):
     surviving_input_ids: Mapped[str] = mapped_column(Text)
     depends_on_task_ids: Mapped[str] = mapped_column(Text)
     status: Mapped[RederivationStatus] = mapped_column(enum_column(RederivationStatus))
+    replacement_memory_id: Mapped[str | None] = mapped_column(Id)
+    created_at: Mapped[datetime]
+
+
+class ToolProposalRow(SutBase):
+    """A proposal that passed authorization. The model justification is not stored."""
+
+    __tablename__ = "tool_proposals"
+
+    id: Mapped[str] = mapped_column(Id, primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(Id, fk("workspaces.id"))
+    proposer_kind: Mapped[PrincipalKind] = mapped_column(enum_column(PrincipalKind))
+    proposer_id: Mapped[str] = mapped_column(Id)
+    tool_name: Mapped[str] = mapped_column(String(64))
+    arguments_json: Mapped[str] = mapped_column(Text)
+    target_source_id: Mapped[str | None] = mapped_column(Id)
+    proposed_at: Mapped[datetime]
+
+
+class ModelCallRow(SutBase):
+    """Input and output of one backend call. No evaluator labels are stored."""
+
+    __tablename__ = "model_calls"
+
+    id: Mapped[str] = mapped_column(Id, primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(Id, fk("workspaces.id"))
+    purpose: Mapped[ModelPurpose] = mapped_column(enum_column(ModelPurpose))
+    seed: Mapped[int]
+    script_id: Mapped[str] = mapped_column(String(64))
+    transformation_type: Mapped[TransformationType | None] = mapped_column(
+        enum_column(TransformationType)
+    )
+    task: Mapped[str | None] = mapped_column(Text)
+    parent_hashes_json: Mapped[str] = mapped_column(Text)
+    context_ids_json: Mapped[str] = mapped_column(Text)
+    output_text: Mapped[str] = mapped_column(Text)
+    tool_name: Mapped[str | None] = mapped_column(String(64))
+    arguments_json: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime]
+
+
+class SandboxTicketRow(SutBase):
+    __tablename__ = "sandbox_tickets"
+    __table_args__ = (CheckConstraint("status IN ('open', 'closed')", name="status"),)
+
+    id: Mapped[str] = mapped_column(Id, primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(Id, fk("workspaces.id"))
+    title: Mapped[str] = mapped_column(String(500))
+    body: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(16))
+    created_at: Mapped[datetime]
+    updated_at: Mapped[datetime]
+
+
+class SandboxNoteRow(SutBase):
+    __tablename__ = "sandbox_notes"
+
+    id: Mapped[str] = mapped_column(Id, primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(Id, fk("workspaces.id"))
+    body: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime]
+
+
+class SandboxEffectRow(SutBase):
+    """One allowed sandbox execution. Append-only."""
+
+    __tablename__ = "sandbox_effects"
+
+    id: Mapped[str] = mapped_column(Id, primary_key=True)
+    workspace_id: Mapped[str] = mapped_column(Id, fk("workspaces.id"))
+    proposal_id: Mapped[str] = mapped_column(Id, fk("tool_proposals.id"))
+    tool_name: Mapped[str] = mapped_column(String(64))
+    arguments_json: Mapped[str] = mapped_column(Text)
+    ticket_id: Mapped[str | None] = mapped_column(Id)
+    note_id: Mapped[str | None] = mapped_column(Id)
     created_at: Mapped[datetime]
 
 
@@ -392,7 +468,15 @@ for _row in _immutable_rows:
         "BEFORE UPDATE",
         f"{_row.__tablename__} are immutable",
     )
-_append_only_rows: tuple[type[SutBase], ...] = (RecordedNodeRow, RecordedLinkRow, EventRow)
+_append_only_rows: tuple[type[SutBase], ...] = (
+    RecordedNodeRow,
+    RecordedLinkRow,
+    EventRow,
+    ToolProposalRow,
+    ModelCallRow,
+    SandboxNoteRow,
+    SandboxEffectRow,
+)
 for _row in _append_only_rows:
     for _action in ("UPDATE", "DELETE"):
         _abort_trigger(
