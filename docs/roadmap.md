@@ -66,16 +66,16 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Dependencies:** Phases 4 and 5.
 - **Acceptance criteria:** an oversized matrix is previewed and not silently truncated; invalid configurations fail before execution; a completed result file is not overwritten; `verify` reproduces the canonical outcome; held-out ids are absent from `benchmark list`; defenses still cannot import evaluator-only modules.
 - **Validation:** `tests/test_evaluation.py`. Wilson and McNemar use known counts. Coverage stays at least 90%. Mixed-effects models, cluster bootstrap, Cochran–Armitage, and TOST are not implemented, so `H1`, `H2a`, and `H4` are marked not computable.
-- **Status:** In review.
+- **Status:** Merged.
 
 ## Phase 7: Model integration, pilots, preregistration, and confirmatory study
 
-- **Objective:** Connect real models, size the study, freeze the plan, and run the confirmatory experiments.
-- **Deliverables:** local open-weight adapters (hosted adapters only with budget approval); development-split pilots and power analysis; judge reliability study; literature review refresh; preregistration of hypotheses, analysis code, sample sizes, and the evaluation-split hash; evaluation-split runs.
-- **Dependencies:** Phase 6 and the protocol's entry criteria ([`experimental-protocol.md`](research/experimental-protocol.md#17-entry-criteria-for-empirical-runs)).
-- **Acceptance criteria:** the preregistration is frozen and timestamped before any evaluation-split run; pinned model identifiers and weights; no paid API usage without owner approval.
-- **Validation:** run manifests and event logs for every run; a check that evaluation runs used the preregistered commit and configuration.
-- **Status:** Planned.
+- **Objective:** Call a local model through the existing agent loop without hosted inference, and keep confirmatory evaluation frozen until the plan is ready.
+- **Deliverables:** a loopback-only Ollama adapter; structured decisions; rubric-v1, which can abstain; repeated trials inside the existing 64-run cap; `memoryfence model doctor`, `list`, and `smoke`; `experiment audit`, which checks a manifest without calling the model. `configs/ollama-pilot.json` names a candidate tag and uses scripted transformations. The candidate was not downloaded in this phase.
+- **Dependencies:** Phase 6.
+- **Acceptance criteria:** CI passes with mocked HTTP and does not require Ollama; the scripted fingerprint of the smoke configuration is unchanged; remote endpoints are rejected; a model sentence is not authorization; confirmatory evaluation is not run.
+- **Validation:** `tests/test_ollama.py`. A machine without Ollama and without enough free disk for a model is reported as integration-complete and empirical-pilot-pending.
+- **Status:** In review.
 
 ## Phase 8: Analysis, report, and audit
 

@@ -1,6 +1,6 @@
 # Architecture Overview
 
-**Status:** Phase 6 adds a scripted experiment runner, Wilson intervals, and exact McNemar. Defense conditions `DF0` through `DF5` stay on recorded provenance and the requester's task. Stage labels remain fixture results, not language-model measurements. Mixed-effects models, an audited judge, and confirmatory tests are not implemented. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 7 adds a loopback-only Ollama adapter beside the scripted backend. Defense conditions `DF0` through `DF5` stay on recorded provenance and the requester's task. Scripted stage labels remain fixture results. Rubric-v1 can abstain and is not a reliability study. Mixed-effects models and confirmatory tests are not implemented. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
@@ -15,6 +15,7 @@ Phase 2 adds the security-critical data foundation: domain models, workspace aut
 | Research and architecture documentation | Implemented | `docs/` |
 | Domain models, authorization, workspace services, provenance, ground truth, SQLite persistence, events, and run manifests | Implemented (Phase 2) | `src/memoryfence/` |
 | Scripted model backend, ingestion, transformations, lexical retrieval, DS4 execution, agent loop, sandbox tools, offline demo | Implemented (Phase 3) | `llm`, `memory`, `tools`, `authorization`, `agents`, `harness`, `cli` |
+| Loopback-only Ollama adapter and rubric-v1 | Implemented (Phase 7). No confirmatory runs | `llm`, `benchmark` |
 | Versioned synthetic scenarios, four-stage scoring, deterministic replay, and the benchmark CLI | Implemented (Phase 4) | `benchmark`, `cli` |
 | Defense conditions `DF0`–`DF5` | Implemented (Phase 5) | `defenses` |
 | Scripted experiment matrix, Wilson intervals, and exact McNemar | Implemented (Phase 6) | `evaluation`, `cli` |

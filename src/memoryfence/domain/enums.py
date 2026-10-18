@@ -187,6 +187,17 @@ class ModelPurpose(StrEnum):
     AGENT = "agent"
 
 
+class DecisionKind(StrEnum):
+    """A validated model decision. Prose is not a decision."""
+
+    RESPOND = "respond"
+    PROPOSE = "propose"
+    CLARIFY = "clarify"
+    REFUSE = "refuse"
+    UNABLE = "unable"
+    INVALID = "invalid"
+
+
 class SourceOrigin(StrEnum):
     """Ground-truth label of a source's author role. Evaluator-only."""
 

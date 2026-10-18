@@ -130,3 +130,32 @@ def test_uncommitted_work_is_absent_after_reopen(tmp_path: Path) -> None:
         assert count == 0
     finally:
         reopened.dispose()
+
+
+def test_killed_process_drops_an_uncommitted_row(tmp_path: Path) -> None:
+    """A process killed before commit does not leave that row.
+
+    This uses a disposable database. It does not interrupt SQLite during the
+    commit syscall, so it is not evidence of crash atomicity for that window.
+    """
+    import sqlite3
+    import subprocess
+    import sys
+
+    database = tmp_path / "killed.sqlite"
+    script = (
+        "import os, signal, sqlite3, sys\n"
+        "conn = sqlite3.connect(sys.argv[1])\n"
+        "conn.execute('create table sample (id integer)')\n"
+        "conn.commit()\n"
+        "conn.execute('begin')\n"
+        "conn.execute('insert into sample values (1)')\n"
+        "os.kill(os.getpid(), signal.SIGKILL)\n"
+    )
+    subprocess.run([sys.executable, "-c", script, str(database)], check=False)  # noqa: S603
+    opened = sqlite3.connect(database)
+    try:
+        count = opened.execute("select count(*) from sample").fetchone()
+    finally:
+        opened.close()
+    assert count == (0,)

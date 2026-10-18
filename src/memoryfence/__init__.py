@@ -2,8 +2,9 @@
 
 The package contains the domain model, authorization, persistence, provenance, a
 deterministic scripted agent simulation, an offline demo, a scripted scenario
-benchmark, the protocol defense conditions, and a scripted experiment runner.
-Empirical language-model evaluation is not implemented here.
+benchmark, the protocol defense conditions, a scripted experiment runner, and a
+loopback-only Ollama adapter. Confirmatory language-model evaluation is not
+implemented here.
 """
 
 from importlib.metadata import PackageNotFoundError, version
