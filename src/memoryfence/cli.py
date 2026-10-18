@@ -20,12 +20,27 @@ from memoryfence.domain.enums import (
 )
 from memoryfence.domain.errors import DomainValidationError
 from memoryfence.domain.serialization import canonical_json
+from memoryfence.evaluation.config import load_config, smoke_config
+from memoryfence.evaluation.report import write_summary
+from memoryfence.evaluation.runner import execute, export_json, load_records, preview, verify
 from memoryfence.harness.episode import run_demo
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="memoryfence")
     commands = parser.add_subparsers(dest="command", required=True)
+    experiment = commands.add_parser("experiment", help="scripted experiment matrix")
+    experiment_commands = experiment.add_subparsers(dest="experiment_command", required=True)
+    for name in ("validate", "preview"):
+        command = experiment_commands.add_parser(name)
+        command.add_argument("--config", type=Path, required=True)
+    for name in ("run",):
+        command = experiment_commands.add_parser(name)
+        command.add_argument("--config", type=Path, required=True)
+        command.add_argument("--directory", type=Path, required=True)
+    experiment_commands.add_parser("smoke").add_argument("--directory", type=Path, required=True)
+    for name in ("status", "resume", "export", "summarize", "verify"):
+        experiment_commands.add_parser(name).add_argument("--directory", type=Path, required=True)
     demo = commands.add_parser("demo", help="run the offline scripted collaborative episode")
     demo.add_argument("--directory", type=Path, required=True)
     benchmark = commands.add_parser("benchmark", help="scripted scenario benchmark")
@@ -63,6 +78,8 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _dispatch(args: argparse.Namespace) -> int:
+    if args.command == "experiment":
+        return _experiment(args)
     if args.command == "demo":
         trace = run_demo(args.directory)
         payload = json.loads(trace.model_dump_json())
@@ -108,6 +125,51 @@ def _dispatch(args: argparse.Namespace) -> int:
             canonical_json(json.loads(result.model_dump_json())) + "\n" + f"events {len(events)}\n"
         )
         return 0
+    return 2
+
+
+def _experiment(args: argparse.Namespace) -> int:
+    if args.experiment_command == "validate":
+        matrix = preview(load_config(args.config))
+        sys.stdout.write(f"candidates {matrix.candidates} valid {matrix.valid_count}\n")
+        for item in matrix.exclusions:
+            sys.stdout.write(f"excluded {item.scenario_id} {item.reason}\n")
+        return 0
+    if args.experiment_command == "preview":
+        matrix = preview(load_config(args.config))
+        sys.stdout.write(canonical_json(json.loads(matrix.model_dump_json())) + "\n")
+        return 0
+    if args.experiment_command == "smoke":
+        execute(smoke_config(), args.directory, resume=False)
+        sys.stdout.write("smoke completed\n")
+        return 0
+    if args.experiment_command == "run":
+        execute(load_config(args.config), args.directory, resume=False)
+        sys.stdout.write("experiment completed\n")
+        return 0
+    if args.experiment_command == "resume":
+        execute(load_config(args.directory / "config.json"), args.directory, resume=True)
+        sys.stdout.write("experiment resumed\n")
+        return 0
+    if args.experiment_command == "status":
+        records = load_records(args.directory)
+        completed = sum(record.status == "completed" for record in records)
+        sys.stdout.write(f"recorded {len(records)} completed {completed}\n")
+        return 0
+    if args.experiment_command == "export":
+        sys.stdout.write(export_json(args.directory) + "\n")
+        return 0
+    if args.experiment_command == "summarize":
+        path = write_summary(args.directory)
+        sys.stdout.write(f"{path}\n")
+        return 0
+    if args.experiment_command == "verify":
+        scratch = args.directory / "_verify"
+        if scratch.exists():
+            raise DomainValidationError("remove _verify before verifying")
+        same = verify(args.directory, scratch)
+        sys.stdout.write(json.dumps({"equivalent": same}) + "\n")
+        return 0 if same else 1
     return 2
 
 

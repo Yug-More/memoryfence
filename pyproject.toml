@@ -130,6 +130,7 @@ forbidden_modules = [
   "memoryfence.cli",
   "memoryfence.benchmark",
   "memoryfence.defenses",
+  "memoryfence.evaluation",
 ]
 
 [[tool.importlinter.contracts]]
@@ -184,4 +185,24 @@ forbidden_modules = [
   "memoryfence.benchmark",
   "memoryfence.harness",
   "memoryfence.llm",
+  "memoryfence.evaluation",
 ]
+
+[[tool.importlinter.contracts]]
+name = "System under test cannot import the evaluation harness"
+type = "forbidden"
+source_modules = [
+  "memoryfence.access",
+  "memoryfence.storage",
+  "memoryfence.observability",
+  "memoryfence.provenance",
+  "memoryfence.workspace",
+  "memoryfence.llm",
+  "memoryfence.memory",
+  "memoryfence.tools",
+  "memoryfence.authorization",
+  "memoryfence.agents",
+  "memoryfence.defenses",
+  "memoryfence.benchmark",
+]
+forbidden_modules = ["memoryfence.evaluation"]
