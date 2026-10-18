@@ -1,0 +1,97 @@
+# Development Guide
+
+This guide covers local setup, the quality checks that CI enforces, and repository conventions.
+
+## Prerequisites
+
+- **Git**
+- **[uv](https://docs.astral.sh/uv/getting-started/installation/)** 0.9 or newer. uv manages the Python interpreter, the virtual environment, and the lockfile.
+- **GNU Make**, optional but convenient. Every Make target is a thin wrapper around the command shown below.
+- **Node.js** 20 or newer, only for `make diagrams`.
+
+You do not need to install Python separately. `.python-version` pins the local interpreter to 3.12, the minimum supported version, and uv downloads it if needed. CI also tests Python 3.13.
+
+## Setup
+
+```bash
+git clone https://github.com/Yug-More/memoryfence.git
+cd memoryfence
+make setup
+```
+
+`make setup` runs:
+
+```bash
+uv sync --frozen                 # create .venv from uv.lock without re-resolving
+uv run --frozen pre-commit install
+```
+
+`--frozen` guarantees that the environment matches the committed `uv.lock` exactly.
+
+## Make targets
+
+| Target | Underlying command | Purpose |
+|---|---|---|
+| `make setup` | `uv sync --frozen`, then `pre-commit install` | Create the environment and install git hooks |
+| `make lint` | `uv run --frozen ruff check .` | Lint rules |
+| `make format` | `ruff format .`, then `ruff check --fix .` | Apply formatting and safe fixes |
+| `make format-check` | `uv run --frozen ruff format --check .` | Verify formatting without changing files |
+| `make typecheck` | `uv run --frozen mypy` | Strict type checking of `src/` and `tests/` |
+| `make test` | `uv run --frozen pytest` | Run the test suite |
+| `make coverage` | `uv run --frozen pytest --cov --cov-report=term-missing` | Tests with branch coverage; fails below 90% |
+| `make build` | `uv build`, then `twine check --strict dist/*` | Build the sdist and wheel and validate their metadata |
+| `make citation` | `check-jsonschema --builtin-schema vendor.citation-file-format CITATION.cff` | Validate citation metadata |
+| `make check` | `lint`, `format-check`, `typecheck`, `coverage`, `build`, `citation` | **Everything the CI quality job runs** |
+| `make pre-commit` | `uv run --frozen pre-commit run --all-files` | Repository hygiene hooks |
+| `make diagrams` | `npx @mermaid-js/mermaid-cli@12.0.0` on every Markdown file containing Mermaid | Render-check all diagrams into `.diagrams/` |
+| `make clean` | — | Remove caches and build artifacts |
+
+Run `make help` for the list with descriptions.
+
+## What the checks cover in Phase 1
+
+| Check | What it verifies |
+|---|---|
+| `tests/test_package.py` | The package imports; `memoryfence.__version__` matches the installed metadata and `pyproject.toml`; `__all__` is explicit; the `py.typed` marker ships; there are no runtime dependencies |
+| `tests/test_docs.py` | Required documents exist and are non-empty; every relative Markdown link and heading anchor resolves; condition codes used in the research documents are defined in the protocol; the architecture overview contains the required diagrams |
+| Ruff | Style, import order, common bugs, naming, annotations, and security lint rules (flake8-bandit) |
+| mypy `--strict` | Complete type annotations and no implicit `Any` |
+| `make build` | The package builds as sdist and wheel, and its metadata passes `twine check --strict` |
+| `make citation` | `CITATION.cff` conforms to the Citation File Format 1.2.0 schema |
+| pre-commit | Whitespace, end-of-file newlines, YAML and TOML syntax, merge-conflict markers, large files, private keys, Ruff, mypy, citation schema, workflow schema |
+| `make diagrams` | Every Mermaid block in the README and `docs/` renders without syntax errors |
+
+The Phase 1 tests check repository integrity only. They do not test research functionality, because none is implemented yet.
+
+### Mermaid diagrams
+
+GitHub renders Mermaid natively, and CI render-checks every diagram with `make diagrams`. Run it locally before changing a diagram. The first run downloads mermaid-cli and a headless browser, so it needs network access. The rendered output goes to the git-ignored `.diagrams/` directory.
+
+## Dependency management
+
+- Add a development dependency with `uv add --dev <package>`. Add a runtime dependency with `uv add <package>` **only** together with the code that uses it, and justify it in the pull request.
+- Commit `pyproject.toml` and `uv.lock` together.
+- To upgrade, run `uv lock --upgrade-package <package>` and review the diff.
+- To update pre-commit hook revisions, run `uv run pre-commit autoupdate`. Keep the Ruff hook version consistent with the Ruff version in `uv.lock`.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `main`:
+
+- **quality** (Python 3.12 and 3.13): `uv sync --frozen`, Ruff lint, Ruff format check, mypy, pytest with coverage, package build and metadata check, citation validation;
+- **hygiene**: all pre-commit hooks against all files;
+- **diagrams**: render-check of every Mermaid diagram.
+
+Third-party actions are pinned to full commit SHAs, with the version noted in a comment. The workflow token has read-only `contents` permission, checkout does not persist credentials, and every job has a timeout.
+
+## Environment variables
+
+Phase 1 reads no environment variables. [`.env.example`](../.env.example) documents the variables planned for later phases. Copy it to `.env` (which is git-ignored) for local use, and never commit real values.
+
+## Conventions
+
+- **Layout:** `src/memoryfence/` for the package, `tests/` mirroring package modules, and `docs/` for research and architecture.
+- **Modules** are created only when they contain working, tested code. Planned modules are documented in [`architecture/overview.md`](architecture/overview.md#6-planned-modules), not scaffolded as empty files.
+- **Import contracts** in the architecture overview are binding from Phase 2 and will be checked in CI.
+- **Commits** follow Conventional Commits (see [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
+- **Architecture decisions** are recorded as ADRs in [`architecture/decisions/`](architecture/decisions/).
