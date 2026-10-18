@@ -26,7 +26,8 @@ htmlcov/
 .env.*
 !.env.example
 
-# Experiment artifacts (generated locally; never commit raw run logs or databases)
+# Local experiments and scratch checks (never commit raw databases or scratch scripts)
+.smoke/
 runs/
 *.sqlite
 *.sqlite3
