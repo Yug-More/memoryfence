@@ -41,7 +41,7 @@ uv run --frozen pre-commit install
 | `make coverage` | `uv run --frozen pytest --cov --cov-report=term-missing` | Tests with branch coverage; fails below 90% |
 | `make build` | `uv build`, then `twine check --strict dist/*` | Build the sdist and wheel and validate their metadata |
 | `make citation` | `check-jsonschema --builtin-schema vendor.citation-file-format CITATION.cff` | Validate citation metadata |
-| `make contracts` | `uv run --frozen lint-imports` | Forbid `domain` from importing other internal modules, and forbid the system under test from importing `groundtruth` |
+| `make contracts` | `uv run --frozen lint-imports` | Forbid `domain` from importing other internal modules, and forbid the system under test from importing `groundtruth` or `benchmark` |
 | `make check` | `lint`, `format-check`, `typecheck`, `coverage`, `build`, `citation`, `contracts` | **Everything the CI quality job runs** |
 | `make pre-commit` | `uv run --frozen pre-commit run --all-files` | Repository hygiene hooks |
 | `make diagrams` | `npx @mermaid-js/mermaid-cli@12.0.0` on every Markdown file containing Mermaid | Render-check all diagrams into `.diagrams/` |
@@ -64,7 +64,7 @@ Run `make help` for the list with descriptions.
 | pre-commit | Whitespace, end-of-file newlines, YAML and TOML syntax, merge-conflict markers, large files, private keys, Ruff, mypy, citation schema, workflow schema |
 | `make diagrams` | Every Mermaid block in the README and `docs/` renders without syntax errors |
 
-Phase 2 tests exercise the authorization boundary, provenance split, and database transactions directly. Phase 3 adds scripted ingestion, transformations, retrieval, DS4 execution, sandbox tools, and `tests/test_demo.py`. Those tests do not call an external model.
+Phase 2 tests exercise the authorization boundary, provenance split, and database transactions directly. Phase 3 adds scripted ingestion, transformations, retrieval, DS4 execution, sandbox tools, and `tests/test_demo.py`. Phase 4 adds `tests/test_benchmark.py`: the scenario catalog, separate stage labels, deletion and fidelity sweeps, replay, and the benchmark CLI. Those tests do not call an external model.
 
 ## Offline demo
 
@@ -75,6 +75,21 @@ uv run memoryfence demo --directory /tmp/memoryfence-demo
 ```
 
 The command creates `system.sqlite` and `groundtruth.sqlite` in that directory and prints one canonical JSON trace. Two runs with the same code produce the same trace. The summary text is a named fixture (`demo-tt1`), not a generated summary. One proposed tool is executed. One proposed tool is denied by the sandbox allowlist after authorization records the proposal.
+
+## Scripted benchmark
+
+```bash
+uv run memoryfence benchmark list
+uv run memoryfence benchmark validate
+uv run memoryfence benchmark run --scenario direct-note --directory /tmp/memoryfence-direct
+uv run memoryfence benchmark replay --directory /tmp/memoryfence-direct --into /tmp/memoryfence-direct-replay
+uv run memoryfence benchmark inspect --directory /tmp/memoryfence-direct
+uv run memoryfence benchmark export --directory /tmp/memoryfence-direct
+```
+
+`run` refuses an existing directory. Optional `--policy`, `--fidelity`, and `--marked` override the scenario's deletion and provenance settings. `replay` reruns the saved scenario into a fresh directory and prints whether the canonical outcome matches. Comparison ignores the trace path, the code version, and retrieval latency.
+
+The catalog has eighteen versioned fixtures. Families A–H cover a direct note, summary, merge, multi-round derivation, post-deletion retrieval, cross-user visibility, an unauthorized proposal, and an executed sandbox tool. Protocol families are `SF1`–`SF5`. Controls are `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, and `C-UCC`. Scoring records four separate booleans: S1 Retrieved, S2 Followed, S3 Proposed, and S4 Executed. A failed scripted call stores `stages: null` and a failure reason. Public scenario objects and exported results omit source origins and the followed-instruction marker. Those stay in the evaluator. A stage label from this runner is a fixture result, not an attack rate.
 
 Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere.
 
