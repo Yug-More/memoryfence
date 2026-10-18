@@ -4,7 +4,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
-from tests.conftest import Lab
 
 from memoryfence.domain.enums import LineageFidelity, MissingnessMode, TransformationType
 from memoryfence.domain.errors import ProvenanceIntegrityError, ReasonCode
@@ -21,6 +20,7 @@ from memoryfence.workspace.directory import DirectoryService
 from memoryfence.workspace.memories import MemoryService
 from memoryfence.workspace.sources import SourceService
 from memoryfence.workspace.tools import ToolService
+from tests.conftest import Lab
 
 LEVELS = (
     LineageFidelity.LF0_0,
