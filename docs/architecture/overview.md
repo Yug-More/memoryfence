@@ -1,10 +1,10 @@
 # Architecture Overview
 
-**Status:** Phase 2 implements the typed core. Later phases (model calls, retrieval, the agent loop, attacks, defenses, and the experiment runner) remain planned. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
+**Status:** Phase 3 adds a deterministic scripted simulation on the Phase 2 core: ingestion, transformations, retrieval, DS4 execution, an agent loop, and sandbox tools. Attacks, defenses, and the experiment runner remain planned. Scripted text is a fixture, not a language-model result. The rationale for the major choices is recorded in [ADR-0001](decisions/ADR-0001-architecture.md). The research context is in [`problem-statement.md`](../research/problem-statement.md), [`threat-model.md`](../research/threat-model.md), and [`experimental-protocol.md`](../research/experimental-protocol.md).
 
 ## 1. Implemented and planned components
 
-Phase 2 adds the security-critical data foundation: domain models, workspace authorization, two SQLite databases, true and recorded provenance, deletion-policy state transitions, and structured events. It does not call a language model, generate memories, run an agent, or execute a benchmark.
+Phase 2 adds the security-critical data foundation: domain models, workspace authorization, two SQLite databases, true and recorded provenance, deletion-policy state transitions, and structured events. Phase 3 runs a scripted episode on that foundation. It does not call an external model or execute a benchmark.
 
 | Component | State | Where |
 |---|---|---|
@@ -14,7 +14,8 @@ Phase 2 adds the security-critical data foundation: domain models, workspace aut
 | Continuous integration (Python 3.12 and 3.13, hygiene hooks, diagram rendering, import contracts) | Implemented | `.github/workflows/ci.yml` |
 | Research and architecture documentation | Implemented | `docs/` |
 | Domain models, authorization, workspace services, provenance, ground truth, SQLite persistence, events, and run manifests | Implemented (Phase 2) | `src/memoryfence/` |
-| Language model, retrieval, agent loop, tool execution, attacks, defenses, experiment runner | Planned (Phases 3–6) | — |
+| Scripted model backend, ingestion, transformations, lexical retrieval, DS4 execution, agent loop, sandbox tools, offline demo | Implemented (Phase 3) | `llm`, `memory`, `tools`, `authorization`, `agents`, `harness`, `cli` |
+| Attack scenarios, defenses, experiment runner, statistics | Planned (Phases 4–6) | — |
 
 ## 2. Goals and constraints
 
@@ -46,22 +47,22 @@ flowchart LR
         OUT["Outcome classifier S0–S4,<br/>metrics, statistics"]:::harness
     end
 
-    subgraph SUT["System under test (planned)"]
+    subgraph SUT["System under test"]
         direction LR
         WS[("Workspace: principals,<br/>ACLs, sources, revisions")]:::implemented
-        TRN["Memory<br/>transformations"]:::planned
+        TRN["Memory<br/>transformations"]:::implemented
         MEM[("Memory store and<br/>recorded provenance")]:::implemented
         DEL["Deletion policies<br/>DS0–DS4"]:::implemented
-        RET["Retrieval"]:::planned
-        AGT["Victim agent loop"]:::planned
-        AUTH["Authorization<br/>gateway"]:::planned
-        TOOLS["Sandbox tools<br/>and state"]:::planned
+        RET["Retrieval"]:::implemented
+        AGT["Victim agent loop"]:::implemented
+        AUTH["Authorization<br/>gateway"]:::implemented
+        TOOLS["Sandbox tools<br/>and state"]:::implemented
         WS --> TRN --> MEM --> RET --> AGT --> AUTH --> TOOLS
         DEL -.-> WS
         DEL -.-> MEM
     end
 
-    LLM["LanguageModel protocol:<br/>scripted, local, hosted"]:::planned
+    LLM["LanguageModel protocol:<br/>scripted backend"]:::implemented
     DEF["Defense policies<br/>DF1–DF5"]:::planned
     OBS[("Event log and SQLite<br/>per episode")]:::implemented
 
@@ -119,7 +120,7 @@ Information flows from the system under test to the evaluator only through write
 
 ### 4.1 Provenance isolation
 
-True provenance and the deletion ledger live in `groundtruth.sqlite`, attached as schema `groundtruth` only on the writer connection. Defense-facing reads use a separate read-only engine that never attaches that file, so a privileged join is impossible. Recorded provenance is what the system under test stores. Degradation changes only recorded edges. Import-linter forbids `access`, `storage`, `observability`, `provenance`, and `workspace` from importing `groundtruth`.
+True provenance and the deletion ledger live in `groundtruth.sqlite`, attached as schema `groundtruth` only on the writer connection. One unit of work is one `BEGIN IMMEDIATE` transaction on that connection. SQLite commits attached databases atomically, including across a crash, only in rollback-journal mode, using a master journal. The writer forces `journal_mode=DELETE` and `synchronous=FULL` and refuses any other mode. WAL mode does not provide that multi-file guarantee. Defense-facing reads use a separate read-only engine that never attaches the ground-truth file, so a privileged join is impossible. Recorded provenance is what the system under test stores. Degradation changes only recorded edges. Import-linter forbids the system-under-test packages, including `llm`, `memory`, `tools`, `authorization`, and `agents`, from importing `groundtruth`.
 
 ```mermaid
 flowchart LR
@@ -164,12 +165,13 @@ All modules live in the single `memoryfence` package under `src/`.
 | `memoryfence.provenance` | Recorded provenance graph and seeded degradation | `domain`, `storage` | Implemented |
 | `memoryfence.workspace` | Membership, sources, revisions, memories, deletion policies, tool authorization | `domain`, `access`, `storage`, `observability`, `provenance` | Implemented |
 | `memoryfence.groundtruth` | True provenance, labels, deletion ledger, and run rows in a separate database. Harness only | `domain`, `storage`, `observability` | Implemented |
-| `memoryfence.llm` | `LanguageModel` protocol and deterministic scripted backend; local and hosted adapters later | `domain` | 3 |
-| `memoryfence.memory` | Memory store, extraction, transformations `TT0`–`TT4`, retrieval | `domain`, `workspace`, `provenance`, `storage`, `llm` | 3 |
-| `memoryfence.deletion` | Not a separate package. Policy state transitions live in `workspace`. Phase 3 executes DS4 re-derivation | — | 3 |
-| `memoryfence.tools` | Simulated tools, sandbox state, state-diff recording | `domain`, `access` | 3 |
-| `memoryfence.authorization` | Authorization gateway: ACL check, defense hooks for proposed actions, dispatch to tools | `domain`, `access`, `tools` | 3 |
-| `memoryfence.agents` | Victim agent loop: retrieve, build context, call model, submit proposed calls to the gateway | `domain`, `memory`, `llm`, `authorization` | 3 |
+| `memoryfence.llm` | `LanguageModel` protocol and deterministic scripted backend. No keyword fallback and no ground truth | `domain` | Implemented |
+| `memoryfence.memory` | Ingestion, scripted `TT1`–`TT4`, lexical retrieval, DS4 task execution | `domain`, `workspace`, `provenance`, `storage` | Implemented |
+| `memoryfence.tools` | Synthetic ticket, task, and note tools. Unknown names are denied | `domain`, `workspace` | Implemented |
+| `memoryfence.authorization` | Propose, then independently authorize execution, then call the sandbox. No justification argument | `domain`, `tools`, `workspace` | Implemented |
+| `memoryfence.agents` | One bounded step: retrieve, call the backend, submit a tool call to the gateway | `domain`, `memory`, `authorization` | Implemented |
+| `memoryfence.harness` | Opens both databases and runs the offline demo. Harness code, not a defense | `groundtruth` and the packages above | Implemented |
+| `memoryfence.cli` | `memoryfence demo` | `harness` | Implemented |
 | `memoryfence.attacks` | Scenario templates, payload variants, canaries, objective predicates | `domain`, `groundtruth` | 4 |
 | `memoryfence.defenses` | Implementations of the defense hook protocol, `DF1`–`DF5` | `domain`, `access`, `provenance` | 5 |
 | `memoryfence.evaluation` | Configuration schemas, episode runner, outcome classifier, metrics, statistics, reports | all of the above | 6 |
@@ -215,13 +217,13 @@ Arrows point from a module to a module it may import. Transitive edges to `domai
 Enforced now by `make contracts` (`lint-imports`) and in CI:
 
 1. **`domain` imports no other internal module.**
-2. **`access`, `storage`, `observability`, `provenance`, and `workspace` must not import `groundtruth`.** The harness wires the write-only `GroundTruthRecorder`. A defense-facing session cannot see the ground-truth schema.
+2. **`access`, `storage`, `observability`, `provenance`, `workspace`, `llm`, `memory`, `tools`, `authorization`, and `agents` must not import `groundtruth`.** The harness wires the write-only `GroundTruthRecorder`. A defense-facing session cannot see the ground-truth schema.
+3. **`agents` must not import `tools` directly.** Tool calls go through `authorization`. Indirect use via the gateway is allowed.
 
 Still planned, and not yet packages:
 
-3. **`defenses` must not import `attacks`, `evaluation`, or `groundtruth`.**
-4. **`agents` must not import `tools`.** Tool calls go through authorization.
-5. **Only the harness (`groundtruth` today; `evaluation` and `attacks` later) reads true provenance.**
+4. **`defenses` must not import `attacks`, `evaluation`, or `groundtruth`.**
+5. **Only the harness (`groundtruth` and `harness` today; `evaluation` and `attacks` later) reads true provenance.**
 
 ## 7. Defense hook points
 
@@ -305,7 +307,7 @@ flowchart TB
 
 Deletion policies act on recorded provenance only, because that is all a real platform would have. Measurement compares the policy's effect against true provenance, which the policy does not consult when choosing what to change.
 
-Phase 2 implements these transitions in `memoryfence.workspace`. `DS4` records a `RederivationTask` for each deleted derived memory and does not generate text. Executing that task is Phase 3. Until then, DS4 is a deletion-state and work-record contract, not a completed re-derivation.
+Phase 2 implements these transitions in `memoryfence.workspace`. `DS4` records a `RederivationTask` for each deleted derived memory and does not generate text in that step. `memoryfence.memory` later executes pending tasks from the recorded snapshot: surviving parent memories and replacements of dependency tasks, in identifier order. It does not read the deletion ledger or deleted content. A `not_regenerated` task stays not regenerated. A failed fixture leaves the task pending so the same call can be retried. A completed task is not run again.
 
 ## 11. Agent retrieval and authorization
 
@@ -366,7 +368,7 @@ flowchart LR
 
 ## 13. Data and persistence
 
-Each episode has two SQLite files, opened together by `open_episode`. Foreign keys are enabled on every connection and are declared `DEFERRABLE INITIALLY DEFERRED`, so one unit of work can insert related rows in either order and still commit or roll back as a whole. There are no ORM relationships and no cascading deletes. Provenance rows are not removed as a side effect of deleting a memory.
+Each episode has two SQLite files, opened together by `open_episode`. The writer attaches the ground-truth file and uses one transaction for both. Joint commit atomicity is SQLite's master journal and requires rollback-journal mode, which the writer enforces. Foreign keys are enabled on every connection and are declared `DEFERRABLE INITIALLY DEFERRED`, so one unit of work can insert related rows in either order and still commit or roll back as a whole. There are no ORM relationships and no cascading deletes. Provenance rows are not removed as a side effect of deleting a memory.
 
 - **`system.sqlite`** stores users, workspaces, memberships, agents, sources, immutable revisions, memories, transformations, recorded provenance, deletion headers, re-derivation tasks, and the event log.
 - **`groundtruth.sqlite`** stores true provenance nodes and links, source-origin labels, the deletion ledger, and experiment-run manifests. It is attached only on the writer connection.

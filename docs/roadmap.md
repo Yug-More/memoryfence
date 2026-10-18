@@ -5,8 +5,8 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | Phase | Title | Status |
 |---|---|---|
 | 1 | Research foundation and engineering architecture | Merged |
-| 2 | Core domain, access control, provenance, and storage | In review |
-| 3 | Memory simulation, model backend, tools, gateway, and agent loop | Planned |
+| 2 | Core domain, access control, provenance, and storage | Merged |
+| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | In review |
 | 4 | Attack scenarios and replay benchmark | Planned |
 | 5 | Defenses | Planned |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
@@ -28,18 +28,18 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Objective:** Implement the deterministic, model-free core: who can see what, where content came from, and the separation between true and recorded provenance.
 - **Deliverables:** `memoryfence.domain`; `access`; `workspace` (membership, sources, immutable revisions, memories, and deletion-policy state transitions); `provenance` (recorded graph and seeded degradation); `groundtruth` (true provenance, deletion ledger, separate database); `storage` (SQLAlchemy 2 over SQLite); `observability` (structured events and run manifests); `import-linter` contracts in CI.
 - **Dependencies:** Phase 1.
-- **Acceptance criteria:** the import contracts in [`architecture/overview.md`](architecture/overview.md#62-import-contracts) pass in CI; degradation is nested across `LF` levels and leaves true provenance byte-identical; extraction links are never degraded; ACLs are enforced on every read path; deletion policies `DS0`–`DS4` follow the protocol, with DS4 re-derivation execution deferred; no language-model dependency.
+- **Acceptance criteria:** the import contracts in [`architecture/overview.md`](architecture/overview.md#62-import-contracts) pass in CI; degradation is nested across `LF` levels and leaves true provenance byte-identical; extraction links are never degraded; ACLs are enforced on every read path; deletion policies `DS0`–`DS4` follow the protocol. Phase 2 records DS4 tasks and does not generate their text; Phase 3 executes them. No language-model dependency.
 - **Validation:** tests for authorization, degradation, nesting, lineage, deletion policies, and SQLite transactions; a byte-identity test of true provenance across `LF` levels; coverage of at least 90%.
-- **Status:** In review.
+- **Status:** Merged.
 
 ## Phase 3: Memory simulation, model backend, tools, gateway, and agent loop
 
 - **Objective:** Build the system under test end to end on a deterministic backend. Phase 2 already records deletion-policy state transitions and DS4 work items; this phase executes transformations and re-derivation.
-- **Deliverables:** `llm` (`LanguageModel` protocol and scripted backend); memory extraction and transformations `TT0`–`TT4` with versioned prompts and lexical retrieval with ACL filtering; execution of `DS4` re-derivation tasks; sandbox tools with state diffs; an authorization gateway with defense hooks; a victim agent loop; one end-to-end episode on the scripted backend; an assessment of an AgentDojo adapter.
+- **Deliverables:** `llm` (`LanguageModel` protocol and scripted backend); memory ingestion and transformations `TT1`–`TT4`, with `TT0` as retrieval of an untransformed primary; lexical retrieval with ACL filtering; execution of `DS4` re-derivation tasks; sandbox tools; an authorization gateway; a victim agent loop; one offline episode, `memoryfence demo`. Defense hooks and an AgentDojo adapter remain later work. The scripted transformations are deterministic fixtures, not model reasoning.
 - **Dependencies:** Phase 2.
 - **Acceptance criteria:** each deletion policy reaches exactly the memories that recorded provenance connects to the deleted source, including under degraded provenance; the gateway always applies the ACL and ignores natural-language justifications; agents cannot reach tools except through the gateway; transformations record one true edge per input.
 - **Validation:** tests for every deletion policy at every `LF` level; adversarial-justification tests for the gateway; a deterministic end-to-end episode test with a recorded event log; coverage of at least 90%.
-- **Status:** Planned.
+- **Status:** In review.
 
 ## Phase 4: Attack scenarios and replay benchmark
 

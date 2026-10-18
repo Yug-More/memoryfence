@@ -17,11 +17,13 @@ from memoryfence.domain.enums import (
     MemoryVisibility,
     Operation,
     Permission,
+    RederivationStatus,
     ResourceKind,
     TransformationType,
 )
 from memoryfence.domain.errors import (
     DomainValidationError,
+    InvalidTransitionError,
     ProvenanceIntegrityError,
     ReasonCode,
     ResourceNotFound,
@@ -31,23 +33,31 @@ from memoryfence.domain.ids import (
     MemoryId,
     RevisionId,
     SourceId,
+    TaskId,
     TransformationId,
     UserId,
     WorkspaceId,
 )
 from memoryfence.domain.memories import Memory, TransformationRecord
+from memoryfence.domain.model import ModelCallDraft
 from memoryfence.domain.principals import PrincipalRef
 from memoryfence.domain.provenance import (
     ProvenanceDegradationConfiguration,
     TrueProvenanceLink,
     TrueProvenanceNode,
 )
-from memoryfence.domain.serialization import sha256_hex
+from memoryfence.domain.serialization import canonical_json, sha256_hex
 from memoryfence.observability import Auditor
 from memoryfence.provenance.recorded import RecordedProvenanceWriter
 from memoryfence.storage.database import UnitOfWork
 from memoryfence.storage.mappers import to_memory
-from memoryfence.storage.schema import MemoryRow, SourceRevisionRow, TransformationRow
+from memoryfence.storage.schema import (
+    MemoryRow,
+    ModelCallRow,
+    RederivationTaskRow,
+    SourceRevisionRow,
+    TransformationRow,
+)
 from memoryfence.workspace.authority import Authorizer
 
 
@@ -121,11 +131,15 @@ class MemoryService:
         prompt_version: str,
         parent_ids: tuple[MemoryId, ...],
         content: str,
+        visibility: MemoryVisibility = MemoryVisibility.PRIVATE,
+        complete_task_id: TaskId | None = None,
+        model_call: ModelCallDraft | None = None,
     ) -> Memory:
         """Record a derived memory. ``content`` is stored output, not generated here.
 
-        The derived memory is private to the acting user. Phase 2 does not widen a
-        parent's access control list; a shared derived ACL is deferred to retrieval.
+        Visibility defaults to private so existing callers do not widen an ACL.
+        ``WORKSPACE`` is allowed only when the caller has already decided every parent
+        is workspace-visible. A derived memory never inherits a source ACL.
         """
         with self._auditor.operation(
             EventCategory.MEMORY,
@@ -174,13 +188,18 @@ class MemoryService:
                 )
             )
             uow.session.flush()
+            if visibility is MemoryVisibility.INHERIT_SOURCE:
+                raise DomainValidationError("a derived memory cannot inherit source visibility")
+            owner_user_id = (
+                principal.acting_user_id if visibility is MemoryVisibility.PRIVATE else None
+            )
             memory = _insert_memory(
                 uow,
                 memory_id=MemoryId(uow.next_id(IdPrefix.MEMORY)),
                 workspace_id=workspace_id,
                 memory_type=MemoryType.DERIVED,
-                visibility=MemoryVisibility.PRIVATE,
-                owner_user_id=principal.acting_user_id,
+                visibility=visibility,
+                owner_user_id=owner_user_id,
                 content=content,
                 source_revision_id=None,
                 transformation_id=transformation.id,
@@ -210,9 +229,15 @@ class MemoryService:
                 degradation=self._degradation,
                 created_at=memory.created_at,
             )
+            if complete_task_id is not None:
+                _complete_task(uow, complete_task_id, workspace_id, memory.id)
+                scope.details["rederivation_task_id"] = complete_task_id
+            if model_call is not None:
+                scope.details["model_call_id"] = _insert_model_call(uow, workspace_id, model_call)
             scope.resource = _memory_ref(memory.id)
             scope.details["transformation_id"] = transformation.id
             scope.details["transformation_type"] = transformation_type.value
+            scope.details["visibility"] = visibility.value
             scope.details["parent_ids"] = tuple(parent.id for parent in parents)
         return memory
 
@@ -232,6 +257,46 @@ class MemoryService:
             authorizer.require(actor, Permission.MEMORY_READ, workspace_id, facts)
             memory = to_memory(row)
         return memory
+
+
+def _complete_task(
+    uow: UnitOfWork, task_id: TaskId, workspace_id: WorkspaceId, replacement_id: MemoryId
+) -> None:
+    row = uow.session.get(RederivationTaskRow, task_id)
+    if row is None:
+        raise ResourceNotFound("rederivation task", task_id)
+    if row.workspace_id != workspace_id:
+        raise ProvenanceIntegrityError(
+            ReasonCode.LINEAGE_CROSS_WORKSPACE, f"task {task_id} belongs to another workspace"
+        )
+    if row.status is not RederivationStatus.PENDING:
+        raise InvalidTransitionError(f"task {task_id} is {row.status.value}")
+    row.status = RederivationStatus.COMPLETED
+    row.replacement_memory_id = replacement_id
+    uow.session.flush()
+
+
+def _insert_model_call(uow: UnitOfWork, workspace_id: WorkspaceId, draft: ModelCallDraft) -> str:
+    call_id = uow.next_id(IdPrefix.MODEL_CALL)
+    uow.session.add(
+        ModelCallRow(
+            id=call_id,
+            workspace_id=workspace_id,
+            purpose=draft.purpose,
+            seed=draft.seed,
+            script_id=draft.script_id,
+            transformation_type=draft.transformation_type,
+            task=draft.task,
+            parent_hashes_json=canonical_json(list(draft.parent_content_hashes)),
+            context_ids_json=canonical_json(list(draft.context_memory_ids)),
+            output_text=draft.output_text,
+            tool_name=draft.tool_name,
+            arguments_json=canonical_json([list(pair) for pair in draft.arguments]),
+            created_at=uow.now(),
+        )
+    )
+    uow.session.flush()
+    return call_id
 
 
 def _readable_parent(

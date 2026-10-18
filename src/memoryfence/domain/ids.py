@@ -25,6 +25,10 @@ TaskId = NewType("TaskId", str)
 ProposalId = NewType("ProposalId", str)
 EventId = NewType("EventId", str)
 RunId = NewType("RunId", str)
+ModelCallId = NewType("ModelCallId", str)
+SandboxId = NewType("SandboxId", str)
+TicketId = NewType("TicketId", str)
+NoteId = NewType("NoteId", str)
 
 
 class IdPrefix(StrEnum):
@@ -42,6 +46,10 @@ class IdPrefix(StrEnum):
     PROPOSAL = "prop"
     EVENT = "evt"
     RUN = "run"
+    MODEL_CALL = "mdl"
+    SANDBOX = "sbx"
+    TICKET = "tkt"
+    NOTE = "nte"
 
 
 _SUFFIX = r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?"
@@ -81,3 +89,7 @@ TaskIdField = Annotated[TaskId, AfterValidator(_validator(IdPrefix.TASK))]
 ProposalIdField = Annotated[ProposalId, AfterValidator(_validator(IdPrefix.PROPOSAL))]
 EventIdField = Annotated[EventId, AfterValidator(_validator(IdPrefix.EVENT))]
 RunIdField = Annotated[RunId, AfterValidator(_validator(IdPrefix.RUN))]
+ModelCallIdField = Annotated[ModelCallId, AfterValidator(_validator(IdPrefix.MODEL_CALL))]
+SandboxIdField = Annotated[SandboxId, AfterValidator(_validator(IdPrefix.SANDBOX))]
+TicketIdField = Annotated[TicketId, AfterValidator(_validator(IdPrefix.TICKET))]
+NoteIdField = Annotated[NoteId, AfterValidator(_validator(IdPrefix.NOTE))]

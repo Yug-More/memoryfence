@@ -64,7 +64,19 @@ Run `make help` for the list with descriptions.
 | pre-commit | Whitespace, end-of-file newlines, YAML and TOML syntax, merge-conflict markers, large files, private keys, Ruff, mypy, citation schema, workflow schema |
 | `make diagrams` | Every Mermaid block in the README and `docs/` renders without syntax errors |
 
-Phase 2 tests exercise the authorization boundary, provenance split, and database transactions directly. They do not call a language model or start an experiment.
+Phase 2 tests exercise the authorization boundary, provenance split, and database transactions directly. Phase 3 adds scripted ingestion, transformations, retrieval, DS4 execution, sandbox tools, and `tests/test_demo.py`. Those tests do not call an external model.
+
+## Offline demo
+
+After `make setup`:
+
+```bash
+uv run memoryfence demo --directory /tmp/memoryfence-demo
+```
+
+The command creates `system.sqlite` and `groundtruth.sqlite` in that directory and prints one canonical JSON trace. Two runs with the same code produce the same trace. The summary text is a named fixture (`demo-tt1`), not a generated summary. One proposed tool is executed. One proposed tool is denied by the sandbox allowlist after authorization records the proposal.
+
+Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere.
 
 ### Mermaid diagrams
 

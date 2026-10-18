@@ -183,4 +183,7 @@ def to_rederivation_task(row: RederivationTaskRow) -> RederivationTask:
         depends_on_task_ids=tuple(TaskId(item) for item in json.loads(row.depends_on_task_ids)),
         status=row.status,
         created_at=row.created_at,
+        replacement_memory_id=(
+            MemoryId(row.replacement_memory_id) if row.replacement_memory_id is not None else None
+        ),
     )

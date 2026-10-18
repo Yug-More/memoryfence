@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 2 (core domain, authorization, provenance, and persistence).** The research design from Phase 1 is unchanged. The repository now contains typed domain models, workspace authorization, SQLite persistence, separate true and recorded provenance, and the five deletion-policy state transitions. **No language-model calls, agent loop, attack replay, defense evaluation, or experimental results exist.** DS4 records re-derivation work and does not generate text.
+> **Project status: Phase 3 (collaborative agent and memory simulation).** The research design from Phase 1 is unchanged. The repository contains the Phase 2 core plus a deterministic offline episode: ingestion, scripted transformations, lexical retrieval, DS4 task execution, an agent loop, and sandboxed tools. **The scripted backend is a fixture, not a language model. No attack-replay benchmark, defense evaluation, or empirical results exist.**
 
 ## Contents
 
@@ -162,14 +162,14 @@ Green boxes are implemented. Grey dashed boxes are planned. The [architecture ov
 | Domain models | Pydantic v2 | In use |
 | Persistence | SQLite through SQLAlchemy 2 | In use |
 | Import contracts | import-linter | In use |
-| Model access | Deterministic scripted backend first; optional local and hosted adapters | Planned (Phases 3 and 7) |
+| Model access | Deterministic scripted backend; optional local and hosted adapters later | Scripted backend in use (Phase 3). Adapters are Phase 7 |
 
 ## Repository structure
 
 ```text
 memoryfence/
-├── src/memoryfence/          # Domain, authorization, storage, provenance, workspace, events
-├── tests/                    # Security, persistence, provenance, and documentation tests
+├── src/memoryfence/          # Domain, authorization, storage, provenance, simulation, demo CLI
+├── tests/                    # Security, simulation, persistence, provenance, and documentation tests
 ├── docs/
 │   ├── research/             # Literature review, problem, threat model, hypotheses, protocol, limitations
 │   ├── architecture/         # Architecture overview and ADRs
@@ -192,7 +192,10 @@ Prerequisites: [uv](https://docs.astral.sh/uv/getting-started/installation/) and
 git clone https://github.com/Yug-More/memoryfence.git
 cd memoryfence
 make setup          # uv sync --frozen, then install pre-commit hooks
+uv run memoryfence demo --directory /tmp/memoryfence-demo
 ```
+
+`memoryfence demo` needs no credentials and does not call a network. It prints one JSON trace of a scripted episode. The trace is a mechanics check, not a model-susceptibility result.
 
 ## Quality checks
 
@@ -202,7 +205,7 @@ make pre-commit     # repository hygiene hooks
 make diagrams       # render-check every Mermaid diagram (requires Node.js)
 ```
 
-Tests cover authorization, workspace isolation, provenance degradation, the five deletion policies, and SQLite transactions, in addition to package metadata and documentation integrity. They do not call a model or run an experiment. See [`docs/development.md`](docs/development.md).
+Tests cover authorization, workspace isolation, provenance degradation, the five deletion policies, cross-database commit failure, scripted transformations, retrieval, DS4 execution, tool authorization, and the offline demo, in addition to package metadata and documentation integrity. They do not call an external model. See [`docs/development.md`](docs/development.md).
 
 ## Documentation map
 
@@ -223,8 +226,8 @@ Tests cover authorization, workspace isolation, provenance degradation, the five
 | Phase | Scope | Status |
 |---|---|---|
 | 1 | Research foundation and engineering architecture | **Merged** |
-| 2 | Core domain, access control, provenance, and storage | **In review** |
-| 3 | Memory simulation, model backend, tools, gateway, and agent loop | Planned |
+| 2 | Core domain, access control, provenance, and storage | **Merged** |
+| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | **In review** |
 | 4 | Attack scenarios and replay benchmark | Planned |
 | 5 | Defenses | Planned |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
@@ -242,7 +245,8 @@ See [`docs/roadmap.md`](docs/roadmap.md) for each phase's objective, deliverable
 
 ## Current limitations
 
-- No research functionality is implemented, and no results exist.
+- The agent and transformations are scripted fixtures. They do not measure language-model behavior, and no empirical results exist.
+- Attack replay, defenses, and statistical analysis are not implemented.
 - Most of the literature review is abstract-level, and the closest related work consists of recent preprints.
 - The proposed contribution is incremental relative to concurrent work and is framed accordingly.
 - The planned evaluation uses a simulated workspace, a small number of models, and English-only text.

@@ -53,12 +53,19 @@ class RederivationTask(DomainModel):
     depends_on_task_ids: tuple[TaskIdField, ...]
     status: RederivationStatus
     created_at: UtcDatetime
+    replacement_memory_id: MemoryIdField | None = None
 
     @model_validator(mode="after")
     def _status_matches_inputs(self) -> Self:
         has_inputs = bool(self.surviving_input_ids or self.depends_on_task_ids)
-        if has_inputs != (self.status is RederivationStatus.PENDING):
-            raise ValueError("a task is pending exactly when at least one input can survive")
+        if self.status is RederivationStatus.PENDING:
+            if not has_inputs or self.replacement_memory_id is not None:
+                raise ValueError("a pending task has inputs and no replacement")
+        elif self.status is RederivationStatus.NOT_REGENERATED:
+            if has_inputs or self.replacement_memory_id is not None:
+                raise ValueError("a task is not_regenerated only when no input can survive")
+        elif not has_inputs or self.replacement_memory_id is None:
+            raise ValueError("a completed task records its inputs and replacement")
         return self
 
 
