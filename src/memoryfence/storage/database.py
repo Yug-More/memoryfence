@@ -6,10 +6,16 @@ Each episode has two SQLite files:
 * the **ground-truth database**, attached as schema ``groundtruth`` *only* on the
   harness writer connection.
 
-A unit of work is one transaction on the writer connection, so changes to both files
-commit or roll back together (SQLite commits attached databases atomically in rollback
-journal mode). Defense-facing reads use a separate read-only engine that never attaches
-the ground-truth file, so a privileged join is impossible rather than merely discouraged.
+A unit of work is one ``BEGIN IMMEDIATE`` transaction on that writer connection. There
+is no second commit. SQLite makes a commit that dirties attached databases atomic,
+including across a crash, only while the main database uses a rollback journal: the
+commit is coordinated by a master journal. That guarantee does not hold in WAL mode.
+The writer therefore forces ``journal_mode=DELETE`` and ``synchronous=FULL`` and refuses
+any other journal mode. This is SQLite's documented multi-file commit behavior, not a
+separate two-phase commit we implement ourselves.
+
+Defense-facing reads use a separate read-only engine that never attaches the
+ground-truth file, so a privileged join is impossible rather than merely discouraged.
 """
 
 import sqlite3
@@ -72,6 +78,9 @@ def _configure(engine: Engine, *, attach: Path | None, read_only: bool) -> None:
         try:
             cursor.execute("PRAGMA foreign_keys = ON")
             if attach is not None:
+                # journal_mode must be set outside a transaction. isolation_level None
+                # above leaves the connection in autocommit until the begin handler.
+                _require_rollback_journal(cursor)
                 cursor.execute(f"ATTACH DATABASE ? AS {GROUND_TRUTH_SCHEMA}", (str(attach),))
             if read_only:
                 cursor.execute("PRAGMA query_only = ON")
@@ -81,6 +90,22 @@ def _configure(engine: Engine, *, attach: Path | None, read_only: bool) -> None:
     @event.listens_for(engine, "begin")
     def _on_begin(connection: Connection) -> None:
         connection.exec_driver_sql("BEGIN" if read_only else "BEGIN IMMEDIATE")
+
+
+def _require_rollback_journal(cursor: sqlite3.Cursor) -> None:
+    """Force the journal mode that makes an attached-database commit atomic.
+
+    ``PRAGMA journal_mode = DELETE`` returns the mode actually in effect. Anything else
+    means a later commit could persist one file and not the other.
+    """
+    cursor.execute("PRAGMA journal_mode = DELETE")
+    row = cursor.fetchone()
+    mode = "" if row is None else str(row[0]).lower()
+    if mode != "delete":
+        raise PersistenceError(
+            "attached-database commits require SQLite rollback journal mode DELETE"
+        )
+    cursor.execute("PRAGMA synchronous = FULL")
 
 
 def _translate(error: DBAPIError) -> PersistenceError | ConflictError:
