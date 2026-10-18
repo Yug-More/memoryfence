@@ -107,6 +107,21 @@ uv run memoryfence benchmark run \
 
 `DF0` is the platform ACL with no extra defense. `DF1` delimits retrieved text and labels recorded authors. `DF2-label` annotates those authors. `DF2-exclude` drops a memory when any recorded author is neither the requester nor a user with instruction authority over the requester. `DF3` allows a standing sandbox tool only when the task text names it and every argument token appears in the task. The oracle source is an injected tool list and is not the main result. `DF4` applies `DF2` and `DF3` together. `DF5` blocks a tool at or above the risk threshold when retrieved context has an untrusted recorded author. Missing recorded edges are not filled from true provenance. The scripted backend does not read the delimited prompt, so `DF1` does not change its tool call.
 
+### Scripted experiments
+
+```bash
+uv run memoryfence experiment smoke --directory /tmp/memoryfence-smoke
+uv run memoryfence experiment status --directory /tmp/memoryfence-smoke
+uv run memoryfence experiment summarize --directory /tmp/memoryfence-smoke
+uv run memoryfence experiment verify --directory /tmp/memoryfence-smoke
+```
+
+`validate` and `preview` read a JSON configuration and print the matrix, including exclusions. `run` refuses a matrix larger than `max_runs` (at most 64). `resume` continues a directory whose configuration file matches. `verify` reruns the first completed cell and compares the canonical outcome. The report states Wilson intervals and says the counts are not language-model attack rates.
+
+The development catalog has the eighteen scenarios already used to build the harness. Two held-out templates, `heldout-clean` and `heldout-note`, load only through the evaluation split. Two templates are not a representative held-out sample. Block `e3` previews the development scenarios at `LF1.0` under `DF0`, `DF1`, `DF2-exclude`, `DF3`, `DF4` with exclude, and `DF5`, crossed with `DS0` and `DS1`. `DF2-label` and the `DF3` oracle are custom configurations, not E3 main cells. Scenarios without a deletion source are excluded from `DS1` and the exclusion is reported.
+
+Hypothesis procedures that this package can compute are labeled `procedure_available`. `H1`, `H2a`, and `H4` stay `not_computable` because the protocol's trend, equivalence, and mixed-effects tests are not implemented. A scripted count is not confirmation of a hypothesis.
+
 Retrieval ranks memories by the count of shared case-folded alphanumeric tokens, breaks ties by memory identifier, drops a zero score, and returns at most `top_k` memories the principal may read. `TT0` is retrieval of a primary memory with no transformation. `TT1` through `TT4` ask the scripted backend for an explicit reply and store that text. Prompt version strings such as `tt1-scripted-v1` name the fixture, not a model prompt that was sent anywhere.
 
 ### Mermaid diagrams

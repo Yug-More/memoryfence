@@ -57,16 +57,16 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Dependencies:** Phases 3 and 4.
 - **Acceptance criteria:** defenses read recorded provenance only and pass the import contracts; the `DF3` policy step cannot see retrieved content; missing recorded edges are not repaired from true provenance; each condition is selectable without reusing episode state.
 - **Validation:** `tests/test_defenses.py` and the existing benchmark suite. Scripted stage labels are fixture results, not empirical defense effectiveness.
-- **Status:** In review.
+- **Status:** Merged.
 
 ## Phase 6: Evaluation runner, metrics, and reproducibility
 
-- **Objective:** Run experiment blocks from configuration and compute every planned metric and statistic reproducibly.
-- **Deliverables:** configuration schemas; seeded episode runner for blocks E1–E4; seed hierarchy and matching; metrics (survival, stage rates, PD-ASR, persistence ratio, utility, false positives, overhead); statistical analysis code (Wilson intervals, exact McNemar, mixed-effects models, cluster bootstrap, trend and equivalence tests, Holm–Bonferroni); run manifests.
+- **Objective:** Run a scripted experiment from a validated configuration and summarize the four stages without treating fixture counts as model findings.
+- **Deliverables:** `memoryfence.evaluation` with a versioned JSON configuration, an inspectable matrix, exclusions, a hard `max_runs` stop, isolated run directories, resume of an incomplete cell, a manifest with the configuration hash and git revision, Wilson intervals, exact McNemar, Holm adjustment, and a paired risk-difference interval. Legitimate-task completion is counted on `C-CLEAN`, `C-LEGIT`, and `C-SELF`. The development catalog and two held-out templates are separate loaders. CLI: `validate`, `preview`, `smoke`, `run`, `status`, `resume`, `export`, `summarize`, `verify`.
 - **Dependencies:** Phases 4 and 5.
-- **Acceptance criteria:** rerunning a configuration on the scripted backend reproduces the event log byte for byte; matched episodes share seeds as specified in the protocol; statistics code is validated against known reference values.
-- **Validation:** reproducibility tests; statistics tests against reference implementations or published examples; coverage of at least 90%.
-- **Status:** Planned.
+- **Acceptance criteria:** an oversized matrix is previewed and not silently truncated; invalid configurations fail before execution; a completed result file is not overwritten; `verify` reproduces the canonical outcome; held-out ids are absent from `benchmark list`; defenses still cannot import evaluator-only modules.
+- **Validation:** `tests/test_evaluation.py`. Wilson and McNemar use known counts. Coverage stays at least 90%. Mixed-effects models, cluster bootstrap, Cochran–Armitage, and TOST are not implemented, so `H1`, `H2a`, and `H4` are marked not computable.
+- **Status:** In review.
 
 ## Phase 7: Model integration, pilots, preregistration, and confirmatory study
 

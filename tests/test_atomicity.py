@@ -108,3 +108,25 @@ def _write_both_databases(database: EpisodeDatabase) -> None:
             )
         )
         unit.session.flush()
+
+
+def test_uncommitted_work_is_absent_after_reopen(tmp_path: Path) -> None:
+    """Rollback on an exception is not a crash during SQLite's commit syscall.
+
+    The injected-commit test above also stops before the database commit API.
+    Neither test is evidence of crash atomicity across a power loss.
+    """
+    clock = StepClock(datetime(2026, 1, 1, tzinfo=UTC), timedelta(seconds=1))
+    database = open_episode(tmp_path, clock)
+    try:
+        with pytest.raises(RuntimeError, match="stop before commit"), database.unit_of_work():
+            raise RuntimeError("stop before commit")
+    finally:
+        database.dispose()
+    reopened = open_episode(tmp_path, clock)
+    try:
+        with reopened.system_read_session() as session:
+            count = session.connection().exec_driver_sql("SELECT COUNT(*) FROM users").scalar()
+        assert count == 0
+    finally:
+        reopened.dispose()
