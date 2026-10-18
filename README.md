@@ -5,7 +5,7 @@
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
 > [!IMPORTANT]
-> **Project status: Phase 3 (collaborative agent and memory simulation).** The research design from Phase 1 is unchanged. The repository contains the Phase 2 core plus a deterministic offline episode: ingestion, scripted transformations, lexical retrieval, DS4 task execution, an agent loop, and sandboxed tools. **The scripted backend is a fixture, not a language model. No attack-replay benchmark, defense evaluation, or empirical results exist.**
+> **Project status: Phase 4 (scripted memory-poisoning benchmark).** The research design from Phase 1 is unchanged. The repository contains the Phase 2 core, the Phase 3 offline episode, and a versioned catalog of synthetic scenarios with deterministic replay. **Every stage label is a fixture result. It is not a language-model measurement, and no empirical attack rate exists.** Defenses and statistical analysis are not implemented.
 
 ## Contents
 
@@ -134,17 +134,19 @@ flowchart LR
     classDef planned fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray:4 3,color:#1b1b1b
     classDef harness fill:#fff3cd,stroke:#b8860b,stroke-dasharray:4 3,color:#1b1b1b
 
-    SRC[("Shared sources")]:::implemented --> TRN["Transformations"]:::planned --> MEM[("Memories and<br/>recorded provenance")]:::implemented
-    MEM --> RET["Retrieval"]:::planned --> AGT["Agent"]:::planned --> AUTH["Authorization<br/>gateway"]:::planned --> SBX["Sandbox tools"]:::planned
+    SRC[("Shared sources")]:::implemented --> TRN["Transformations"]:::implemented --> MEM[("Memories and<br/>recorded provenance")]:::implemented
+    MEM --> RET["Retrieval"]:::implemented --> AGT["Agent"]:::implemented --> AUTH["Authorization<br/>gateway"]:::implemented --> SBX["Sandbox tools"]:::implemented
     DEL["Deletion policies"]:::implemented -.-> MEM
     DEF["Defenses"]:::planned -. "hooks" .-> RET
     DEF -. "hooks" .-> AUTH
     TRN -. "lineage events" .-> GT[("Ground truth<br/>(evaluator only)")]:::harness
+    BENCH["Scripted scenarios<br/>and replay"]:::implemented --> AGT
+    BENCH --> GT
     SBX --> EVAL["Outcome classifier<br/>and statistics"]:::harness
     GT --> EVAL
 ```
 
-Green boxes are implemented. Grey dashed boxes are planned. The [architecture overview](docs/architecture/overview.md) has the data model, provenance isolation, lifecycle, lineage, deletion, and the import contracts. [ADR-0001](docs/architecture/decisions/ADR-0001-architecture.md) records the rationale.
+Green boxes are implemented. Grey dashed boxes are planned. Yellow dashed boxes are harness-only. The [architecture overview](docs/architecture/overview.md) has the data model, provenance isolation, lifecycle, lineage, deletion, and the import contracts. [ADR-0001](docs/architecture/decisions/ADR-0001-architecture.md) records the rationale.
 
 ## Technology stack
 
@@ -162,14 +164,14 @@ Green boxes are implemented. Grey dashed boxes are planned. The [architecture ov
 | Domain models | Pydantic v2 | In use |
 | Persistence | SQLite through SQLAlchemy 2 | In use |
 | Import contracts | import-linter | In use |
-| Model access | Deterministic scripted backend; optional local and hosted adapters later | Scripted backend in use (Phase 3). Adapters are Phase 7 |
+| Model access | Deterministic scripted backend; optional local and hosted adapters later | Scripted backend in use. Adapters are Phase 7 |
 
 ## Repository structure
 
 ```text
 memoryfence/
-├── src/memoryfence/          # Domain, authorization, storage, provenance, simulation, demo CLI
-├── tests/                    # Security, simulation, persistence, provenance, and documentation tests
+├── src/memoryfence/          # Domain, authorization, storage, provenance, simulation, benchmark, CLI
+├── tests/                    # Security, simulation, benchmark, persistence, provenance, and documentation tests
 ├── docs/
 │   ├── research/             # Literature review, problem, threat model, hypotheses, protocol, limitations
 │   ├── architecture/         # Architecture overview and ADRs
@@ -193,9 +195,11 @@ git clone https://github.com/Yug-More/memoryfence.git
 cd memoryfence
 make setup          # uv sync --frozen, then install pre-commit hooks
 uv run memoryfence demo --directory /tmp/memoryfence-demo
+uv run memoryfence benchmark validate
+uv run memoryfence benchmark run --scenario clean-note --directory /tmp/memoryfence-clean
 ```
 
-`memoryfence demo` needs no credentials and does not call a network. It prints one JSON trace of a scripted episode. The trace is a mechanics check, not a model-susceptibility result.
+Neither command needs credentials or a network. `demo` prints one JSON trace of a scripted episode. `benchmark run` writes `benchmark-result.json` and `events.jsonl` for one synthetic scenario. Both are mechanics checks. Stage labels are fixture results, not model-susceptibility measurements.
 
 ## Quality checks
 
@@ -205,7 +209,7 @@ make pre-commit     # repository hygiene hooks
 make diagrams       # render-check every Mermaid diagram (requires Node.js)
 ```
 
-Tests cover authorization, workspace isolation, provenance degradation, the five deletion policies, cross-database commit failure, scripted transformations, retrieval, DS4 execution, tool authorization, and the offline demo, in addition to package metadata and documentation integrity. They do not call an external model. See [`docs/development.md`](docs/development.md).
+Tests cover authorization, workspace isolation, provenance degradation, the five deletion policies, cross-database commit failure, scripted transformations, retrieval, DS4 execution, tool authorization, the offline demo, and the scripted scenario catalog, in addition to package metadata and documentation integrity. They do not call an external model. See [`docs/development.md`](docs/development.md).
 
 ## Documentation map
 
@@ -227,8 +231,8 @@ Tests cover authorization, workspace isolation, provenance degradation, the five
 |---|---|---|
 | 1 | Research foundation and engineering architecture | **Merged** |
 | 2 | Core domain, access control, provenance, and storage | **Merged** |
-| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | **In review** |
-| 4 | Attack scenarios and replay benchmark | Planned |
+| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | **Merged** |
+| 4 | Scripted scenarios and replay benchmark | **In review** |
 | 5 | Defenses | Planned |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
 | 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
@@ -245,8 +249,8 @@ See [`docs/roadmap.md`](docs/roadmap.md) for each phase's objective, deliverable
 
 ## Current limitations
 
-- The agent and transformations are scripted fixtures. They do not measure language-model behavior, and no empirical results exist.
-- Attack replay, defenses, and statistical analysis are not implemented.
+- The agent, transformations, and scenario outcomes are scripted fixtures. They do not measure language-model behavior, and no empirical results exist.
+- Defenses, a development/evaluation template split, an audited judge, and statistical analysis are not implemented.
 - Most of the literature review is abstract-level, and the closest related work consists of recent preprints.
 - The proposed contribution is incremental relative to concurrent work and is framed accordingly.
 - The planned evaluation uses a simulated workspace, a small number of models, and English-only text.

@@ -6,8 +6,8 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 |---|---|---|
 | 1 | Research foundation and engineering architecture | Merged |
 | 2 | Core domain, access control, provenance, and storage | Merged |
-| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | In review |
-| 4 | Attack scenarios and replay benchmark | Planned |
+| 3 | Memory simulation, scripted backend, tools, gateway, and agent loop | Merged |
+| 4 | Scripted scenarios and replay benchmark | In review |
 | 5 | Defenses | Planned |
 | 6 | Evaluation runner, metrics, and reproducibility | Planned |
 | 7 | Model integration, pilots, preregistration, and confirmatory study | Planned |
@@ -39,16 +39,16 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 - **Dependencies:** Phase 2.
 - **Acceptance criteria:** each deletion policy reaches exactly the memories that recorded provenance connects to the deleted source, including under degraded provenance; the gateway always applies the ACL and ignores natural-language justifications; agents cannot reach tools except through the gateway; transformations record one true edge per input.
 - **Validation:** tests for every deletion policy at every `LF` level; adversarial-justification tests for the gateway; a deterministic end-to-end episode test with a recorded event log; coverage of at least 90%.
-- **Status:** In review.
+- **Status:** Merged.
 
-## Phase 4: Attack scenarios and replay benchmark
+## Phase 4: Scripted scenarios and replay benchmark
 
-- **Objective:** Author the synthetic scenarios and a replayable benchmark that exercises them without a live model.
-- **Deliverables:** scenario families SF1–SF5 with benign twins, payload styles, canaries, and objective predicates; controls `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, `C-UCC`; template-level development and evaluation split with the evaluation split committed by hash; outcome classifier for S0–S4; judge prompt and human-audit tooling; a replay benchmark of scripted model responses.
+- **Objective:** Author synthetic scenarios and replay them on the scripted backend without a live model.
+- **Deliverables:** `memoryfence.benchmark` with eighteen versioned scenarios in families A–H and protocol families `SF1`–`SF5`; controls `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, and `C-UCC`; separate S1–S4 stage records; deletion policies `DS0`–`DS4` and lineage-fidelity overrides, including marked exploratory missingness; run manifests, `benchmark-result.json`, and `events.jsonl`; CLI commands `list`, `validate`, `run`, `replay`, `inspect`, and `export`. The followed-instruction marker and source origins stay in the evaluator. A development/evaluation template split, an audited judge, and statistics remain later phases.
 - **Dependencies:** Phase 3.
-- **Acceptance criteria:** every objective predicate is deterministic and written before any empirical run; development tooling cannot load evaluation templates; all recipients use the `.invalid` domain; the classifier reproduces expected stage labels on replayed episodes.
-- **Validation:** classifier tests on hand-labeled replayed episodes; a test that evaluation templates are unreadable from development entry points; a secret and real-address scan over all scenario content.
-- **Status:** Planned.
+- **Acceptance criteria:** each scenario validates before it runs; stage labels are computed from persisted ground truth and the event log, not from the agent's copy of the scenario; replay of a saved directory reproduces the canonical outcome; recipients use the `.invalid` domain; the system under test cannot import the benchmark.
+- **Validation:** `tests/test_benchmark.py` covers the catalog, stage separation, controls, deletion and fidelity sweeps, timeout failure, replay, and the CLI. Coverage stays at least 90%.
+- **Status:** In review.
 
 ## Phase 5: Defenses
 

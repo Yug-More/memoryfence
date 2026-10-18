@@ -108,12 +108,11 @@ class GroundTruthReader:
         row = self._session.get(SourceLabelRow, source_id)
         if row is None:
             raise ResourceNotFound("source label", source_id)
-        return SourceLabel(
-            source_id=SourceId(row.source_id),
-            workspace_id=WorkspaceId(row.workspace_id),
-            origin=row.origin,
-            labeled_at=row.labeled_at,
-        )
+        return _label(row)
+
+    def labels(self) -> tuple[SourceLabel, ...]:
+        statement = select(SourceLabelRow).order_by(SourceLabelRow.source_id)
+        return tuple(_label(row) for row in self._session.scalars(statement))
 
     def ledger(self, deletion_id: DeletionId) -> tuple[DeletionLedgerEntry, ...]:
         statement = (
@@ -140,6 +139,15 @@ class GroundTruthReader:
         if row is None:
             raise ResourceNotFound("experiment run", run_id)
         return ExperimentManifest.model_validate_json(row.manifest_json)
+
+
+def _label(row: SourceLabelRow) -> SourceLabel:
+    return SourceLabel(
+        source_id=SourceId(row.source_id),
+        workspace_id=WorkspaceId(row.workspace_id),
+        origin=row.origin,
+        labeled_at=row.labeled_at,
+    )
 
 
 class GroundTruthStore:

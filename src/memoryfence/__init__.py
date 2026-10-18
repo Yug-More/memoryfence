@@ -1,8 +1,8 @@
 """MemoryFence: evaluating persistent memory poisoning in collaborative AI agents.
 
 The package contains the domain model, authorization, persistence, provenance, a
-deterministic scripted agent simulation, and an offline demo. Attack replay, defenses,
-and empirical model evaluation are not implemented here.
+deterministic scripted agent simulation, an offline demo, and a scripted scenario
+benchmark. Defenses and empirical model evaluation are not implemented here.
 """
 
 from importlib.metadata import PackageNotFoundError, version
