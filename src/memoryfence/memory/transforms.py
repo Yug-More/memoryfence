@@ -14,7 +14,7 @@ from memoryfence.domain.enums import (
 from memoryfence.domain.errors import ProvenanceIntegrityError, ReasonCode
 from memoryfence.domain.ids import MemoryId, TaskId, WorkspaceId
 from memoryfence.domain.memories import Memory
-from memoryfence.domain.model import LanguageModel, ModelCallDraft, ModelRequest
+from memoryfence.domain.model import ContextMemory, LanguageModel, ModelCallDraft, ModelRequest
 from memoryfence.domain.principals import PrincipalRef
 from memoryfence.domain.provenance import ProvenanceDegradationConfiguration
 from memoryfence.observability import Auditor
@@ -79,6 +79,9 @@ class TransformService:
             workspace_id=workspace_id,
             transformation_type=transformation_type,
             parent_content_hashes=tuple(parent.content_sha256 for parent in parents),
+            context=tuple(
+                ContextMemory(memory_id=parent.id, content=parent.content) for parent in parents
+            ),
         )
         response = self._backend.complete(request)
         visibility = (
@@ -90,7 +93,11 @@ class TransformService:
             actor,
             workspace_id,
             transformation_type=transformation_type,
-            prompt_version=PROMPT_VERSION[transformation_type],
+            prompt_version=(
+                f"{transformation_type.value.lower()}-ollama-v1"
+                if response.generation == "ollama"
+                else PROMPT_VERSION[transformation_type]
+            ),
             parent_ids=parent_ids,
             content=response.text,
             visibility=visibility,

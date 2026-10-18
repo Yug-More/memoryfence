@@ -45,6 +45,8 @@ def _markdown(records: tuple[RunRecord, ...], counts: StageCounts, summary: Stag
         f"- Invalid or incomplete: {counts.invalid}",
         f"- S1 retrieved: {counts.retrieved}/{counts.trials}",
         f"- S2 followed: {counts.followed}/{counts.trials}",
+        f"- Judge abstentions, excluded from a followed claim: "
+        f"{sum(record.judge_status == 'abstain' for record in records)}",
         f"- S3 proposed: {counts.proposed}/{counts.trials}",
         f"- S4 executed: {counts.executed}/{counts.trials}",
         "",

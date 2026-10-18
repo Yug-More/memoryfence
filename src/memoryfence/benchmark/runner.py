@@ -3,6 +3,7 @@
 import json
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from typing import Literal
 
 from pydantic import JsonValue
 from sqlalchemy import select
@@ -10,6 +11,7 @@ from sqlalchemy import select
 from memoryfence.agents.loop import AgentLoop, AgentStep
 from memoryfence.authorization.gateway import ToolGateway
 from memoryfence.benchmark.catalog import load_scenario
+from memoryfence.benchmark.judge import judge_text
 from memoryfence.benchmark.labels import EvaluationKey
 from memoryfence.benchmark.result import BenchmarkResult
 from memoryfence.benchmark.score import StageRecord, legitimate_succeeded, score_stages
@@ -34,6 +36,7 @@ from memoryfence.domain.enums import (
 )
 from memoryfence.domain.errors import DomainValidationError, MemoryFenceError
 from memoryfence.domain.ids import IdPrefix, MemoryId, RunId, SourceId
+from memoryfence.domain.model import LanguageModel
 from memoryfence.domain.principals import PrincipalRef, User
 from memoryfence.domain.provenance import ProvenanceDegradationConfiguration
 from memoryfence.domain.serialization import sha256_hex
@@ -41,6 +44,7 @@ from memoryfence.domain.time import StepClock
 from memoryfence.groundtruth import open_episode
 from memoryfence.groundtruth.store import GroundTruthStore
 from memoryfence.llm.backend import ScriptedBackend, ScriptedReply
+from memoryfence.llm.ollama import OllamaBackend
 from memoryfence.memory.calls import ModelCallLog
 from memoryfence.memory.ingest import IngestionService
 from memoryfence.memory.rederive import RederivationExecutor
@@ -100,6 +104,9 @@ def run_case(
     marked: bool = False,
     defense: DefenseConfiguration | None = None,
     code_version: str,
+    agent_backend: LanguageModel | None = None,
+    transform_backend: LanguageModel | None = None,
+    trial: int = 0,
 ) -> BenchmarkResult:
     """Execute ``spec`` in a fresh directory. ``key`` is not passed to the agent."""
     if key.scenario_id != spec.id or key.version != spec.version:
@@ -153,6 +160,9 @@ def run_case(
             defense=chosen_defense,
             code_version=code_version,
             directory=directory,
+            agent_backend=agent_backend,
+            transform_backend=transform_backend,
+            trial=trial,
         )
     except MemoryFenceError as error:
         status = RunStatus.FAILED
@@ -169,6 +179,8 @@ def run_case(
             steps=(),
             legitimate=False,
             failure_reason=error.code.value,
+            agent_backend=agent_backend,
+            transform_backend=transform_backend,
         )
         events = _read_events(database)
     finally:
@@ -221,6 +233,9 @@ def _episode(
     defense: DefenseConfiguration,
     code_version: str,
     directory: Path,
+    agent_backend: LanguageModel | None = None,
+    transform_backend: LanguageModel | None = None,
+    trial: int = 0,
 ) -> tuple[BenchmarkResult, list[dict[str, JsonValue]]]:
     auditor = Auditor(database)
     directory_service = DirectoryService(database, auditor)
@@ -247,9 +262,11 @@ def _episode(
         payload_variant=f"v{spec.version}",
         replicate=0,
     )
-    backend = ScriptedBackend(_replies(spec), seed=spec.seed)
+    scripted = ScriptedBackend(_replies(spec), seed=spec.seed)
+    transform_model = scripted if transform_backend is None else transform_backend
+    agent_model = scripted if agent_backend is None else agent_backend
     ingestion = IngestionService(auditor)
-    transforms = TransformService(database, auditor, degradation, backend, seed=spec.seed)
+    transforms = TransformService(database, auditor, degradation, transform_model, seed=spec.seed)
     labels = GroundTruthStore(database)
     source_ids: dict[str, SourceId] = {}
     memory_ids: dict[str, MemoryId] = {}
@@ -287,18 +304,18 @@ def _episode(
         deletion = _delete(auditor, users, spec, source_ids, policy)
         if deletion is not None and policy is DeletionPolicy.CASCADE_AND_REDERIVE:
             owner = _owner(users, spec)
-            RederivationExecutor(database, auditor, degradation, backend, seed=spec.seed).execute(
-                PrincipalRef.user(owner.id), deletion.deletion_id
-            )
+            RederivationExecutor(
+                database, auditor, degradation, transform_model, seed=spec.seed
+            ).execute(PrincipalRef.user(owner.id), deletion.deletion_id)
     suite = None if defense.defense.value == "DF0" else DefenseSuite(defense, auditor)
     gateway = ToolGateway(ToolService(auditor), Sandbox(auditor), suite)
     loop = AgentLoop(
         RetrievalService(auditor),
-        backend,
+        agent_model,
         gateway,
         ModelCallLog(auditor),
         auditor,
-        seed=spec.seed,
+        seed=spec.seed + trial,
         max_steps=len(spec.actions),
         defense=suite,
     )
@@ -311,6 +328,14 @@ def _episode(
         steps=steps,
         key=key,
     )
+    judge_status = "not_applicable"
+    if agent_backend is not None:
+        judgment = judge_text(steps[-1].response_text if steps else "", canary=key.lexical_canary)
+        judge_status = judgment.status
+        if judgment.status == "followed":
+            stages = stages.model_copy(update={"followed": True})
+        elif judgment.status in {"not_followed", "abstain", "invalid"}:
+            stages = stages.model_copy(update={"followed": False})
     result = _result(
         spec,
         run_id=run_id,
@@ -324,6 +349,9 @@ def _episode(
         steps=steps,
         legitimate=legitimate_succeeded(steps, key),
         failure_reason=None,
+        agent_backend=agent_backend,
+        transform_backend=transform_backend,
+        judge_status=judge_status,
     )
     return result, _read_events(database)
 
@@ -432,10 +460,14 @@ def _result(
     steps: tuple[AgentStep, ...],
     legitimate: bool,
     failure_reason: str | None,
+    agent_backend: LanguageModel | None = None,
+    transform_backend: LanguageModel | None = None,
+    judge_status: str = "not_applicable",
 ) -> BenchmarkResult:
     reason = _authorization_reason(steps, spec)
+    identity = agent_backend.identity if isinstance(agent_backend, OllamaBackend) else None
     return BenchmarkResult(
-        kind="scripted-benchmark",
+        kind="local-model-benchmark" if agent_backend is not None else "scripted-benchmark",
         scenario_id=spec.id,
         scenario_version=spec.version,
         family=spec.family,
@@ -461,7 +493,29 @@ def _result(
         legitimate_task=legitimate,
         failure_reason=failure_reason,
         trace_path=str(directory / RESULT_NAME),
+        agent_backend="ollama" if agent_backend is not None else "scripted",
+        transformation_backend="ollama" if transform_backend is not None else "scripted",
+        judge_status=_judge_status(judge_status),
+        model_tag=None if identity is None else identity.tag,
+        model_digest=None if identity is None else identity.digest,
+        prompt_template=None if agent_backend is None else "agent-v1",
     )
+
+
+def _judge_status(
+    status: str,
+) -> Literal["not_applicable", "followed", "not_followed", "abstain", "invalid"]:
+    if status == "followed":
+        return "followed"
+    if status == "not_followed":
+        return "not_followed"
+    if status == "abstain":
+        return "abstain"
+    if status == "invalid":
+        return "invalid"
+    if status == "not_applicable":
+        return "not_applicable"
+    return "invalid"
 
 
 def _authorization_reason(steps: tuple[AgentStep, ...], spec: ScenarioSpec) -> str | None:

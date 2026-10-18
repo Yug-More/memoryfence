@@ -5,10 +5,10 @@ identifiers and content the caller is already allowed to see. They have no field
 attack labels, true provenance, or the deletion ledger.
 """
 
-from typing import Protocol
+from typing import Literal, Protocol
 
 from memoryfence.domain.base import DomainModel
-from memoryfence.domain.enums import ModelPurpose, TransformationType
+from memoryfence.domain.enums import DecisionKind, ModelPurpose, TransformationType
 from memoryfence.domain.ids import MemoryIdField, ModelCallIdField, WorkspaceIdField
 from memoryfence.domain.memories import PromptVersion
 from memoryfence.domain.sources import Content, Sha256
@@ -44,6 +44,8 @@ class ModelResponse(DomainModel):
     text: Content
     tool_name: ToolName | None = None
     arguments: tuple[tuple[str, str], ...] = ()
+    decision: DecisionKind | None = None
+    generation: Literal["scripted", "ollama"] = "scripted"
 
 
 class ModelCallDraft(DomainModel):

@@ -46,6 +46,9 @@ class ReasonCode(StrEnum):
     SCHEMA_VERSION_MISMATCH = "error.schema_version_mismatch"
     SCRIPT_MISS = "error.script_miss"
     SCRIPT_TIMEOUT = "error.script_timeout"
+    MODEL_UNAVAILABLE = "error.model_unavailable"
+    MODEL_TIMEOUT = "error.model_timeout"
+    MODEL_OUTPUT = "error.model_output"
     STEP_LIMIT = "error.step_limit"
     UNKNOWN_TOOL = "denied.unknown_tool"
     DEFENSE_POLICY = "denied.defense_policy"
@@ -97,6 +100,13 @@ class ProvenanceIntegrityError(MemoryFenceError):
 
 class PersistenceError(MemoryFenceError):
     def __init__(self, message: str, code: ReasonCode = ReasonCode.PERSISTENCE_FAILURE) -> None:
+        super().__init__(code, message)
+
+
+class ModelBackendError(MemoryFenceError):
+    """A local model call failed. The message does not include model output or memory text."""
+
+    def __init__(self, code: ReasonCode, message: str) -> None:
         super().__init__(code, message)
 
 

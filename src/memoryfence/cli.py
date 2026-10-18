@@ -22,13 +22,22 @@ from memoryfence.domain.errors import DomainValidationError
 from memoryfence.domain.serialization import canonical_json
 from memoryfence.evaluation.config import load_config, smoke_config
 from memoryfence.evaluation.report import write_summary
-from memoryfence.evaluation.runner import execute, export_json, load_records, preview, verify
+from memoryfence.evaluation.runner import audit, execute, export_json, load_records, preview, verify
 from memoryfence.harness.episode import run_demo
+from memoryfence.llm.ollama import doctor, list_models, smoke_call
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="memoryfence")
     commands = parser.add_subparsers(dest="command", required=True)
+    model = commands.add_parser("model", help="local Ollama checks")
+    model_commands = model.add_subparsers(dest="model_command", required=True)
+    for name in ("doctor", "list"):
+        command = model_commands.add_parser(name)
+        command.add_argument("--endpoint", default="http://127.0.0.1:11434")
+    smoke_model = model_commands.add_parser("smoke")
+    smoke_model.add_argument("--model", required=True)
+    smoke_model.add_argument("--endpoint", default="http://127.0.0.1:11434")
     experiment = commands.add_parser("experiment", help="scripted experiment matrix")
     experiment_commands = experiment.add_subparsers(dest="experiment_command", required=True)
     for name in ("validate", "preview"):
@@ -39,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--config", type=Path, required=True)
         command.add_argument("--directory", type=Path, required=True)
     experiment_commands.add_parser("smoke").add_argument("--directory", type=Path, required=True)
-    for name in ("status", "resume", "export", "summarize", "verify"):
+    for name in ("status", "resume", "export", "summarize", "verify", "audit"):
         experiment_commands.add_parser(name).add_argument("--directory", type=Path, required=True)
     demo = commands.add_parser("demo", help="run the offline scripted collaborative episode")
     demo.add_argument("--directory", type=Path, required=True)
@@ -78,6 +87,8 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _dispatch(args: argparse.Namespace) -> int:
+    if args.command == "model":
+        return _model(args)
     if args.command == "experiment":
         return _experiment(args)
     if args.command == "demo":
@@ -128,6 +139,22 @@ def _dispatch(args: argparse.Namespace) -> int:
     return 2
 
 
+def _model(args: argparse.Namespace) -> int:
+    if args.model_command == "doctor":
+        status, message = doctor(args.endpoint)
+        sys.stdout.write(message + "\n")
+        return status
+    if args.model_command == "list":
+        status, message = list_models(args.endpoint)
+        sys.stdout.write(message + "\n")
+        return status
+    if args.model_command == "smoke":
+        status, message = smoke_call(args.endpoint, args.model)
+        sys.stdout.write(message + "\n")
+        return status
+    return 2
+
+
 def _experiment(args: argparse.Namespace) -> int:
     if args.experiment_command == "validate":
         matrix = preview(load_config(args.config))
@@ -163,6 +190,10 @@ def _experiment(args: argparse.Namespace) -> int:
         path = write_summary(args.directory)
         sys.stdout.write(f"{path}\n")
         return 0
+    if args.experiment_command == "audit":
+        ok = audit(args.directory)
+        sys.stdout.write(json.dumps({"manifest_ok": ok, "rerun": False}) + "\n")
+        return 0 if ok else 1
     if args.experiment_command == "verify":
         scratch = args.directory / "_verify"
         if scratch.exists():

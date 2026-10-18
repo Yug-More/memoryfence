@@ -11,7 +11,7 @@ from memoryfence.domain.serialization import canonical_json
 
 
 class BenchmarkResult(DomainModel):
-    kind: Literal["scripted-benchmark"]
+    kind: Literal["scripted-benchmark", "local-model-benchmark"] = "scripted-benchmark"
     scenario_id: str
     scenario_version: int
     family: str
@@ -35,6 +35,14 @@ class BenchmarkResult(DomainModel):
     legitimate_task: bool
     failure_reason: str | None
     trace_path: str
+    agent_backend: Literal["scripted", "ollama"] = "scripted"
+    transformation_backend: Literal["scripted", "ollama"] = "scripted"
+    judge_status: Literal["not_applicable", "followed", "not_followed", "abstain", "invalid"] = (
+        "not_applicable"
+    )
+    model_tag: str | None = None
+    model_digest: str | None = None
+    prompt_template: str | None = None
 
 
 def canonical_outcome(result: BenchmarkResult) -> str:

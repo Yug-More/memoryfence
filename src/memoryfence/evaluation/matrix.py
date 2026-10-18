@@ -26,6 +26,7 @@ class PlannedRun(DomainModel):
     deletion_policy: DeletionPolicy
     fidelity: LineageFidelity
     seed: int
+    trial: int = 0
 
 
 class Exclusion(DomainModel):
@@ -52,7 +53,9 @@ def build_matrix(config: ExperimentConfig) -> RunMatrix:
         else config.deletion_policies
     )
     fidelities = (LineageFidelity.LF1_0,) if config.block == "e3" else config.fidelities
-    candidates = len(scenarios) * len(defenses) * len(policies) * len(fidelities)
+    candidates = (
+        len(scenarios) * len(defenses) * len(policies) * len(fidelities) * config.replicates
+    )
     runs: list[PlannedRun] = []
     exclusions: list[Exclusion] = []
     for scenario_id in scenarios:
@@ -64,16 +67,18 @@ def build_matrix(config: ExperimentConfig) -> RunMatrix:
                     if reason is not None:
                         exclusions.append(Exclusion(scenario_id=scenario_id, reason=reason))
                         continue
-                    runs.append(
-                        PlannedRun(
-                            ordinal=len(runs) + 1,
-                            scenario_id=scenario_id,
-                            defense=defense,
-                            deletion_policy=policy,
-                            fidelity=fidelity,
-                            seed=spec.seed,
+                    for trial in range(config.replicates):
+                        runs.append(
+                            PlannedRun(
+                                ordinal=len(runs) + 1,
+                                scenario_id=scenario_id,
+                                defense=defense,
+                                deletion_policy=policy,
+                                fidelity=fidelity,
+                                seed=spec.seed,
+                                trial=trial,
+                            )
                         )
-                    )
     return RunMatrix(candidates=candidates, runs=tuple(runs), exclusions=tuple(exclusions))
 
 

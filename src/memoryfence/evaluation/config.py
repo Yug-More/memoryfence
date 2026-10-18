@@ -4,16 +4,30 @@ import json
 from pathlib import Path
 from typing import Literal, Self
 
-from pydantic import ConfigDict, Field, model_validator
+from pydantic import ConfigDict, Field, JsonValue, model_validator
 
 from memoryfence.domain.base import DomainModel
 from memoryfence.domain.defenses import DefenseConfiguration
 from memoryfence.domain.enums import DeletionPolicy, LineageFidelity
 from memoryfence.domain.errors import DomainValidationError
 from memoryfence.domain.serialization import canonical_json, sha256_hex
+from memoryfence.llm.endpoint import require_loopback
 
 SplitName = Literal["development", "evaluation"]
 BlockName = Literal["custom", "smoke", "e3"]
+BackendName = Literal["scripted", "ollama"]
+_OMIT_WHEN_SCRIPTED = (
+    "model_tag",
+    "endpoint",
+    "temperature",
+    "num_ctx",
+    "num_predict",
+    "timeout_seconds",
+    "max_model_calls",
+    "prompt_template",
+    "judge_version",
+    "transformation_backend",
+)
 
 
 class ExperimentConfig(DomainModel):
@@ -30,8 +44,18 @@ class ExperimentConfig(DomainModel):
     deletion_policies: tuple[DeletionPolicy, ...] = Field(min_length=1)
     fidelities: tuple[LineageFidelity, ...] = Field(min_length=1)
     replicates: int = Field(default=1, ge=1, le=3)
-    backend: Literal["scripted"] = "scripted"
+    backend: BackendName = "scripted"
     max_runs: int = Field(ge=1, le=64)
+    model_tag: str | None = None
+    endpoint: str = "http://127.0.0.1:11434"
+    temperature: float = Field(default=0.0, ge=0, le=1)
+    num_ctx: int = Field(default=2048, ge=256, le=8192)
+    num_predict: int = Field(default=256, ge=16, le=1024)
+    timeout_seconds: float = Field(default=30, ge=1, le=120)
+    max_model_calls: int = Field(default=8, ge=1, le=32)
+    prompt_template: Literal["agent-v1"] = "agent-v1"
+    judge_version: Literal["rubric-v1"] = "rubric-v1"
+    transformation_backend: Literal["scripted", "ollama"] = "scripted"
 
     @model_validator(mode="before")
     @classmethod
@@ -55,14 +79,33 @@ class ExperimentConfig(DomainModel):
 
     @model_validator(mode="after")
     def _scripted_limits(self) -> Self:
-        if self.replicates != 1:
-            raise ValueError("the scripted backend does not sample replicates")
         if len(self.scenarios) != len(set(self.scenarios)):
             raise ValueError("scenario ids must be unique")
+        if self.backend == "scripted":
+            if self.replicates != 1 or self.model_tag is not None:
+                raise ValueError("the scripted backend does not sample replicates or a model")
+            if self.transformation_backend != "scripted":
+                raise ValueError("the scripted backend does not use a model transformation")
+            return self
+        if self.model_tag is None:
+            raise ValueError("an ollama experiment requires a model tag")
+        try:
+            require_loopback(self.endpoint)
+        except DomainValidationError as error:
+            raise ValueError("the model endpoint must be http on loopback") from error
+        if self.transformation_backend == "ollama" and self.prompt_template != "agent-v1":
+            raise ValueError("unknown prompt template")
         return self
 
+    def stored_json(self) -> JsonValue:
+        data = super().model_dump(mode="json")
+        if isinstance(data, dict) and data.get("backend") == "scripted":
+            for key in _OMIT_WHEN_SCRIPTED:
+                data.pop(key, None)
+        return data
+
     def fingerprint(self) -> str:
-        return sha256_hex(canonical_json(self.model_dump(mode="json")))
+        return sha256_hex(canonical_json(self.stored_json()))
 
 
 def load_config(path: Path) -> ExperimentConfig:

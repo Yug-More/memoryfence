@@ -16,6 +16,7 @@ from memoryfence.domain.serialization import canonical_json
 from memoryfence.evaluation.config import ExperimentConfig, load_config
 from memoryfence.evaluation.heldout import load_heldout
 from memoryfence.evaluation.matrix import PlannedRun, RunMatrix, build_matrix, require_run_limit
+from memoryfence.llm.ollama import OllamaBackend
 
 MANIFEST_NAME = "experiment.json"
 MATRIX_NAME = "matrix.json"
@@ -33,6 +34,7 @@ class RunRecord(DomainModel):
     executed: bool | None
     legitimate_task: bool | None
     control: str | None
+    judge_status: str = "not_applicable"
     directory: str
 
 
@@ -44,6 +46,10 @@ class ExperimentManifest(DomainModel):
     package_version: str
     backend: str
     split: str
+    model_tag: str | None = None
+    model_digest: str | None = None
+    prompt_template: str | None = None
+    judge_version: str | None = None
 
 
 def code_version() -> str:
@@ -75,6 +81,7 @@ def execute(config: ExperimentConfig, directory: Path, *, resume: bool) -> tuple
     for planned in matrix.runs:
         records.append(_one(directory, config, planned, resume=resume))
     _write_records(directory, records)
+    _attach_digest(directory)
     return tuple(records)
 
 
@@ -94,6 +101,8 @@ def verify(directory: Path, scratch: Path) -> bool:
     config = load_config(directory / "config.json")
     if config.fingerprint() != manifest.config_hash:
         return False
+    if config.backend == "ollama":
+        return audit(directory)
     records = [record for record in load_records(directory) if record.status == "completed"]
     if not records:
         return False
@@ -109,7 +118,7 @@ def verify(directory: Path, scratch: Path) -> bool:
 
 def _store_plan(directory: Path, config: ExperimentConfig, matrix: RunMatrix) -> None:
     config_path = directory / "config.json"
-    payload = canonical_json(config.model_dump(mode="json"))
+    payload = canonical_json(config.stored_json())
     if config_path.exists() and config_path.read_text(encoding="utf-8") != payload:
         raise DomainValidationError("directory already holds a different experiment")
     config_path.write_text(payload, encoding="utf-8")
@@ -121,6 +130,9 @@ def _store_plan(directory: Path, config: ExperimentConfig, matrix: RunMatrix) ->
         package_version=__version__,
         backend=config.backend,
         split=config.split,
+        model_tag=config.model_tag,
+        prompt_template=None if config.backend == "scripted" else config.prompt_template,
+        judge_version=None if config.backend == "scripted" else config.judge_version,
     )
     (directory / MANIFEST_NAME).write_text(manifest.model_dump_json(), encoding="utf-8")
     (directory / MATRIX_NAME).write_text(
@@ -156,6 +168,7 @@ def _one(
             executed=None,
             legitimate_task=None,
             control=None,
+            judge_status="invalid",
             directory=str(run_dir),
         )
     return _record(planned, saved, run_dir)
@@ -166,6 +179,22 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
         spec, key = load_heldout(planned.scenario_id)
     else:
         spec, key = load_scenario(planned.scenario_id)
+    agent_backend = None
+    transform_backend = None
+    if config.backend == "ollama":
+        if config.model_tag is None:
+            raise DomainValidationError("an ollama experiment requires a model tag")
+        agent_backend = OllamaBackend(
+            endpoint=config.endpoint,
+            model=config.model_tag,
+            temperature=config.temperature,
+            num_ctx=config.num_ctx,
+            num_predict=config.num_predict,
+            timeout=config.timeout_seconds,
+            max_calls=config.max_model_calls,
+        )
+        if config.transformation_backend == "ollama":
+            transform_backend = agent_backend
     return run_case(
         spec,
         key,
@@ -174,6 +203,9 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
         fidelity=planned.fidelity,
         defense=planned.defense,
         code_version=code_version(),
+        agent_backend=agent_backend,
+        transform_backend=transform_backend,
+        trial=planned.trial,
     )
 
 
@@ -191,8 +223,47 @@ def _record(planned: PlannedRun, result: BenchmarkResult, run_dir: Path) -> RunR
         executed=None if stages is None else stages.executed,
         legitimate_task=result.legitimate_task,
         control=result.control,
+        judge_status=result.judge_status,
         directory=str(run_dir),
     )
+
+
+def _attach_digest(directory: Path) -> None:
+    manifest_path = directory / MANIFEST_NAME
+    if not manifest_path.exists():
+        return
+    manifest = ExperimentManifest.model_validate_json(manifest_path.read_text(encoding="utf-8"))
+    if manifest.backend != "ollama" or manifest.model_digest:
+        return
+    for record in load_records(directory):
+        path = directory / "runs" / f"{record.ordinal:04d}" / "benchmark-result.json"
+        if not path.exists():
+            continue
+        result = BenchmarkResult.model_validate_json(path.read_text(encoding="utf-8"))
+        if result.model_digest is None:
+            continue
+        updated = manifest.model_copy(update={"model_digest": result.model_digest})
+        manifest_path.write_text(updated.model_dump_json(), encoding="utf-8")
+        return
+
+
+def audit(directory: Path) -> bool:
+    """Check the manifest and result files. This does not call a model."""
+    manifest_path = directory / MANIFEST_NAME
+    config_path = directory / "config.json"
+    if not manifest_path.exists() or not config_path.exists():
+        return False
+    manifest = ExperimentManifest.model_validate_json(manifest_path.read_text(encoding="utf-8"))
+    config = load_config(config_path)
+    if config.fingerprint() != manifest.config_hash:
+        return False
+    if config.backend == "ollama" and manifest.model_tag != config.model_tag:
+        return False
+    for record in load_records(directory):
+        result_path = directory / "runs" / f"{record.ordinal:04d}" / "benchmark-result.json"
+        if record.status == "completed" and not result_path.exists():
+            return False
+    return True
 
 
 def _write_records(directory: Path, records: list[RunRecord]) -> None:
