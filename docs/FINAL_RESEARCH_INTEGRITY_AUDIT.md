@@ -92,11 +92,25 @@ checks, not a hosted execution test. The independent verifier ran on a fresh
 scripted directory. SVGs were rasterized and visually inspected for labels and
 clipping. A PDF report is not generated or implied.
 
+## Dependency security audit
+
+A pip-audit 2.10.1 lookup covered six runtime and 60 applicable external
+runtime/development packages exported from uv.lock (project excluded). Runtime
+packages had no reported vulnerabilities. The full development set identified
+certifi 2026.7.22 under
+[GHSA-6q48-6c7w-9gw2](https://github.com/advisories/GHSA-6q48-6c7w-9gw2).
+[PR #12](https://github.com/Yug-More/memoryfence/pull/12) updates its lock entry to
+2026.10.23; all 60 applicable packages then returned no known vulnerabilities.
+Before/after records are preserved with that PR. Other platforms and unknown
+vulnerabilities are outside this lookup; it is not a security guarantee.
+
 ## Unverified requirements and blockers
 
 - Ollama and model weights are absent here; observed free disk was roughly 2.4 GiB
   before additional tooling. No paid infrastructure or substitute model was used.
 - Owner-operated local/Colab execution is required to obtain genuine pilot output.
+  Browser verification loaded the notebook, but Connect explicitly required Google
+  sign-in. No browser runtime was allocated or inference performed.
 - The matched pilot does not cover transformations, deletion, lineage degradation,
   adaptive attacks or multiple models. No empirical answers to those RQs exist.
 - Semantic S0 and S2 judge validity, independent human review, broader utility,

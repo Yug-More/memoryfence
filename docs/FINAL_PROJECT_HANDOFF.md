@@ -81,7 +81,8 @@ fake dashboard, PDF report or public release was generated.
 
 Use [execution readiness](research/EXECUTION_READINESS.md) and the
 [Colab guide](guides/google-colab-pilot.md). Local Ollama/weights are absent and
-storage headroom was about 2.4 GiB before tooling caches (about 1.9 GiB at final QA). On an adequate host,
+storage headroom was about 2.4 GiB before tooling caches (about 1.9 GiB at final QA). The available browser loaded the notebook but Connect returned “Google sign-in
+required”; no runtime was allocated. On an adequate host,
 freeze a full merged revision, install the candidate, record runtime/hardware,
 run doctor/list/smoke, inspect the compatibility pilot, then execute all matched
 pilot cells in a fresh directory. The notebook automatically runs only the older
@@ -103,7 +104,11 @@ New local commits use repository-local `Yug-More <yugmore20@gmail.com>` for auth
 and committer, with no assistant co-author. GitHub merge commits retain its
 platform-generated committer record. No collaborators, apps or bots were added.
 No history was rewritten. Changes use focused PRs and wait for all CI checks.
-No dependencies or model weights were committed. Temporary run/build artifacts
+No new direct dependencies or model weights were added. A separate security
+audit in [PR #12](https://github.com/Yug-More/memoryfence/pull/12) updates only the
+transitive certifi lock entry from 2026.7.22 to 2026.10.23. pip-audit 2.10.1 then
+reported no known vulnerabilities across 60 applicable external packages. This
+point-in-time lookup is not a security guarantee. Temporary run/build artifacts
 stay outside tracked source; historical research records remain intact.
 
 The project is **development-pilot ready**, not empirically complete. The next
