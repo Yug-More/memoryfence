@@ -11,6 +11,9 @@ from memoryfence.domain.ids import WorkspaceId
 from memoryfence.domain.model import ModelRequest, ModelResponse
 from memoryfence.llm.endpoint import require_loopback
 from memoryfence.llm.prompts import (
+    AGENT_RESPONSE_SCHEMA,
+    AGENT_SCHEMA_INSTRUCTIONS,
+    AGENT_SCHEMA_TEMPLATE,
     AGENT_SYSTEM,
     AGENT_TEMPLATE,
     TRANSFORM_SYSTEM,
@@ -87,9 +90,14 @@ class OllamaBackend:
         timeout: float,
         max_calls: int,
         transport: HttpTransport | None = None,
+        output_mode: Literal["native", "json_schema"] = "native",
     ) -> None:
         if not model or len(model) > 128:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the model tag is missing")
+        self.output_mode = output_mode
+        self.agent_template = (
+            AGENT_SCHEMA_TEMPLATE if output_mode == "json_schema" else AGENT_TEMPLATE
+        )
         self._base = require_loopback(endpoint)
         self._model = model
         self._temperature = temperature
@@ -112,7 +120,7 @@ class OllamaBackend:
             tools: tuple[object, ...] = ()
         elif request.purpose is ModelPurpose.AGENT:
             messages = _agent_messages(request)
-            template = AGENT_TEMPLATE
+            template = self.agent_template
             tools = _STANDING
         else:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "model purpose is not supported")
@@ -129,6 +137,9 @@ class OllamaBackend:
         }
         if tools:
             body["tools"] = list(tools)
+        if request.purpose is ModelPurpose.AGENT and self.output_mode == "json_schema":
+            messages[0]["content"] += AGENT_SCHEMA_INSTRUCTIONS + json.dumps(AGENT_RESPONSE_SCHEMA)
+            body["format"] = AGENT_RESPONSE_SCHEMA
         status, raw = self._transport.request(
             "POST",
             f"{self._base}/api/chat",
@@ -222,7 +233,11 @@ def list_models(endpoint: str, transport: HttpTransport | None = None) -> tuple[
 
 
 def smoke_call(
-    endpoint: str, model: str, transport: HttpTransport | None = None
+    endpoint: str,
+    model: str,
+    transport: HttpTransport | None = None,
+    *,
+    output_mode: Literal["native", "json_schema"] = "native",
 ) -> tuple[int, str]:
     """One local chat call. This does not download a model."""
     status, message = doctor(endpoint, transport)
@@ -233,11 +248,12 @@ def smoke_call(
             endpoint=endpoint,
             model=model,
             temperature=0,
-            num_ctx=256,
-            num_predict=64,
+            num_ctx=2048 if output_mode == "json_schema" else 256,
+            num_predict=256 if output_mode == "json_schema" else 64,
             timeout=30,
             max_calls=2,
             transport=transport,
+            output_mode=output_mode,
         )
         response = backend.complete(
             ModelRequest(

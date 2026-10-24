@@ -484,8 +484,9 @@ def memoryfence_command(
     return (uv, "run", "--project", str(root), "--frozen", "memoryfence", *args)
 
 
-def load_pilot(root: Path) -> ExperimentConfig:
-    path = root / "configs" / "ollama-pilot.json"
+def load_pilot(root: Path, *, schema_output: bool = False) -> ExperimentConfig:
+    filename = "ollama-schema-pilot.json" if schema_output else "ollama-pilot.json"
+    path = root / "configs" / filename
     try:
         config = load_config(path)
     except DomainValidationError as error:
@@ -501,8 +502,8 @@ def load_pilot(root: Path) -> ExperimentConfig:
     return config
 
 
-def preview_pilot(root: Path) -> RunMatrix:
-    config = load_pilot(root)
+def preview_pilot(root: Path, *, schema_output: bool = False) -> RunMatrix:
+    config = load_pilot(root, schema_output=schema_output)
     matrix = preview(config)
     scenarios = {run.scenario_id for run in matrix.runs}
     if matrix.valid_count != 4 or matrix.exclusions or scenarios != {"clean-note", "direct-note"}:
@@ -550,7 +551,10 @@ def read_model_metadata(directory: Path) -> ExperimentManifest:
         raise ColabSessionError("the manifest is not the pilot model")
     if not manifest.model_digest:
         raise ColabSessionError("the manifest has no model digest")
-    if manifest.prompt_template != "agent-v1" or manifest.judge_version != "rubric-v1":
+    if (
+        manifest.prompt_template not in {"agent-v1", "agent-v2-json-schema"}
+        or manifest.judge_version != "rubric-v1"
+    ):
         raise ColabSessionError("the manifest prompt or judge version is unexpected")
     if not manifest.code_version:
         raise ColabSessionError("the manifest has no code version")
@@ -561,6 +565,8 @@ def record_smoke_identity(
     endpoint: str,
     model: str,
     transport: HttpTransport | None = None,
+    *,
+    schema_output: bool = False,
 ) -> ModelIdentity:
     if model != PILOT_MODEL_TAG:
         raise ColabSessionError("only qwen2.5:0.5b may be used for this pilot")
@@ -571,11 +577,12 @@ def record_smoke_identity(
         endpoint=endpoint,
         model=model,
         temperature=0,
-        num_ctx=256,
-        num_predict=64,
+        num_ctx=2048 if schema_output else 256,
+        num_predict=256 if schema_output else 64,
         timeout=30,
         max_calls=2,
         transport=transport,
+        output_mode="json_schema" if schema_output else "native",
     )
     try:
         backend.complete(

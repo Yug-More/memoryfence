@@ -794,3 +794,45 @@ def test_scripted_backend_and_cli_still_work(
     directory = tmp_path / "smoke"
     assert main(["experiment", "smoke", "--directory", str(directory)]) == 0
     assert main(["model", "doctor", "--endpoint", "http://example.com"]) == 2
+
+
+def test_notebook_project_steps_run_in_an_isolated_interpreter(tmp_path: Path) -> None:
+    import ast
+
+    notebook = json.loads(NOTEBOOK.read_text())
+    for cell in notebook["cells"]:
+        if cell["cell_type"] == "code":
+            tree = ast.parse("".join(cell["source"]))
+            for node in ast.walk(tree):
+                if (
+                    isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Name)
+                    and node.func.id == "run_project"
+                    and node.args
+                ):
+                    ast.parse(ast.literal_eval(node.args[0]))
+    setup = ast.parse("".join(notebook["cells"][4]["source"]))
+    function = next(
+        n for n in setup.body if isinstance(n, ast.FunctionDef) and n.name == "run_project"
+    )
+    state = tmp_path / "state.json"
+    namespace = {
+        "ROOT": ROOT,
+        "STATE_FILE": state,
+        "IN_COLAB": True,
+        "REVISION": SHA,
+        "FROZEN": True,
+        "SCHEMA_OUTPUT": True,
+        "PILOT_CONFIG": "configs/ollama-schema-pilot.json",
+        "subprocess": subprocess,
+    }
+    exec(  # noqa: S102
+        compile(ast.Module(body=[function], type_ignores=[]), "notebook-runner", "exec"), namespace
+    )
+    run = namespace["run_project"]
+    assert callable(run)
+    run('STAMP = "isolated-test"\nprint("project subprocess imported successfully")')
+    assert json.loads(state.read_text())["STAMP"] == "isolated-test"
+    with pytest.raises(RuntimeError, match="Project step failed"):
+        run('STAMP = "failure-preserved"\nraise SystemExit(2)')
+    assert json.loads(state.read_text())["STAMP"] == "failure-preserved"

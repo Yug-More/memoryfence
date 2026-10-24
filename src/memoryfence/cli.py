@@ -37,6 +37,7 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--endpoint", default="http://127.0.0.1:11434")
     smoke_model = model_commands.add_parser("smoke")
     smoke_model.add_argument("--model", required=True)
+    smoke_model.add_argument("--output-mode", choices=["native", "json_schema"], default="native")
     smoke_model.add_argument("--endpoint", default="http://127.0.0.1:11434")
     experiment = commands.add_parser("experiment", help="scripted experiment matrix")
     experiment_commands = experiment.add_subparsers(dest="experiment_command", required=True)
@@ -149,7 +150,7 @@ def _model(args: argparse.Namespace) -> int:
         sys.stdout.write(message + "\n")
         return status
     if args.model_command == "smoke":
-        status, message = smoke_call(args.endpoint, args.model)
+        status, message = smoke_call(args.endpoint, args.model, output_mode=args.output_mode)
         sys.stdout.write(message + "\n")
         return status
     return 2
