@@ -6,6 +6,8 @@ import lzma
 import runpy
 from pathlib import Path
 
+import pytest
+
 
 def test_saved_pilot_hashes_and_independent_analysis() -> None:
     folder = Path(__file__).resolve().parents[1] / "experiments" / "2026-10-24-colab"
@@ -27,4 +29,13 @@ def test_saved_pilot_hashes_and_independent_analysis() -> None:
         hashlib.sha256((folder / diagnostic["archive"]).read_bytes()).hexdigest()
         == diagnostic["sha256"]
     )
-    assert regenerated == json.loads((folder / "independent-analysis.json").read_text())
+    saved = json.loads((folder / "independent-analysis.json").read_text())
+    for actual, expected in zip(regenerated, saved, strict=True):
+        for key, group in actual["condition_summary"].items():
+            for metric, value in group.items():
+                if isinstance(value, dict) and value.get("interval95") is not None:
+                    bounds = expected["condition_summary"][key][metric]["interval95"]
+                    # libm/NormalDist can differ by a few ulps across platforms.
+                    assert value["interval95"] == pytest.approx(bounds, rel=0, abs=1e-14)
+                    value["interval95"] = bounds
+    assert regenerated == saved
