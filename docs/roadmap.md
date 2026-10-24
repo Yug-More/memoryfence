@@ -124,3 +124,21 @@ See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and t
 | Private vulnerability reporting | Enable it in the repository's security settings | Awaiting owner |
 | Hosted-model budget | None by default | Awaiting owner |
 | ORCID and affiliation in `CITATION.cff` | Add only if the owner provides them | Awaiting owner |
+
+## Recovery completion record — 24 October 2026
+
+- Recovery and architecture verification: merged in PR #9.
+- Model identity, durable evidence, checkpoints, scoring and denominators: repaired
+  in PR #10; 180 tests passed. Three matched ticket templates supplement the
+  eighteen historical mechanism fixtures.
+- Genuine empirical execution: blocked by absent local runtime/weights and limited
+  disk; owner-operated Colab/local execution remains required. The 24-cell matched
+  development pilot is a plan only.
+- Preliminary methodology report, independent arithmetic verifier, README identity,
+  integrity audit and handoff: prepared in the documentation workstream.
+- Full bibliography refresh, semantic survival, judge validation, paired cached
+  transformations, broader utility, missing confirmatory procedures, preregistration
+  and representative held-out study remain open.
+
+See [handoff](FINAL_PROJECT_HANDOFF.md) for reproduction and the evidence needed next.
+No phase label overrides the explicit absence of genuine model results.

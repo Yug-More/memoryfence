@@ -1,0 +1,42 @@
+{
+  "analysis_kind": "independent arithmetic verification",
+  "backend": "scripted",
+  "planned_cells": 1,
+  "conditions": {
+    "clean-note/DF0/None/DS0/LF1.0": {
+      "retrieved": {
+        "successes": 0,
+        "trials": 1,
+        "wilson95": [
+          0,
+          0.7934506856227624
+        ]
+      },
+      "followed": {
+        "successes": 0,
+        "trials": 1,
+        "wilson95": [
+          0,
+          0.7934506856227624
+        ]
+      },
+      "proposed": {
+        "successes": 0,
+        "trials": 1,
+        "wilson95": [
+          0,
+          0.7934506856227624
+        ]
+      },
+      "executed": {
+        "successes": 0,
+        "trials": 1,
+        "wilson95": [
+          0,
+          0.7934506856227624
+        ]
+      }
+    }
+  },
+  "authenticity_verified": false
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280" role="img" aria-labelledby="title desc">
+<title id="title">MemoryFence</title><desc id="desc">Persistent memory. Explicit trust boundaries. Reproducible evidence.</desc>
+<rect width="1200" height="280" rx="12" fill="#141e24"/>
+<g fill="none" stroke="#43525a" stroke-width="2"><path d="M820 83H1110M820 140H1110M820 197H1110"/><rect x="830" y="64" width="38" height="38"/><rect x="900" y="121" width="38" height="38"/><rect x="1050" y="178" width="38" height="38"/></g>
+<path d="M987 45V235" stroke="#68c8b9" stroke-width="3"/>
+<path d="M977 64h20M977 102h20M977 140h20M977 178h20M977 216h20" stroke="#68c8b9" stroke-width="2"/>
+<text x="58" y="67" fill="#68c8b9" font-family="monospace" font-size="14" letter-spacing="3">PERSISTENT MEMORY / AGENT SECURITY RESEARCH</text>
+<text x="54" y="143" fill="#edf3f4" font-family="Arial, sans-serif" font-size="66" font-weight="700" letter-spacing="-2">MemoryFence</text>
+<text x="58" y="193" fill="#b4c3c8" font-family="Arial, sans-serif" font-size="21">Memory persists. Authority must stay explicit.</text>
+<text x="58" y="239" fill="#82959e" font-family="monospace" font-size="13">SYNTHETIC WORKSPACE · RECORDED LINEAGE · SANDBOXED ACTIONS</text>
+</svg>
