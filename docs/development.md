@@ -196,11 +196,13 @@ revision-locked resume, result checksums, strengthened audit and condition-speci
 denominators. Historical fixtures remain regression tools; source/objective
 mismatches disqualify them for real-model source-compliance interpretation.
 
-The 24-cell matched development configuration is
-`configs/ollama-ticket-pilot.json`. Its three templates align harmless ticket
-objectives, schemas and exact predicates. It is planned, not executed. The Colab
-notebook still automatically runs the older four-cell compatibility configuration.
-Run the matched pilot separately after inspecting compatibility outputs.
+The native configuration `configs/ollama-ticket-pilot.json` remains unexecuted.
+The separately identified schema configuration `configs/ollama-ticket-schema-pilot.json`
+completed 24 cells, alongside four schema compatibility cells. Baseline utility
+failed; see [the results report](research/COLAB_PILOT_RESULTS.md). Recalculate the
+saved genuine evidence with `uv run python experiments/2026-10-24-colab/analyze.py`.
+Actual Colab execution used archived drivers; the complete revised notebook was
+not independently demonstrated through unattended Run All.
 
 After `experiment summarize`, independently verify primary stage counts and Wilson
 intervals with `uv run python scripts/recalculate.py <experiment-directory>`. This

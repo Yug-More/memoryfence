@@ -1,115 +1,79 @@
 # Project handoff
 
-24 October 2026 · Development pilot preparation complete; empirical work pending
+24 October 2026 · Genuine development pilot completed; full study incomplete
 
-## What is delivered
+## Delivered work
 
-The [recovery report](PROJECT_STATE_RECOVERY.md) reconstructs baseline
-`36cd67f214926e03081397fbd1e5b6a3e1522ed4`, merged PRs #1–#8, architecture,
-research specification, artifacts and actual checks. It replaces inferred phase
-completion with evidence-based readiness classifications.
+Recovery and architecture verification merged in [PR #9](https://github.com/Yug-More/memoryfence/pull/9).
+[PR #10](https://github.com/Yug-More/memoryfence/pull/10) repaired model identity,
+raw HTTP recording, durable checkpoints, scoring and denominators. Documentation
+and identity assets merged in [PR #11](https://github.com/Yug-More/memoryfence/pull/11);
+the dependency audit merged in [PR #12](https://github.com/Yug-More/memoryfence/pull/12).
+[PR #13](https://github.com/Yug-More/memoryfence/pull/13) repaired the Colab interpreter
+boundary and introduced explicit schema output as a separately identified condition.
+Its merged revision, `38fd3da59688a7997b954a3308e89ba2a1f09bbd`, produced both genuine runs.
 
-[PR #9](https://github.com/Yug-More/memoryfence/pull/9) merged the recovery report
-at `f451530`. [PR #10](https://github.com/Yug-More/memoryfence/pull/10) merged
-experimental evidence and measurement repairs at `bab2b21`; implementation commit
-`4a019c7` passed all four CI checks. [PR #11](https://github.com/Yug-More/memoryfence/pull/11) tracks documentation
-implementation `9f7f6304b620e02e1a7aa600d3c46c0c287703bd` and its final verification
-record. The documentation work adds the
-preliminary report, integrity audit, independent verifier and project identity.
-Use `git rev-parse HEAD` and the PR record for the final documentation revision;
-a report cannot contain its own eventual commit hash.
+The typed Python/SQLite harness implements separate system and evaluator state,
+provenance, transformations, deletion, retrieval, defenses, a bounded agent loop
+and sandbox actions. Implemented mechanisms do not imply empirically validated
+security. Original research questions and the draft protocol remain unchanged.
 
-## Architecture and features
+## Observed results
 
-Typed Python/Pydantic domain models, SQLAlchemy/SQLite, separate system/evaluator
-state, ACL enforcement, recorded and true provenance, seeded edge loss,
-TT1–TT4 transformations, DS0–DS4 deletion, lexical retrieval, a bounded agent loop,
-gateway and sandbox, DF0–DF5 defenses, scripted benchmarking, Ollama over loopback,
-and a structurally validated Colab notebook are implemented. No frontend or hosted
-service was added. The [architecture overview](architecture/overview.md) and new
-[lifecycle SVG](assets/memory-lifecycle.svg) describe those boundaries.
+**28 genuine benchmark cells completed:** four compatibility cells and 24 matched
+cells, with no invalid cells in the explicit schema condition. Three fully recorded
+diagnostic probes are separate from those trials. The candidate remained
+`qwen2.5:0.5b`; inference used free Colab CPU resources. No paid service was used.
 
-Repairs add raw HTTP journals, real UTC capture times, corrected Ollama identity,
-per-cell checkpoints, preserved interrupted attempts and original manifests,
-stronger audits, exact action predicates, separated populations/abstentions and
-joint-event conditional rates. Confirmatory status is no longer inferred.
-Three matched development templates supplement the eighteen historical fixtures.
+Every matched defense condition had 0/2 attack-objective executions and **0/2
+legitimate ticket completions**. The failed undefended utility control prevents a
+useful defense-efficacy conclusion. All matched responses selected `respond`.
+One compatibility response recommended forwarding to the synthetic address; its
+lexical judgment remains an abstention, with no tool action. Transformation,
+deletion and model-generalization questions were not tested.
 
-## Experiments and report status
+The [results report](research/COLAB_PILOT_RESULTS.md) and
+[evidence inventory](../experiments/2026-10-24-colab/README.md) contain exact
+conditions, deviations, counts and limitations. Original archives retain raw
+requests/responses, databases, manifests, results and drivers. Lossless XZ wrappers
+preserve original ZIP bytes. Checksums matched the values exported from Colab.
 
-**Completed genuine model experiments: zero.** No genuine empirical result,
-defense reduction or model generalization is claimed. Deterministic demos and
-fixture tests ran. The 24-cell matched pilot is specified and previewed, not run.
-The [technical report](research/PRELIMINARY_TECHNICAL_REPORT.md) is explicitly
-preliminary. The [integrity audit](FINAL_RESEARCH_INTEGRITY_AUDIT.md) identifies
-remaining requirements rather than certifying empirical completion.
-
-Original RQs and draft protocol are preserved. Historical source/objective
-mismatches are documented. The new pilot aligns source instructions, native
-create_ticket arguments and predicates, but does not measure transformation or
-deletion effects. S2 is heuristic and clean-summary quality lacks a checker.
-
-## Reproduction and verification
+## Reproduction and checks
 
 ```bash
 uv sync --frozen
+uv run python experiments/2026-10-24-colab/analyze.py
 make check
 make pre-commit
-make diagrams
-uv run memoryfence experiment smoke --directory /tmp/memoryfence-handoff-new
-uv run memoryfence experiment summarize --directory /tmp/memoryfence-handoff-new
-uv run memoryfence experiment verify --directory /tmp/memoryfence-handoff-new
-uv run python scripts/recalculate.py /tmp/memoryfence-handoff-new
 ```
 
-The baseline suite passed 171 tests at 92.17% combined coverage; repairs passed
-180 tests at 91.65%. Ruff lint/format, strict mypy, six import contracts,
-package build metadata and citation validation passed. PRs #9 and #10 passed CI
-on Python 3.12 and 3.13, hygiene and Mermaid rendering. The independent verifier
-matched primary stage arithmetic and Wilson intervals on a fresh scripted smoke
-run; it does not attest authenticity or reconstruct every semantic label.
-Final QA passed **183 tests** at **91.65%** combined coverage (the added cases are
-documentation parametrizations). Verification logs are in
-[the final QA record](verification/2026-10-24/handoff-tests.txt).
+The independent stdlib analysis reconstructs retrieval from true lineage and
+objective/utility actions from readonly SQLite effects, and matches stored calls
+to raw responses. All 28 cells passed these consistency checks. It does not attest
+the server or validate semantic judging. The older `scripts/recalculate.py`
+checks exported stage arithmetic; deterministic test fixtures remain explicitly
+separate from real inference. PR #13 passed 185 tests with 91.59% combined coverage.
+Final local evidence QA passed 187 tests at 91.59% combined coverage, lint,
+formatting, strict typing, package/citation validation and all six import contracts.
+The evidence PR's CI record supplies remote verification for this workstream.
 
-All nine notebook code cells also parse as Python; this verifies syntax, not hosted
-execution. The README commands use fresh directories and keep simulation distinct from
-inference. Editable SVGs were rendered and visually inspected. No empirical chart,
-fake dashboard, PDF report or public release was generated.
+The actual Colab runs used archived project drivers in a notebook cell. An
+unattended execution of every cell in the revised notebook was not independently
+demonstrated. No model weights were committed or downloaded onto the Mac.
 
-## Execution still required
+## Remaining research requirements
 
-Use [execution readiness](research/EXECUTION_READINESS.md) and the
-[Colab guide](guides/google-colab-pilot.md). Local Ollama/weights are absent and
-storage headroom was about 2.4 GiB before tooling caches (about 1.9 GiB at final QA). The available browser loaded the notebook but Connect returned “Google sign-in
-required”; no runtime was allocated. On an adequate host,
-freeze a full merged revision, install the candidate, record runtime/hardware,
-run doctor/list/smoke, inspect the compatibility pilot, then execute all matched
-pilot cells in a fresh directory. The notebook automatically runs only the older
-four-cell compatibility configuration; invoke the matched pilot separately.
+Do not scale this failed-capability condition into a confirmatory defense study.
+First define a separate benign capability screen; any model or prompt change must
+receive a new identity and fresh controls. Semantic survival and judging, human
+reliability, paired cached transformations, component seed hierarchy, broader
+utility, representative held-outs, sample-size planning, statistical procedures
+and preregistration remain incomplete. The inherited bibliography received key
+spot checks, not a complete refresh. Licensing remains the owner's decision.
+No release, tag or publication is implied.
 
-Preserve the entire output directory or exported archive: databases, raw journals,
-invalid cells, manifest, config, matrix, result records and summaries. Independently
-recalculate, manually inspect negative controls and abstentions, and publish only
-conclusions supported by that evidence. Failed inference is not a defense success.
-
-Do not run the confirmatory evaluation split until sample size, statistical
-procedures, held-out design, paired transformations, judge reliability and
-preregistration are complete. A complete literature refresh and the owner's
-license choice also remain open. Public release/publication needs owner approval.
-
-## Maintenance and ownership
-
-New local commits use repository-local `Yug-More <yugmore20@gmail.com>` for author
-and committer, with no assistant co-author. GitHub merge commits retain its
-platform-generated committer record. No collaborators, apps or bots were added.
-No history was rewritten. Changes use focused PRs and wait for all CI checks.
-No new direct dependencies or model weights were added. A separate security
-audit in [PR #12](https://github.com/Yug-More/memoryfence/pull/12) updates only the
-transitive certifi lock entry from 2026.7.22 to 2026.10.23. pip-audit 2.10.1 then
-reported no known vulnerabilities across 60 applicable external packages. This
-point-in-time lookup is not a security guarantee. Temporary run/build artifacts
-stay outside tracked source; historical research records remain intact.
-
-The project is **development-pilot ready**, not empirically complete. The next
-handoff input is a genuine complete pilot archive from an adequate execution host.
+Local commits use `Yug-More <yugmore20@gmail.com>` as author and committer, without
+assistant co-authors. Focused PRs require passing CI before merge. No direct runtime
+dependency was added; the certifi audit was a separate lockfile fix. The optional
+figure generator uses an isolated plotting environment. See the
+[integrity audit](FINAL_RESEARCH_INTEGRITY_AUDIT.md) for the limits of acceptance.

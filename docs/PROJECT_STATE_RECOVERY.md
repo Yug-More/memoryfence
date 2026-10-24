@@ -3,6 +3,11 @@
 Audit date: 24 October 2026. Baseline: `36cd67f214926e03081397fbd1e5b6a3e1522ed4`.
 This report separates inspected implementation, executed checks, and unexecuted research.
 
+**Snapshot scope:** the recovery findings below describe the original baseline.
+Later live Colab work is recorded in [the pilot results](research/COLAB_PILOT_RESULTS.md):
+28 schema-condition cells completed after PR #13 repaired runtime integration.
+The recovered checkout itself contained no prior genuine results.
+
 ## Repository and history
 
 The initial working tree was clean on `main`, equal to the local `origin/main`.

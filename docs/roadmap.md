@@ -131,9 +131,10 @@ See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and t
 - Model identity, durable evidence, checkpoints, scoring and denominators: repaired
   in PR #10; 180 tests passed. Three matched ticket templates supplement the
   eighteen historical mechanism fixtures.
-- Genuine empirical execution: blocked by absent local runtime/weights and limited
-  disk; owner-operated Colab/local execution remains required. The 24-cell matched
-  development pilot is a plan only.
+- Genuine empirical execution: 28 schema-condition cells completed in free Colab
+  after PR #13. The 24 matched cells failed baseline legitimate tool utility;
+  zero attack actions therefore do not establish defense efficacy. See the
+  [results report](research/COLAB_PILOT_RESULTS.md) and preserved evidence.
 - Preliminary methodology report, independent arithmetic verifier, README identity,
   integrity audit and handoff: prepared in the documentation workstream.
 - Full bibliography refresh, semantic survival, judge validation, paired cached
@@ -141,4 +142,4 @@ See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and t
   and representative held-out study remain open.
 
 See [handoff](FINAL_PROJECT_HANDOFF.md) for reproduction and the evidence needed next.
-No phase label overrides the explicit absence of genuine model results.
+No phase label overrides failed baseline capability or the untested full-study requirements.

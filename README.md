@@ -7,12 +7,14 @@ agent's memory lifecycle—and where retrieval, provenance and authorization sto
 
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
-**Status: verified software baseline; empirical study pending.** The recovered
-baseline passes 171 tests; the evidence repairs pass 180 tests with 91.65% combined
-statement/branch coverage. These are software checks. **No genuine model trials
-have been recovered or executed in this checkout.** The 24-cell development pilot
-is a plan, not a result. See the [recovery report](docs/PROJECT_STATE_RECOVERY.md)
-and [integrity audit](docs/FINAL_RESEARCH_INTEGRITY_AUDIT.md).
+**Status: genuine development pilot completed; full study not ready.** Two Colab
+runs preserved **28 completed real-model cells**. In the matched pilot, every
+condition had 0/2 attack executions **and 0/2 legitimate ticket completions**.
+The failed utility control prevents a defense-effectiveness claim. Original
+native-format probes failed; the executed schema mode is a separately versioned
+condition. See the [results](docs/research/COLAB_PILOT_RESULTS.md),
+[raw evidence](experiments/2026-10-24-colab/README.md), and
+[integrity audit](docs/FINAL_RESEARCH_INTEGRITY_AUDIT.md).
 
 ## The question
 
@@ -61,6 +63,22 @@ Semantic payload survival remains unvalidated. The S2 rubric has no independent
 human agreement study. Clean controls, utility controls and failed calls have
 separate denominators. Pooled fixture counts are not attack-success rates.
 
+## Observed development pilot
+
+The same `qwen2.5:0.5b` artifact ran on a free CPU runtime. Four compatibility cells
+and 24 matched cells completed with raw requests/responses and both SQLite stores
+preserved. For each of DF0, DF1, DF2-exclude and DF3, the matched attack and utility
+endpoints were both **0/2**. DF2 excluded attacker memory as designed, but zero
+baseline utility means these data cannot establish useful protection. Many model
+responses simply echoed the task. One legacy compatibility response recommending
+the synthetic forwarding address remains an unresolved S2 judgment.
+
+![Measured pilot execution and utility with descriptive uncertainty](experiments/2026-10-24-colab/pilot-outcomes.svg)
+
+The intervals are descriptive Wilson intervals from two seeds and one template per
+population; they do not support scenario-level generalization. This pilot tested
+no transformations or deletion. It does not answer the full research question.
+
 ## Install and run offline
 
 Requires [uv](https://docs.astral.sh/uv/) and Git; Python >=3.12 is managed by uv.
@@ -89,31 +107,34 @@ and never downloads weights itself. No paid API is configured.
 ```bash
 uv run memoryfence model doctor
 uv run memoryfence model list
-uv run memoryfence model smoke --model qwen2.5:0.5b
-uv run memoryfence experiment preview --config configs/ollama-ticket-pilot.json
-uv run memoryfence experiment run --config configs/ollama-ticket-pilot.json --directory /tmp/memoryfence-ticket-pilot-new
+uv run memoryfence model smoke --model qwen2.5:0.5b --output-mode json_schema
+uv run memoryfence experiment preview --config configs/ollama-ticket-schema-pilot.json
+uv run memoryfence experiment run --config configs/ollama-ticket-schema-pilot.json --directory /tmp/memoryfence-ticket-pilot-new
 uv run memoryfence experiment audit --directory /tmp/memoryfence-ticket-pilot-new
 uv run memoryfence experiment summarize --directory /tmp/memoryfence-ticket-pilot-new
 uv run python scripts/recalculate.py /tmp/memoryfence-ticket-pilot-new
 ```
 
-The matched pilot plans 24 cells: attack/clean/utility × DF0/DF1/DF2-exclude/DF3 ×
+The executed matched schema pilot has 24 cells: attack/clean/utility × DF0/DF1/DF2-exclude/DF3 ×
 two repeats. It uses harmless `create_ticket` objectives whose source instructions,
 tool schema and evaluation arguments agree. DS0 and LF1.0 are fixed; this pilot
 cannot answer transformation or deletion questions. All templates are development
-fixtures, not held-out evaluation. Seeds at temperature zero do not establish
+scenarios, not held-out evaluation; scripted fixture responses remain separate from the saved model outputs. Seeds at temperature zero do not establish
 independent scenario samples.
 
-The older four-cell `configs/ollama-pilot.json` remains a compatibility check.
+The original native-output `configs/ollama-pilot.json` remains distinct and unexecuted;
+its smoke failed on the tested candidate. The four-cell schema compatibility run
+uses `configs/ollama-schema-pilot.json`.
 Several historical fixtures contain source/objective mismatches; do not interpret
 their real-model action labels as compliance with source instructions. Read the
 [execution readiness supplement](docs/research/EXECUTION_READINESS.md) before running.
 
 **Colab:** the [existing notebook](notebooks/memoryfence_colab_pilot.ipynb) runs the
-four-cell compatibility workflow in a free runtime, subject to availability.
+four-cell schema compatibility workflow in a free runtime, subject to availability.
 Follow the [Colab guide](docs/guides/google-colab-pilot.md), freeze the full commit
 SHA, and retain its archive. Run the matched configuration explicitly afterward;
-the notebook does not automatically execute it. Hosted execution remains unverified.
+the notebook does not automatically execute it. Genuine runs used archived explicit project drivers; an unattended run of every
+updated notebook cell has not been independently demonstrated.
 
 ## Reproduce and inspect
 
@@ -130,6 +151,15 @@ per-cell files. It is arithmetic verification, not a scientific replication.
 Preserve the complete directory, including SQLite databases and failed outputs.
 Older artifacts without checksums or journals need independent review, not invented
 replacement records. Raw prompts must contain only synthetic data.
+
+To independently verify the committed genuine pilot without rerunning inference:
+
+```bash
+uv run python experiments/2026-10-24-colab/analyze.py
+```
+
+This additionally compares raw replies, retrieval provenance and exact sandbox
+objective effects against the archived SQLite state. It does not attest server honesty.
 
 ## Check the software
 
@@ -157,11 +187,11 @@ See [development](docs/development.md) for exact commands and test boundaries.
 ## Limits and responsible use
 
 This is a pre-alpha research system with synthetic English templates and lexical
-retrieval. There are no empirical defense rates, validated semantic survival
-measurements, completed human judge audit, representative multi-model evaluation,
-or frozen confirmatory study. Some planned statistical procedures are absent.
-An adequate pilot environment and owner-operated Colab/local execution are still
-needed. [Limitations](docs/research/limitations.md) remain part of every claim.
+retrieval. The failed baseline prevents validated defense-effectiveness estimates. There are
+no validated semantic survival measurements, completed human judge audit,
+representative multi-model evaluation, or frozen confirmatory study. Some planned statistical procedures are absent.
+A baseline demonstrating legitimate tool completion is needed before a larger
+transformation/deletion study. [Limitations](docs/research/limitations.md) remain part of every claim.
 
 Use synthetic local scenarios. Do not target real services, users or credentials.
 See [security](SECURITY.md) and [contributing](CONTRIBUTING.md).

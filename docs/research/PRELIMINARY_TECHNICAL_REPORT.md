@@ -2,9 +2,10 @@
 
 24 October 2026 · Development methodology and engineering recovery
 
-**Research status:** no genuine model trials available. This document reports
-verified software behavior and methodological findings, not empirical evidence
-that memory poisoning works or that a defense is effective.
+**Historical recovery report:** this text records the pre-execution engineering
+snapshot. The later [genuine Colab results](COLAB_PILOT_RESULTS.md) supersede its
+zero-trial status: 28 cells completed, with failed baseline utility preventing a
+defense-effectiveness conclusion. The design limitations below remain applicable.
 
 ## Abstract
 
