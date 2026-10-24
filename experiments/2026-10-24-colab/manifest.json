@@ -1,0 +1,77 @@
+{
+  "study_status": "exploratory development pilot; not confirmatory",
+  "execution_date": "2026-10-24",
+  "evidence_transfer": "explicit notebook output containing base64 of original archives; transport and original ZIP checksums matched before local analysis",
+  "runs": [
+    {
+      "archive": "schema-compatibility.zip.xz",
+      "transport_sha256": "4b62f77ac46386f0b76e1684234a49cab05ab521564dd7356f2b85aa9df85867",
+      "original_zip_sha256": "a6af40366ecfefe035e4caab333178797144b6d7364648bceb09abe715079ccb",
+      "original_zip_bytes": 91463,
+      "experiment_id": "ollama-schema-pilot",
+      "code_revision": "38fd3da59688a7997b954a3308e89ba2a1f09bbd",
+      "model_tag": "qwen2.5:0.5b",
+      "model_digest": "a8b0c51577010a279d933d14c2a8ab4b268079d44c5c8830c0a93900f1827c67",
+      "prompt_template": "agent-v2-json-schema",
+      "planned_cells": 4,
+      "completed_cells": 4,
+      "invalid_cells": 0,
+      "raw_chat_response_count": 4,
+      "runtime": {
+        "python_version": "3.12.3",
+        "ram_bytes": 13605830656,
+        "ram_available_bytes": 12261306368,
+        "disk_free_bytes": 90514984960,
+        "cpu_count": 2,
+        "gpu_available": false,
+        "gpu_name": null,
+        "limitations": [
+          "no NVIDIA GPU was detected; the pilot will use the CPU"
+        ]
+      },
+      "production_audit": true
+    },
+    {
+      "archive": "schema-matched.zip.xz",
+      "transport_sha256": "2809aa59374819614dbd5ca79a7b301a2aad119753efa5003ce366138841dcc3",
+      "original_zip_sha256": "13ea8aff918dde2722e50172b092b23a2a550eea5c83d25aff5a7ad680046832",
+      "original_zip_bytes": 516786,
+      "experiment_id": "ollama-ticket-schema-pilot",
+      "code_revision": "38fd3da59688a7997b954a3308e89ba2a1f09bbd",
+      "model_tag": "qwen2.5:0.5b",
+      "model_digest": "a8b0c51577010a279d933d14c2a8ab4b268079d44c5c8830c0a93900f1827c67",
+      "prompt_template": "agent-v2-json-schema",
+      "planned_cells": 24,
+      "completed_cells": 24,
+      "invalid_cells": 0,
+      "raw_chat_response_count": 24,
+      "runtime": {
+        "python_version": "3.12.3",
+        "ram_bytes": 13605830656,
+        "ram_available_bytes": 11684634624,
+        "disk_free_bytes": 90503471104,
+        "cpu_count": 2,
+        "gpu_available": false,
+        "gpu_name": null,
+        "limitations": [
+          "no NVIDIA GPU was detected; the pilot will use the CPU"
+        ]
+      },
+      "production_audit": true
+    }
+  ],
+  "diagnostics": {
+    "archive": "native-diagnostics.zip",
+    "sha256": "b737e1d5924b551763ae42b25050ab505d4ad79ca3f079a08c7169e79c954519",
+    "raw_recorded_chat_probes": 3,
+    "benchmark_trials": 0,
+    "note": "Two malformed native probes and one schema probe; additional CLI smoke logs are not counted as benchmark trials."
+  },
+  "limitations": [
+    "Single 0.5B model and three matched development templates",
+    "No transformations or deletion in pilot",
+    "Schema mode is a separate output/prompt condition",
+    "Baseline legitimate task completion failed; no defense effectiveness inference",
+    "No independent execution attestation or human judge agreement"
+  ]
+}

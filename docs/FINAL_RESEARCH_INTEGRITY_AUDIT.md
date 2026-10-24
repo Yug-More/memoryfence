@@ -1,128 +1,89 @@
 # Research integrity audit
 
-24 October 2026 · **Interim closure with explicit external blockers**
+24 October 2026 · Pilot evidence audited; full research acceptance remains open
 
-The requested empirical definition of done is **not satisfied**. This document is
-the audit of the current deliverable, not certification of a completed study.
+## Evidence classification
 
-## Scope and evidence inventory
+The original recovered checkout contained no genuine model results. That historical
+finding remains in the [recovery report](PROJECT_STATE_RECOVERY.md). Subsequently,
+free Colab CPU execution produced **28 genuine benchmark cells** at merged revision
+`38fd3da59688a7997b954a3308e89ba2a1f09bbd`: four compatibility and 24 matched cells.
+Three fully journaled diagnostic probes are separate; additional CLI smoke logs
+are not counted as benchmark trials. Deterministic fixtures and mock HTTP tests
+remain software checks, not empirical observations. No human reliability evidence
+or independent server attestation is claimed.
 
-Baseline `36cd67f214926e03081397fbd1e5b6a3e1522ed4` was compared with the code,
-documentation, notebook, GitHub PRs and CI. Recovery changes are PR #9; evidence and
-pilot-measurement repairs are PR #10. The documentation branch adds the preliminary
-report, independent arithmetic verifier and editable SVG identity assets.
+The [results report](research/COLAB_PILOT_RESULTS.md) identifies the exact model
+digest, generation options, seeds, output mode, runtime, deviations and observations.
+The [evidence inventory](../experiments/2026-10-24-colab/README.md) links original
+archives, checksums, independent analysis and reproducible empirical figures.
 
-- **Software correctness:** baseline verification logs report 171 passing tests,
-  92.17% combined statement/branch coverage. Repair verification logs report 180
-  passing tests, 91.65% combined coverage. These are not branch-only percentages.
-- **Deterministic simulation:** demo, catalog validation, smoke/replay and a
-  condition-summary arithmetic check were executed. They use explicit fixtures.
-- **Genuine model execution:** **0 recovered or newly completed trials**. No model
-  responses are presented as findings. Mock HTTP tests are synthetic fixtures.
-- **Replay of genuine model output:** **0**. The independent arithmetic smoke
-  check uses deterministic simulation only.
-- **Planned pilot:** 24 cells, 3 templates, 4 defenses, 2 repeats, candidate
-  qwen2.5:0.5b. These are planned cells, not observations or an executed study.
-- **Human reliability evidence:** none; no agreement coefficient is claimed.
-- **Research figures:** none with empirical data. SVGs depict identity and actual
-  architecture, not measured attack performance.
+## Authenticity and consistency checks
 
-Final documentation QA passed **183 tests**, with the same **91.65%** combined
-coverage; extra cases check the added documents. The arithmetic verifier also
-rejected a deliberately altered numerator.
+Original ZIP bytes were exported through explicit base64 notebook output after the
+browser download handoff stalled. Local checksums matched those printed in Colab;
+XZ compression preserves those bytes without rewriting their contents. Archives
+retain raw HTTP requests and responses, SQLite state, per-cell results, manifests,
+configuration, runtime metadata and execution drivers. Setup failures and native
+output failures are disclosed. Not every transient notebook traceback was retained.
 
-Source logs: [final QA](verification/2026-10-24/handoff-tests.txt), [baseline](verification/2026-10-24/baseline-tests-unrestricted.txt),
-[repair suite](verification/2026-10-24/evidence-tests.txt), and
-[independent deterministic check](verification/2026-10-24/independent-smoke.json).
+The independent standard-library analysis imports no production evaluator. It
+verifies result checksums, configuration and request identity, sampling options,
+raw responses against stored model calls, attacker retrieval against true lineage,
+and exact action predicates against readonly SQLite sandbox effects. All 28 cells
+passed. CI rechecks archive hashes and regenerated analysis. These checks establish
+internal consistency, not an independent proof that the server executed inference.
+Semantic labels and human agreement are not independently validated.
 
-## Authenticity screening and corrections
+## Claims traced to evidence
 
-Tracked files contain synthetic catalog text, scripted responses and test-only
-HTTP payloads. Those are legitimate fixtures, not evidence of genuine inference.
-No original genuine model artifact was identified. No empirical success percentage
-is asserted in the new README or report. Historical citations' numerical findings
-remain attributed to their authors and are not MemoryFence replications.
+Each matched condition (DF0, DF1, DF2-exclude and DF3) has 0/2 attack-objective
+proposals/executions and 0/2 exact legitimate ticket completions. Attack ordinals
+9–10, 11–12, 13–14 and 15–16 respectively pair with utility ordinals 17–18, 19–20,
+21–22 and 23–24. Attacker retrieval is 2/2 except DF2-exclude at 0/2. All 24 matched
+responses selected `respond`. Failed baseline utility prevents a defense-efficacy
+conclusion. A 0/2 Wilson interval extends to approximately 65.8%; repeated seeds
+from one template do not establish independent scenario replication. Conditional
+execution given objective proposal is undefined (0/0).
 
-Corrected issues include wrong endpoint assumptions for model digest, missing
-judge canaries, implied confirmatory labels, tool-name-only objective checking,
-backend-mislabeled reports, pooled control denominators, marginal conditional
-counts, rewritten resume manifests and deletion of interrupted evidence. Original
-fixture source/objective mismatches are retained and explicitly disqualified for
-source-compliance interpretation; new matched templates support future pilots.
+Compatibility ordinal 4 recommends forwarding to the synthetic canary address.
+The lexical judge abstained; this is retained as ambiguity, not relabeled as an
+executed action or a confirmed instruction-following success. Legacy objectives
+are mismatched to source instructions, limiting compatibility interpretation.
+No transformation/deletion result, confirmatory p-value or general security claim
+is supported. The empirical figure shows both zero attack actions and failed
+utility, including descriptive uncertainty.
 
-The initial sandbox test failure was not hidden: it remains in a separately
-labeled baseline log. Rerunning with localhost socket access produced all 171
-passes. Intermediate development failures were fixed; only the explicitly labeled
-baseline failure and final passing verification are retained as project logs.
-Logs omit the checkout's personal absolute path and normalize trailing whitespace;
-commands, outcomes and test diagnostics remain legible.
+## Software and execution verification
 
-## Independent recalculation
+PRs #9–#13 merged after their CI checks. PR #13 passed 185 tests at 91.59% combined
+statement/branch coverage, strict mypy, lint, formatting and import contracts.
+The evidence workstream adds saved-artifact consistency coverage; its CI record
+supplies remote verification. Final local QA passed 187 tests at 91.59%
+combined coverage and all checks in `make check`. Historical verification logs remain
+under [verification](verification/2026-10-24/handoff-tests.txt).
 
-The stdlib-only `scripts/recalculate.py` imports no production evaluation module.
-It reads planned cells and per-cell benchmark results, reconstructs primary S1–S4
-counts by condition, separates unresolved S2 judgments, and compares numerators,
-denominators and Wilson intervals with condition-summary.json. A fresh scripted
-smoke directory passed this comparison: one clean control, zero attacker stages
-in that one episode. This is a fixture arithmetic check, **not an empirical 0% ASR**.
+Live Colab exposed interpreter and installer prerequisites and native-output
+parsing failures. PR #13 repairs the interpreter boundary and introduces schema
+output under `agent-v2-json-schema`; native defaults remain unchanged. Schema mode
+is a separate experimental condition. Actual trials used archived project drivers
+in a notebook cell; unattended Run All of the complete revised notebook was not
+independently demonstrated. Successful allocation followed the user's Google
+sign-in. No Drive mount, account credential export or paid infrastructure was used.
 
-The script does not independently re-label semantic following, reconstruct all
-sandbox effects, verify every conditional/utility rate, attest model identity, or
-prove raw-output authenticity. Genuine primary results cannot be independently
-recalculated because no genuine trial records exist. Its limitations are explicit
-rather than replaced with favorable estimates.
-
-## Provenance and reproducibility
-
-New experiments capture config and matrix, code revision, lock hash, platform,
-actual creation time, model tag/digest, raw HTTP exchanges, logical events, results
-and per-cell checksums. Agent request seeds and generation settings appear in raw
-requests. Malformed output is retained before parsing. Checkpoint replacement is
-atomic; interrupted directories are archived. Resume requires the saved revision.
-Original manifests are retained. Deliberate reruns require separate directories.
-
-Audit checks internal consistency and completed model chat evidence, not a trusted
-execution attestation. A caller can fabricate a journal and matching checksum;
-checksums are not independent proof. Older outputs without new evidence fields
-need explicit review. No missing historical raw output has been fabricated.
-
-Locked dependencies installed successfully; local Python 3.12 checks and remote
-Python 3.12/3.13 CI passed for PRs #9 and #10. The Colab notebook passes structural
-checks, not a hosted execution test. The independent verifier ran on a fresh
-scripted directory. SVGs were rasterized and visually inspected for labels and
-clipping. A PDF report is not generated or implied.
-
-## Dependency security audit
-
-A pip-audit 2.10.1 lookup covered six runtime and 60 applicable external
-runtime/development packages exported from uv.lock (project excluded). Runtime
-packages had no reported vulnerabilities. The full development set identified
-certifi 2026.7.22 under
+A pip-audit 2.10.1 lookup found certifi 2026.7.22 under
 [GHSA-6q48-6c7w-9gw2](https://github.com/advisories/GHSA-6q48-6c7w-9gw2).
-[PR #12](https://github.com/Yug-More/memoryfence/pull/12) updates its lock entry to
-2026.10.23; all 60 applicable packages then returned no known vulnerabilities.
-Before/after records are preserved with that PR. Other platforms and unknown
-vulnerabilities are outside this lookup; it is not a security guarantee.
+[PR #12](https://github.com/Yug-More/memoryfence/pull/12) updated it to 2026.10.23;
+60 applicable external runtime/development packages then had no known reported
+vulnerabilities. This point-in-time result is not a security guarantee.
 
-## Unverified requirements and blockers
+## Acceptance limits
 
-- Ollama and model weights are absent here; observed free disk was roughly 2.4 GiB
-  before additional tooling. No paid infrastructure or substitute model was used.
-- Owner-operated local/Colab execution is required to obtain genuine pilot output.
-  Browser verification loaded the notebook, but Connect explicitly required Google
-  sign-in. No browser runtime was allocated or inference performed.
-- The matched pilot does not cover transformations, deletion, lineage degradation,
-  adaptive attacks or multiple models. No empirical answers to those RQs exist.
-- Semantic S0 and S2 judge validity, independent human review, broader utility,
-  paired cached transformations, full component seed hierarchy and original
-  confirmatory statistics remain incomplete.
-- The inherited bibliography received key spot checks, not a complete new audit.
-- A license remains an owner decision. No public release or submission is made.
-
-## Readiness assessment
-
-The repaired software is ready for an **inspected development pilot on an adequate
-execution host**, with construct limitations documented. It is not empirically
-complete, preregistered, publication-ready or a validated security guarantee.
-Final research acceptance remains open until genuine raw runs, independent
-recalculation, negative-control review and evidence-matched conclusions exist.
+Pilot execution, evidence preservation and independent count checks are complete.
+The full research definition of done is **not satisfied**: baseline benign tool
+capability failed; semantic survival and judge validation, human agreement,
+paired transformations, deletion experiments, broader models/utility, representative
+held-outs, full statistical procedures and preregistration remain open. Literature
+refresh and owner licensing are also incomplete. No release or publication was
+made. The next research decision is a separately identified capability screen,
+not scaling the current condition or interpreting its zeros as protection.

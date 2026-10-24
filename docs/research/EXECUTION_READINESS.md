@@ -1,6 +1,10 @@
 # Development execution readiness
 
-This is a preliminary methodology supplement, not an empirical results report.
+This is a methodology supplement. Later [Colab results](COLAB_PILOT_RESULTS.md)
+record 28 completed schema-condition cells; this document's original native
+configurations remain distinct. The pilot failed baseline utility, so the full
+study is not ready. Earlier pending-status descriptions below are the original
+pre-execution plan, not the latest evidence inventory.
 Read it with the [recovery audit](../PROJECT_STATE_RECOVERY.md). Original RQ1–RQ6
 and the draft protocol remain in force. No hypothesis has been confirmed.
 
@@ -134,3 +138,15 @@ before interpreting attacks. Two seeds at temperature zero do not establish broa
 stochastic variation. This pilot addresses only narrow retrieval/action behavior
 and utility; it cannot answer transformation survival or deletion RQs. Its planned
 cells are **not observed results**, and its scripted regression outputs are fixtures.
+
+## Live execution update
+
+PR #13 fixes Colab interpreter isolation and the zstd installation prerequisite.
+The explicit schema condition uses `agent-v2-json-schema`,
+`configs/ollama-schema-pilot.json` and `configs/ollama-ticket-schema-pilot.json`.
+It keeps the model but changes output instructions/decoding; native probes failed
+and were not repaired or pooled. Four compatibility plus 24 matched cells completed
+on frozen code `38fd3da59688a7997b954a3308e89ba2a1f09bbd`. Raw evidence and independent
+SQLite/HTTP checks are preserved. All matched utility controls failed. Establish a
+successful benign-capability control before scaling; do not infer effective defenses
+from these zero attack counts. The results report is the current empirical record.
