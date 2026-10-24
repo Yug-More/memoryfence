@@ -12,7 +12,9 @@ completion with evidence-based readiness classifications.
 [PR #9](https://github.com/Yug-More/memoryfence/pull/9) merged the recovery report
 at `f451530`. [PR #10](https://github.com/Yug-More/memoryfence/pull/10) merged
 experimental evidence and measurement repairs at `bab2b21`; implementation commit
-`4a019c7` passed all four CI checks. The current documentation work adds the
+`4a019c7` passed all four CI checks. [PR #11](https://github.com/Yug-More/memoryfence/pull/11) tracks documentation
+implementation `9f7f6304b620e02e1a7aa600d3c46c0c287703bd` and its final verification
+record. The documentation work adds the
 preliminary report, integrity audit, independent verifier and project identity.
 Use `git rev-parse HEAD` and the PR record for the final documentation revision;
 a report cannot contain its own eventual commit hash.
@@ -70,7 +72,8 @@ Final QA passed **183 tests** at **91.65%** combined coverage (the added cases a
 documentation parametrizations). Verification logs are in
 [the final QA record](verification/2026-10-24/handoff-tests.txt).
 
-The README commands use fresh directories and keep simulation distinct from
+All nine notebook code cells also parse as Python; this verifies syntax, not hosted
+execution. The README commands use fresh directories and keep simulation distinct from
 inference. Editable SVGs were rendered and visually inspected. No empirical chart,
 fake dashboard, PDF report or public release was generated.
 
