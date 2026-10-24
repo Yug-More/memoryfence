@@ -1,0 +1,171 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.12, pytest-9.1.1, pluggy-1.7.0
+rootdir: <checkout>
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.1.0, platformdirs-4.13.4
+collected 171 items
+
+tests/test_atomicity.py ....                                             [  2%]
+tests/test_authorization.py ..........                                   [  8%]
+tests/test_benchmark.py .......                                          [ 12%]
+tests/test_colab.py ....................                                 [ 23%]
+tests/test_defenses.py ........                                          [ 28%]
+tests/test_demo.py ...                                                   [ 30%]
+tests/test_docs.py ...........................................           [ 55%]
+tests/test_evaluation.py .......                                         [ 59%]
+tests/test_imports.py .                                                  [ 60%]
+tests/test_lifecycle.py ................                                 [ 69%]
+tests/test_ollama.py .........F                                          [ 75%]
+tests/test_package.py .....                                              [ 78%]
+tests/test_persistence.py ......                                         [ 81%]
+tests/test_provenance.py ......                                          [ 85%]
+tests/test_simulation.py ..................                              [ 95%]
+tests/test_workspace_edges.py .......                                    [100%]
+
+=================================== FAILURES ===================================
+___________________ test_transport_does_not_follow_redirects ___________________
+
+    def test_transport_does_not_follow_redirects() -> None:
+        class Handler(BaseHTTPRequestHandler):
+            def do_POST(self) -> None:
+                self.send_response(302)
+                self.send_header("Location", "http://example.com/steal")
+                self.end_headers()
+    
+            def log_message(self, fmt: str, *args: object) -> None:
+                return
+    
+>       server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ollama.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+../../.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x10c7affb0>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # Since Linux 6.12.9, SO_REUSEPORT is not allowed
+        # on other address families than AF_INET/AF_INET6.
+        if (
+            self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT")
+            and self.address_family in (socket.AF_INET, socket.AF_INET6)
+        ):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../../.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/socketserver.py:478: PermissionError
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.12.12-final-0 _______________
+
+Name                                        Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------------------------
+src/memoryfence/__init__.py                     4      0      0      0   100%
+src/memoryfence/__main__.py                     4      4      2      0     0%   1-6
+src/memoryfence/access/__init__.py              3      0      0      0   100%
+src/memoryfence/access/permissions.py           7      0      0      0   100%
+src/memoryfence/access/policy.py              153     14     84     12    88%   49, 55, 57, 76, 115, 119-121, 172, 177, 185, 205, 208, 256
+src/memoryfence/agents/__init__.py              2      0      0      0   100%
+src/memoryfence/agents/loop.py                 74      3     14      1    95%   78, 178-179
+src/memoryfence/authorization/__init__.py       2      0      0      0   100%
+src/memoryfence/authorization/gateway.py       45      1      6      1    96%   129
+src/memoryfence/benchmark/__init__.py           3      0      0      0   100%
+src/memoryfence/benchmark/catalog.py           72      4     10      4    90%   412, 415, 418, 421
+src/memoryfence/benchmark/judge.py             28      2     10      2    89%   25, 38
+src/memoryfence/benchmark/labels.py            12      0      0      0   100%
+src/memoryfence/benchmark/result.py            51      0      4      0   100%
+src/memoryfence/benchmark/runner.py           225     12     62     14    91%   113, 118, 219->217, 283, 299, 336, 337->339, 402, 509, 513, 515, 518, 524, 528
+src/memoryfence/benchmark/score.py             18      0      2      0   100%
+src/memoryfence/benchmark/spec.py              69      9     20      9    80%   65, 67, 69, 72, 76, 79, 85, 87, 89
+src/memoryfence/cli.py                        180     20     62      8    87%   98, 102, 139, 147-155, 174-176, 178-180, 200, 204
+src/memoryfence/colab/__init__.py               2      0      0      0   100%
+src/memoryfence/colab/session.py              458      4    194      3    99%   187, 507, 616, 672
+src/memoryfence/defenses/__init__.py            2      0      0      0   100%
+src/memoryfence/defenses/policy.py             24      2     12      2    89%   28, 31
+src/memoryfence/defenses/suite.py             123      6     32      6    92%   44, 143->148, 145->143, 148->158, 186-187, 201, 203, 206
+src/memoryfence/domain/__init__.py              0      0      0      0   100%
+src/memoryfence/domain/access.py               24      2      4      2    86%   32, 34
+src/memoryfence/domain/base.py                  3      0      0      0   100%
+src/memoryfence/domain/defenses.py             29      2     12      2    90%   39, 43
+src/memoryfence/domain/deletion.py             67      3     10      3    92%   63, 66, 68
+src/memoryfence/domain/enums.py               184      5      4      0    95%   122-126
+src/memoryfence/domain/errors.py               78      0      0      0   100%
+src/memoryfence/domain/experiments.py          59      5     10      5    86%   45, 47, 74, 76, 79
+src/memoryfence/domain/ids.py                  68      2      4      2    94%   65, 72
+src/memoryfence/domain/memories.py             54      9     20      9    76%   64, 67, 69, 71, 74, 76, 78, 80, 82
+src/memoryfence/domain/model.py                52      0      0      0   100%
+src/memoryfence/domain/principals.py           69      4     10      4    90%   39, 75, 77, 100
+src/memoryfence/domain/protocols.py             5      0      0      0   100%
+src/memoryfence/domain/provenance.py           75      7     10      4    85%   32, 55, 65-67, 98, 112
+src/memoryfence/domain/serialization.py         7      0      0      0   100%
+src/memoryfence/domain/sources.py              51      4      8      4    86%   44, 46, 48, 66
+src/memoryfence/domain/time.py                 25      1      6      1    94%   14
+src/memoryfence/domain/tools.py                32      0      2      0   100%
+src/memoryfence/evaluation/__init__.py          3      0      0      0   100%
+src/memoryfence/evaluation/config.py           86      6     24      7    88%   64, 83, 86, 88, 91, 97, 102->105
+src/memoryfence/evaluation/heldout.py          15      2      0      0    87%   90-91
+src/memoryfence/evaluation/hypotheses.py       13      0      0      0   100%
+src/memoryfence/evaluation/matrix.py           69      3     24      1    96%   106-107, 114
+src/memoryfence/evaluation/metrics.py          22      0      0      0   100%
+src/memoryfence/evaluation/report.py           27      0      4      0   100%
+src/memoryfence/evaluation/runner.py          172     29     52     12    77%   58, 66-67, 91, 103, 105, 108, 159-160, 185-197, 234, 238-247, 255, 259, 261, 265
+src/memoryfence/evaluation/stats.py            64      0     24      0   100%
+src/memoryfence/groundtruth/__init__.py         4      0      0      0   100%
+src/memoryfence/groundtruth/episode.py         12      0      0      0   100%
+src/memoryfence/groundtruth/recorder.py        19      0      0      0   100%
+src/memoryfence/groundtruth/schema.py          73      0      4      0   100%
+src/memoryfence/groundtruth/store.py           97      1     16      2    97%   58, 93->92
+src/memoryfence/harness/__init__.py             2      0      0      0   100%
+src/memoryfence/harness/episode.py             66      0      0      0   100%
+src/memoryfence/llm/__init__.py                 2      0      0      0   100%
+src/memoryfence/llm/backend.py                 49      1     18      1    97%   76
+src/memoryfence/llm/endpoint.py                33      7     12      3    78%   24, 28-29, 32, 36-37, 39
+src/memoryfence/llm/ollama.py                 200     32     66     25    79%   92, 118, 139, 144, 152, 156, 160->165, 193, 200-201, 206-207, 210, 222, 242-243, 252-253, 256, 292, 297, 299, 304, 310, 316, 319, 323, 339, 342, 352, 364, 366, 370
+src/memoryfence/llm/prompts.py                  5      0      0      0   100%
+src/memoryfence/llm/transport.py               50     17     10      3    60%   31, 42, 58-59, 61, 63, 65-70, 75, 81-83, 89-90, 92
+src/memoryfence/memory/__init__.py              5      0      0      0   100%
+src/memoryfence/memory/calls.py                17      0      0      0   100%
+src/memoryfence/memory/ingest.py               43      2      0      0    95%   90-91
+src/memoryfence/memory/rederive.py             56      3     14      3    91%   76, 91, 100
+src/memoryfence/memory/retrieve.py             71      3     12      2    94%   57, 91-92
+src/memoryfence/memory/transforms.py           43      2     16      2    93%   124, 129
+src/memoryfence/observability/__init__.py       3      0      0      0   100%
+src/memoryfence/observability/events.py        71      5      4      1    92%   161-162, 169, 207-211
+src/memoryfence/observability/manifest.py      28      2      6      0    94%   24-25
+src/memoryfence/provenance/__init__.py          4      0      0      0   100%
+src/memoryfence/provenance/degradation.py      14      0      0      0   100%
+src/memoryfence/provenance/graph.py            28      0     14      1    98%   18->17
+src/memoryfence/provenance/recorded.py         80      8     18      6    86%   38, 76-77, 164, 168, 172, 182, 194
+src/memoryfence/storage/__init__.py             3      0      0      0   100%
+src/memoryfence/storage/database.py           125      6     32      5    93%   74, 105, 146, 164, 208, 210
+src/memoryfence/storage/mappers.py             35      1      0      0    97%   130
+src/memoryfence/storage/schema.py             239      1      8      1    99%   459
+src/memoryfence/storage/types.py               20      0      4      0   100%
+src/memoryfence/tools/__init__.py               2      0      0      0   100%
+src/memoryfence/tools/sandbox.py               77      4     14      4    91%   106, 113, 139, 142
+src/memoryfence/workspace/__init__.py           0      0      0      0   100%
+src/memoryfence/workspace/authority.py         80      3     22      3    94%   53, 58, 102
+src/memoryfence/workspace/deletion.py         124      2     42      3    97%   189, 301, 309->304
+src/memoryfence/workspace/directory.py        140      1     30      1    99%   328
+src/memoryfence/workspace/memories.py         121      8     20      4    91%   176-177, 192, 267, 269, 273, 347-348
+src/memoryfence/workspace/sources.py          115      1     12      1    98%   166
+src/memoryfence/workspace/tools.py             40      0     10      0   100%
+---------------------------------------------------------------------------------------
+TOTAL                                        5110    275   1146    189    92%
+Required test coverage of 90.0% reached. Total coverage: 92.14%
+=========================== short test summary info ============================
+FAILED tests/test_ollama.py::test_transport_does_not_follow_redirects - Permi...
+======================== 1 failed, 170 passed in 12.65s ========================

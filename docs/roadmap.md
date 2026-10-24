@@ -10,10 +10,12 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | 4 | Scripted scenarios and replay benchmark | Merged |
 | 5 | Defense baselines | Merged |
 | 6 | Evaluation runner, metrics, and reproducibility | Merged |
-| 7 | Model integration, pilots, preregistration, and confirmatory study | Merged |
-| 7B | Free Colab workflow for the development pilot | In review |
+| 7 | Model integration, pilots, preregistration, and confirmatory study | Integration merged; empirical work pending |
+| 7B | Free Colab workflow for the development pilot | Merged; hosted execution unverified |
 | 8 | Analysis, report, and audit | Planned |
 | 9 | Release audit | Planned |
+
+See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and the remaining evidence requirements. A merged implementation phase does not establish completion of its proposed study.
 
 ## Phase 1: Research foundation and engineering architecture
 
