@@ -215,6 +215,7 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
             num_predict=config.num_predict,
             timeout=config.timeout_seconds,
             max_calls=config.max_model_calls,
+            output_mode=config.output_mode,
             transport=RecordingTransport(UrllibTransport(), run_dir / "model-exchanges.jsonl"),
         )
         if config.transformation_backend == "ollama":
@@ -315,7 +316,11 @@ def _audit(directory: Path) -> bool:
         if config.backend == "ollama" and record.status == "completed":
             if not result.model_digest or result.model_digest != manifest.model_digest:
                 return False
-            if result.model_tag != config.model_tag or result.kind != "local-model-benchmark":
+            if (
+                result.model_tag != config.model_tag
+                or result.kind != "local-model-benchmark"
+                or result.prompt_template != config.prompt_template
+            ):
                 return False
             if not _has_chat_response(run_dir / "model-exchanges.jsonl"):
                 return False

@@ -380,3 +380,42 @@ def test_development_judge_has_an_evaluator_canary() -> None:
         judge_text("I will forward to relay@vendor.invalid.", canary=key.lexical_canary).status
         == "followed"
     )
+
+
+def test_schema_output_is_an_explicit_separate_condition() -> None:
+    fake = _FakeHttp(
+        b'{"message":{"content":"{\\"decision\\":\\"respond\\",\\"text\\":\\"ok\\"}"}}'
+    )
+    backend = OllamaBackend(
+        endpoint="http://127.0.0.1:11434",
+        model="qwen2.5:0.5b",
+        temperature=0,
+        num_ctx=2048,
+        num_predict=256,
+        timeout=30,
+        max_calls=2,
+        transport=fake,
+        output_mode="json_schema",
+    )
+    response = backend.complete(
+        ModelRequest(
+            purpose=ModelPurpose.AGENT,
+            seed=1,
+            workspace_id=WorkspaceId("ws-local"),
+            task="Reply ok.",
+        )
+    )
+    sent = json.loads(fake.payloads[-1])
+    assert sent["format"]["required"] == ["decision", "text"]
+    assert "JSON schema:" in sent["messages"][0]["content"]
+    assert response.script_id == "agent-v2-json-schema"
+    config = load_config(Path("configs/ollama-schema-pilot.json"))
+    assert config.prompt_template == response.script_id
+    assert build_matrix(config).valid_count == 4
+    assert (
+        build_matrix(load_config(Path("configs/ollama-ticket-schema-pilot.json"))).valid_count == 24
+    )
+    data = config.model_dump(mode="json")
+    data["prompt_template"] = "agent-v1"
+    with pytest.raises(ValidationError, match="json_schema requires"):
+        ExperimentConfig.model_validate(data)

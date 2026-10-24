@@ -498,7 +498,13 @@ def _result(
         judge_status=_judge_status(judge_status),
         model_tag=None if identity is None else identity.tag,
         model_digest=None if identity is None else identity.digest,
-        prompt_template=None if agent_backend is None else "agent-v1",
+        prompt_template=(
+            agent_backend.agent_template
+            if isinstance(agent_backend, OllamaBackend)
+            else None
+            if agent_backend is None
+            else "agent-v1"
+        ),
     )
 
 

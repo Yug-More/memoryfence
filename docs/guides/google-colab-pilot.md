@@ -10,7 +10,12 @@ The pilot is exploratory. It is not a confirmatory study, and it does not establ
 - A free runtime. Do not change the runtime to a paid option.
 - About 30 minutes of uninterrupted time. Free sessions can end early, and a GPU may be unavailable. The pilot is allowed to run on CPU.
 
-The notebook is [`notebooks/memoryfence_colab_pilot.ipynb`](../../notebooks/memoryfence_colab_pilot.ipynb). The configuration it runs is [`configs/ollama-pilot.json`](../../configs/ollama-pilot.json).
+The notebook is [`notebooks/memoryfence_colab_pilot.ipynb`](../../notebooks/memoryfence_colab_pilot.ipynb). The default is the explicitly separate schema-constrained
+[`configs/ollama-schema-pilot.json`](../../configs/ollama-schema-pilot.json).
+Set SCHEMA_OUTPUT=False to retain the historical native-output configuration
+[`configs/ollama-pilot.json`](../../configs/ollama-pilot.json). These conditions must
+never be pooled. Real native smoke attempts returned invalid output; this is not
+a defense result.
 
 ## 1. Open the notebook
 
@@ -31,7 +36,7 @@ Use **Runtime → Run all**, or run each cell from top to bottom. Do not skip th
 1. Introduction.
 2. Runtime diagnostics, which print Python, memory, disk, CPU, and later the GPU check.
 3. Repository setup. The default revision is `main`, which is not a frozen revision. To repeat an exact commit, set `FROZEN = True` and set `REVISION` to the 40-character SHA. A frozen run does not fall back to `main`.
-4. Ollama installation. The daemon listens on `127.0.0.1:11434` inside the Colab runtime.
+4. Ollama installation (including the official Ubuntu zstd extraction prerequisite). The daemon listens on `127.0.0.1:11434` inside the Colab runtime.
 5. Model selection. The only download is `qwen2.5:0.5b`, and only after the disk and memory check passes.
 6. Backend smoke test.
 7. Experiment preview.
@@ -57,7 +62,7 @@ If the small model cannot return the structured decision, smoke exits non-zero a
 
 ## 5. Run the pilot
 
-The preview must report four valid cells: `clean-note` and `direct-note`, each with `DF0` and `DF1`. Transformations stay scripted. The victim agent is Ollama. Held-out scenarios are not included.
+With either output condition, the preview must report four valid cells: `clean-note` and `direct-note`, each with `DF0` and `DF1`. Transformations stay scripted. The victim agent is Ollama. Held-out scenarios are not included.
 
 The run cell calls `memoryfence experiment run`, then `summarize`, then `audit`. `audit` checks the saved files and does not call the model again.
 
@@ -100,3 +105,23 @@ To repeat a configuration, set `FROZEN = True` and the same full commit SHA. Oll
 - Free Colab resources can be refused or withdrawn. That is an infrastructure limit, not an experimental outcome.
 
 Scripted experiments on your own computer stay available and do not need this notebook. See [development.md](../development.md).
+
+## Interpreter isolation and output conditions
+
+The live Colab kernel used Python 3.13 while the locked project environment used
+3.12. Importing the environment's compiled packages into the kernel failed. Project
+steps now run in fresh subprocesses of `.venv/bin/python`; JSON state connects the
+steps, and the kernel only handles orchestration and the final download. A regression
+test executes this boundary, checks every cell's Python syntax, and preserves state
+on subprocess failure.
+
+`agent-v2-json-schema` uses Ollama's explicit JSON-schema output constraint, retaining
+the same model, native tool descriptions, trust instructions and strict parser. It
+adds explicit field instructions and a response schema. This changes the condition,
+so it has separate configurations, hashes and prompt metadata. It does not strip
+code fences, repair model prose into actions, or establish task correctness.
+The original `agent-v1` outputs and failures remain separate. The schema-mode smoke
+uses the planned 2048-token context and 256-token generation limit; the historical
+smoke's 256-token context is too small for the full tool prompt in this runtime.
+The matched behavioral configuration is `configs/ollama-ticket-schema-pilot.json`;
+it must be invoked separately after the four-cell compatibility pilot is inspected.
