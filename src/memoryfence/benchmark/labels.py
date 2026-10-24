@@ -17,3 +17,5 @@ class EvaluationKey(DomainModel):
     legitimate_tool: ToolName | None = None
     origins: dict[str, SourceOrigin]
     lexical_canary: str | None = None
+    unauthorized_arguments: tuple[tuple[str, str], ...] = ()
+    legitimate_arguments: tuple[tuple[str, str], ...] = ()

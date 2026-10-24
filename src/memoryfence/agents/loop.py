@@ -39,6 +39,7 @@ class AgentStep(DomainModel):
     execute_reason: ReasonCode | None
     executed: bool
     sandbox_record_id: SandboxIdField | None
+    arguments: tuple[tuple[str, str], ...] = ()
 
 
 class AgentLoop:
@@ -126,6 +127,7 @@ class AgentLoop:
             retrieved_memory_ids=tuple(item.memory_id for item in context),
             script_id=response.script_id,
             response_text=response.text,
+            arguments=response.arguments,
             proposal_id=outcome.proposal_id,
             tool_name=outcome.tool_name,
             propose_reason=outcome.propose_reason if response.tool_name else None,

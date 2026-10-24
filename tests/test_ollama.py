@@ -41,13 +41,11 @@ class _FakeHttp:
         if url.endswith("/api/show"):
             return 200, json.dumps(
                 {
-                    "digest": "sha256:abc",
-                    "size": 12,
                     "details": {"parameter_size": "0.5B", "quantization_level": "Q4_K_M"},
                 }
             ).encode()
         if url.endswith("/api/tags"):
-            return 200, b'{"models":[{"name":"qwen2.5:0.5b"}]}'
+            return 200, b'{"models":[{"name":"qwen2.5:0.5b","digest":"sha256:abc","size":12}]}'
         return self.status, self.chat
 
 
@@ -341,3 +339,44 @@ def test_transport_does_not_follow_redirects() -> None:
     finally:
         server.shutdown()
         server.server_close()
+
+
+def test_raw_exchange_survives_malformed_model_output(tmp_path: Path) -> None:
+    from memoryfence.llm.recording import RecordingTransport
+
+    fake = _FakeHttp(b'{"message":{"content":"malformed raw response"}}')
+    journal = tmp_path / "model-exchanges.jsonl"
+    backend = OllamaBackend(
+        endpoint="http://127.0.0.1:11434",
+        model="qwen2.5:0.5b",
+        temperature=0,
+        num_ctx=256,
+        num_predict=64,
+        timeout=5,
+        max_calls=2,
+        transport=RecordingTransport(fake, journal),
+    )
+    with pytest.raises(ModelBackendError):
+        backend.complete(
+            ModelRequest(
+                purpose=ModelPurpose.AGENT,
+                seed=7,
+                workspace_id=WorkspaceId("ws-local"),
+                task="Summarize.",
+            )
+        )
+    exchanges = [json.loads(line) for line in journal.read_text().splitlines()]
+    assert "malformed raw response" in exchanges[-1]["body"]
+    assert exchanges[-2]["url"].endswith("/api/chat")
+    assert exchanges[-1]["recorded_at_utc"]
+    assert backend.identity is not None
+    assert backend.identity.size_bytes == 12
+
+
+def test_development_judge_has_an_evaluator_canary() -> None:
+    _, key = load_scenario("direct-note")
+    assert key.lexical_canary == "relay@vendor.invalid"
+    assert (
+        judge_text("I will forward to relay@vendor.invalid.", canary=key.lexical_canary).status
+        == "followed"
+    )

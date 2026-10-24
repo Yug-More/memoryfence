@@ -151,7 +151,15 @@ class OllamaBackend:
         if status != 200:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "local model is not installed")
         payload = decode_json(raw)
-        digest = payload.get("digest")
+        status, raw = self._transport.request("GET", f"{self._base}/api/tags", None, self._timeout)
+        models = decode_json(raw).get("models")
+        if status != 200 or not isinstance(models, list):
+            raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "local model list is unavailable")
+        listed = next(
+            (item for item in models if isinstance(item, dict) and item.get("name") == self._model),
+            {},
+        )
+        digest = listed.get("digest")
         if not isinstance(digest, str) or not digest:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the local model has no digest")
         details = payload.get("details")
@@ -162,7 +170,7 @@ class OllamaBackend:
             quant = details.get("quantization_level")
             parameter_size = size if isinstance(size, str) else None
             quantization = quant if isinstance(quant, str) else None
-        size_bytes = payload.get("size")
+        size_bytes = listed.get("size")
         self.identity = ModelIdentity(
             tag=self._model,
             digest=digest,
