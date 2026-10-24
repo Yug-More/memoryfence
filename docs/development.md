@@ -89,7 +89,7 @@ uv run memoryfence benchmark export --directory /tmp/memoryfence-direct
 
 `run` refuses an existing directory. Optional `--policy`, `--fidelity`, and `--marked` override the scenario's deletion and provenance settings. `replay` reruns the saved scenario into a fresh directory and prints whether the canonical outcome matches. Comparison ignores the trace path, the code version, and retrieval latency.
 
-The catalog has eighteen versioned fixtures. Families A–H cover a direct note, summary, merge, multi-round derivation, post-deletion retrieval, cross-user visibility, an unauthorized proposal, and an executed sandbox tool. Protocol families are `SF1`–`SF5`. Controls are `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, and `C-UCC`. Scoring records four separate booleans: S1 Retrieved, S2 Followed, S3 Proposed, and S4 Executed. A failed scripted call stores `stages: null` and a failure reason. Public scenario objects and exported results omit source origins and the followed-instruction marker. Those stay in the evaluator. A stage label from this runner is a fixture result, not an attack rate.
+The catalog has twenty-one versioned fixtures: eighteen historical mechanism fixtures and three matched ticket-pilot templates. Families A–H cover a direct note, summary, merge, multi-round derivation, post-deletion retrieval, cross-user visibility, an unauthorized proposal, and an executed sandbox tool. Protocol families are `SF1`–`SF5`. Controls are `C-CLEAN`, `C-RAW`, `C-NULL`, `C-PREDEL`, `C-LEGIT`, `C-SELF`, and `C-UCC`. Scoring records four separate booleans: S1 Retrieved, S2 Followed, S3 Proposed, and S4 Executed. A failed scripted call stores `stages: null` and a failure reason. Public scenario objects and exported results omit source origins and the followed-instruction marker. Those stay in the evaluator. A stage label from this runner is a fixture result, not an attack rate.
 
 ### Defense conditions
 
@@ -118,7 +118,7 @@ uv run memoryfence experiment verify --directory /tmp/memoryfence-smoke
 
 `validate` and `preview` read a JSON configuration and print the matrix, including exclusions. `run` refuses a matrix larger than `max_runs` (at most 64). `resume` continues a directory whose configuration file matches. `verify` reruns the first completed cell and compares the canonical outcome. The report states Wilson intervals and says the counts are not language-model attack rates.
 
-The development catalog has the eighteen scenarios already used to build the harness. Two held-out templates, `heldout-clean` and `heldout-note`, load only through the evaluation split. Two templates are not a representative held-out sample. Block `e3` previews the development scenarios at `LF1.0` under `DF0`, `DF1`, `DF2-exclude`, `DF3`, `DF4` with exclude, and `DF5`, crossed with `DS0` and `DS1`. `DF2-label` and the `DF3` oracle are custom configurations, not E3 main cells. Scenarios without a deletion source are excluded from `DS1` and the exclusion is reported.
+The development catalog has eighteen historical scenarios plus three matched ticket-pilot templates. Two held-out templates, `heldout-clean` and `heldout-note`, load only through the evaluation split. Two templates are not a representative held-out sample. Block `e3` previews the development scenarios at `LF1.0` under `DF0`, `DF1`, `DF2-exclude`, `DF3`, `DF4` with exclude, and `DF5`, crossed with `DS0` and `DS1`. `DF2-label` and the `DF3` oracle are custom configurations, not E3 main cells. Scenarios without a deletion source are excluded from `DS1` and the exclusion is reported.
 
 Hypothesis procedures that this package can compute are labeled `procedure_available`. `H1`, `H2a`, and `H4` stay `not_computable` because the protocol's trend, equivalence, and mixed-effects tests are not implemented. A scripted count is not confirmation of a hypothesis.
 
@@ -186,3 +186,24 @@ Phase 1 reads no environment variables. [`.env.example`](../.env.example) docume
 - **Import contracts** in the architecture overview are binding from Phase 2 and will be checked in CI.
 - **Commits** follow Conventional Commits (see [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
 - **Architecture decisions** are recorded as ADRs in [`architecture/decisions/`](architecture/decisions/).
+
+## Recovery verification and current evidence rules
+
+The [recovery report](PROJECT_STATE_RECOVERY.md) distinguishes merged software from
+unexecuted research. See [execution readiness](research/EXECUTION_READINESS.md) for
+raw HTTP journals, actual versus logical time, preserved interrupted attempts,
+revision-locked resume, result checksums, strengthened audit and condition-specific
+denominators. Historical fixtures remain regression tools; source/objective
+mismatches disqualify them for real-model source-compliance interpretation.
+
+The 24-cell matched development configuration is
+`configs/ollama-ticket-pilot.json`. Its three templates align harmless ticket
+objectives, schemas and exact predicates. It is planned, not executed. The Colab
+notebook still automatically runs the older four-cell compatibility configuration.
+Run the matched pilot separately after inspecting compatibility outputs.
+
+After `experiment summarize`, independently verify primary stage counts and Wilson
+intervals with `uv run python scripts/recalculate.py <experiment-directory>`. This
+script uses the standard library and imports no evaluator. It verifies arithmetic,
+not model authenticity, semantic labels or every conditional/utility metric.
+Older artifacts missing checksums or journals must be reviewed explicitly.

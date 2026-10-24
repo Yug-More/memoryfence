@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="550" viewBox="0 0 1200 550" role="img" aria-labelledby="title desc">
+<title id="title">Implemented memory and evidence lifecycle</title><desc id="desc">Shared sources become primary and derived SQLite memories. ACL filtered retrieval feeds the agent, which proposes actions through authorization to a local sandbox. Recorded lineage drives deletion and defenses. Evaluator ground truth is isolated.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#68c8b9"/></marker></defs>
+<rect width="1200" height="550" rx="12" fill="#141e24"/>
+<g font-family="Arial,sans-serif" fill="#edf3f4">
+<text x="36" y="42" font-size="23" font-weight="700">Memory lifecycle</text><text x="36" y="68" font-size="15" fill="#b4c3c8">Implemented modules · persistent SQLite state · local synthetic effects</text>
+<g fill="#202e36" stroke="#566a74"><rect x="36" y="108" width="170" height="80" rx="5"/><rect x="246" y="108" width="170" height="80" rx="5"/><rect x="456" y="108" width="195" height="80" rx="5"/><rect x="691" y="108" width="190" height="80" rx="5"/><rect x="921" y="108" width="243" height="80" rx="5"/></g>
+<g font-size="18" text-anchor="middle"><text x="121" y="140">Shared source</text><text x="331" y="140">Primary memory</text><text x="554" y="140">TT1–TT4 transforms</text><text x="786" y="140">Derived memory</text><text x="1042" y="140">Lexical retrieval + ACL</text></g>
+<g font-size="13" text-anchor="middle" fill="#b4c3c8"><text x="121" y="167">Peer-authored text</text><text x="331" y="167">memory.ingest</text><text x="554" y="167">Scripted or local model</text><text x="786" y="167">Accumulating store</text><text x="1042" y="167">Top-k → defense filter</text></g>
+<g stroke="#68c8b9" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M206 148h35"/><path d="M416 148h35"/><path d="M651 148h35"/><path d="M881 148h35"/><path d="M331 108V87H1042V104"/></g>
+<text x="710" y="82" font-size="12" fill="#b4c3c8">Primary memories also remain retrievable</text>
+<path d="M1042 188V253" stroke="#68c8b9" stroke-width="2" marker-end="url(#arrow)"/>
+<g fill="#202e36" stroke="#566a74"><rect x="921" y="260" width="243" height="80" rx="5"/><rect x="626" y="260" width="243" height="80" rx="5"/><rect x="331" y="260" width="243" height="80" rx="5"/></g>
+<g font-size="18" text-anchor="middle"><text x="1042" y="291">Agent decision</text><text x="747" y="291">Authorization gateway</text><text x="452" y="291">Local sandbox</text></g>
+<g font-size="13" text-anchor="middle" fill="#b4c3c8"><text x="1042" y="319">Scripted or Ollama /api/chat</text><text x="747" y="319">ACL + DF3 / DF4 / DF5</text><text x="452" y="319">Synthetic state changes only</text></g>
+<g stroke="#68c8b9" stroke-width="2" marker-end="url(#arrow)"><path d="M921 300H874"/><path d="M626 300H579"/></g>
+<text x="36" y="270" font-size="17" fill="#68c8b9">Source deletion</text><text x="36" y="296" font-size="14" fill="#b4c3c8">DS0–DS4 follow</text><text x="36" y="318" font-size="14" fill="#b4c3c8">recorded ancestry.</text><text x="36" y="340" font-size="14" fill="#b4c3c8">Missing edges limit reach.</text>
+<path d="M36 380H1164" stroke="#566a74" stroke-dasharray="7 5"/>
+<text x="36" y="412" font-size="17" fill="#68c8b9">EVALUATOR BOUNDARY</text><text x="36" y="440" font-size="15">Separate ground-truth SQLite database → S1 / S2 / S3 / S4 scoring</text>
+<text x="36" y="468" font-size="14" fill="#b4c3c8">Defenses see recorded provenance. They cannot read evaluator labels or true lineage.</text>
+<text x="36" y="514" font-size="14" fill="#b4c3c8">Evidence: model exchange journals + events + result files → per-condition summaries → independent recalculation</text>
+</g></svg>
