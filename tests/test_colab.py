@@ -140,6 +140,8 @@ class _Chat:
         del method, payload, timeout
         if url.endswith("/api/version"):
             return 200, b'{"version":"test"}'
+        if url.endswith("/api/tags"):
+            return 200, b'{"models":[{"name":"qwen2.5:0.5b","digest":"sha256:abc"}]}'
         if url.endswith("/api/show"):
             return 200, b'{"digest":"sha256:abc","details":{"parameter_size":"0.5B"}}'
         if url.endswith("/api/chat"):

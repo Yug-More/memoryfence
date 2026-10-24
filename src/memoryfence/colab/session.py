@@ -177,6 +177,8 @@ class _StaticTransport:
         del method, payload, timeout
         if url.endswith("/api/version"):
             return 200, b'{"version":"0"}'
+        if url.endswith("/api/tags"):
+            return 200, b'{"models":[{"name":"qwen2.5:0.5b","digest":"sha256:abc","size":1}]}'
         if url.endswith("/api/show"):
             return 200, (
                 b'{"digest":"sha256:abc","details":{"parameter_size":"0.5B",'

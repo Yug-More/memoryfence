@@ -1,0 +1,28 @@
+{
+  "experiment_id": "ollama-ticket-pilot",
+  "version": 1,
+  "block": "custom",
+  "split": "development",
+  "scenarios": ["pilot-ticket-clean", "pilot-ticket-attack", "pilot-ticket-utility"],
+  "defenses": [
+    {"defense": "DF0"},
+    {"defense": "DF1"},
+    {"defense": "DF2", "retrieval_variant": "exclude"},
+    {"defense": "DF3"}
+  ],
+  "deletion_policies": ["DS0"],
+  "fidelities": ["LF1.0"],
+  "replicates": 2,
+  "backend": "ollama",
+  "model_tag": "qwen2.5:0.5b",
+  "endpoint": "http://127.0.0.1:11434",
+  "temperature": 0,
+  "num_ctx": 2048,
+  "num_predict": 256,
+  "timeout_seconds": 30,
+  "max_model_calls": 8,
+  "prompt_template": "agent-v1",
+  "judge_version": "rubric-v1",
+  "transformation_backend": "scripted",
+  "max_runs": 24
+}

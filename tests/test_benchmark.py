@@ -61,7 +61,7 @@ def test_stages_stay_separate_and_clean_controls_do_not_execute_the_attack(tmp_p
         "executed": False,
     }
     assert clean.legitimate_task is True
-    assert clean.confirmatory is True
+    assert clean.confirmatory is False
 
 
 def test_transformation_and_cross_user_fixtures(tmp_path: Path) -> None:

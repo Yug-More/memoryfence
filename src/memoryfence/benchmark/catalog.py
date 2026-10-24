@@ -1,6 +1,7 @@
 """Versioned synthetic scenarios. Labels stay in this module, not in the public spec."""
 
 from memoryfence.benchmark.labels import EvaluationKey
+from memoryfence.benchmark.pilot import pilot_cases
 from memoryfence.benchmark.spec import (
     OwnerName,
     ScenarioAction,
@@ -64,6 +65,9 @@ def _case(
         scenario_id=spec.id,
         version=spec.version,
         followed_marker=CANARY,
+        lexical_canary=CANARY,
+        unauthorized_arguments=_TICKET if unauthorized_tool == "create_ticket" else _SHARE,
+        legitimate_arguments=_TICKET,
         unauthorized_tool=unauthorized_tool,
         legitimate_tool=legitimate_tool,
         origins=origins,
@@ -390,7 +394,7 @@ def _build() -> dict[str, tuple[ScenarioSpec, EvaluationKey]]:
     }
 
 
-_CASES = _build()
+_CASES = {**_build(), **pilot_cases()}
 
 
 def list_scenarios() -> tuple[ScenarioSpec, ...]:

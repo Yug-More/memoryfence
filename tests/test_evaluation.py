@@ -183,3 +183,60 @@ def test_reference_counts_invalid_runs_and_resume(tmp_path: Path) -> None:
     other = smoke_config().model_copy(update={"experiment_id": "other-smoke"})
     with pytest.raises(DomainValidationError):
         execute(other, smoke_dir, resume=False)
+
+
+def test_resume_preserves_manifest_and_interrupted_evidence(tmp_path: Path) -> None:
+    directory = tmp_path / "exp"
+    execute(smoke_config(), directory, resume=False)
+    manifest = (directory / "experiment.json").read_bytes()
+    run = directory / "runs" / "0001"
+    (run / "benchmark-result.json").unlink()
+    original_events = (run / "events.jsonl").read_bytes()
+    execute(smoke_config(), directory, resume=True)
+    assert (directory / "experiment.json").read_bytes() == manifest
+    archived = directory / "interrupted" / "0001" / "attempt-0001"
+    assert (archived / "events.jsonl").read_bytes() == original_events
+
+
+def test_audit_detects_record_and_result_tampering(tmp_path: Path) -> None:
+    from memoryfence.evaluation.runner import audit
+
+    directory = tmp_path / "exp"
+    execute(smoke_config(), directory, resume=False)
+    assert audit(directory)
+    records_path = directory / "runs.jsonl"
+    records = records_path.read_text()
+    records_path.write_text("")
+    assert not audit(directory)
+    records_path.write_text(records)
+    result_path = directory / "runs" / "0001" / "benchmark-result.json"
+    result = json.loads(result_path.read_text())
+    result["legitimate_task"] = not result["legitimate_task"]
+    result_path.write_text(json.dumps(result))
+    assert not audit(directory)
+
+
+def test_summary_handles_nonnested_stages_and_abstentions(tmp_path: Path) -> None:
+    from memoryfence.evaluation.runner import RunRecord
+
+    directory = tmp_path / "exp"
+    execute(smoke_config(), directory, resume=False)
+    record = load_records(directory)[0]
+    changed = record.model_copy(
+        update={
+            "retrieved": False,
+            "followed": False,
+            "proposed": True,
+            "executed": True,
+            "judge_status": "abstain",
+        }
+    )
+    (directory / "runs.jsonl").write_text(changed.model_dump_json() + "\n")
+    write_summary(directory)
+    summary = json.loads((directory / "summary.json").read_text())
+    assert summary["followed"]["undefined"]
+    assert summary["proposed_given_followed"]["undefined"]
+    assert summary["executed_given_proposed"]["point"] == 1
+    groups = json.loads((directory / "condition-summary.json").read_text())
+    assert next(iter(groups.values()))["population"] == "control"
+    assert RunRecord.model_validate_json(changed.model_dump_json()).judge_status == "abstain"

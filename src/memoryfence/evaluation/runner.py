@@ -1,9 +1,11 @@
 """Execute an isolated scripted matrix. Completed runs are not overwritten."""
 
 import json
+import os
 import platform
 import shutil
 import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
 
 from memoryfence import __version__
@@ -12,11 +14,13 @@ from memoryfence.benchmark.result import BenchmarkResult, canonical_outcome
 from memoryfence.benchmark.runner import run_case
 from memoryfence.domain.base import DomainModel
 from memoryfence.domain.errors import DomainValidationError, MemoryFenceError
-from memoryfence.domain.serialization import canonical_json
+from memoryfence.domain.serialization import canonical_json, sha256_hex
 from memoryfence.evaluation.config import ExperimentConfig, load_config
 from memoryfence.evaluation.heldout import load_heldout
 from memoryfence.evaluation.matrix import PlannedRun, RunMatrix, build_matrix, require_run_limit
 from memoryfence.llm.ollama import OllamaBackend
+from memoryfence.llm.recording import RecordingTransport
+from memoryfence.llm.transport import UrllibTransport
 
 MANIFEST_NAME = "experiment.json"
 MATRIX_NAME = "matrix.json"
@@ -36,6 +40,7 @@ class RunRecord(DomainModel):
     control: str | None
     judge_status: str = "not_applicable"
     directory: str
+    result_sha256: str | None = None
 
 
 class ExperimentManifest(DomainModel):
@@ -50,6 +55,9 @@ class ExperimentManifest(DomainModel):
     model_digest: str | None = None
     prompt_template: str | None = None
     judge_version: str | None = None
+    created_at_utc: str | None = None
+    lock_sha256: str | None = None
+    platform: str | None = None
 
 
 def code_version() -> str:
@@ -80,6 +88,7 @@ def execute(config: ExperimentConfig, directory: Path, *, resume: bool) -> tuple
     records: list[RunRecord] = []
     for planned in matrix.runs:
         records.append(_one(directory, config, planned, resume=resume))
+        _write_records(directory, records)
     _write_records(directory, records)
     _attach_digest(directory)
     return tuple(records)
@@ -121,8 +130,21 @@ def _store_plan(directory: Path, config: ExperimentConfig, matrix: RunMatrix) ->
     payload = canonical_json(config.stored_json())
     if config_path.exists() and config_path.read_text(encoding="utf-8") != payload:
         raise DomainValidationError("directory already holds a different experiment")
+    manifest_path = directory / MANIFEST_NAME
+    if manifest_path.exists():
+        manifest = ExperimentManifest.model_validate_json(manifest_path.read_text())
+        if manifest.config_hash != config.fingerprint():
+            raise DomainValidationError("saved manifest does not match configuration")
+        if manifest.code_version != code_version():
+            raise DomainValidationError("resume requires the original code revision")
+        if (directory / MATRIX_NAME).read_text() != canonical_json(matrix.model_dump(mode="json")):
+            raise DomainValidationError("saved matrix does not match configuration")
+        return
     config_path.write_text(payload, encoding="utf-8")
     manifest = ExperimentManifest(
+        created_at_utc=datetime.now(UTC).isoformat(),
+        lock_sha256=sha256_hex(Path("uv.lock").read_text()) if Path("uv.lock").exists() else None,
+        platform=platform.platform(),
         experiment_id=config.experiment_id,
         config_hash=config.fingerprint(),
         code_version=code_version(),
@@ -151,9 +173,10 @@ def _one(
     if run_dir.exists() and not resume:
         raise DomainValidationError(f"incomplete run {planned.ordinal} needs resume")
     if run_dir.exists():
-        for child in run_dir.iterdir():
-            child.unlink()
-        run_dir.rmdir()
+        archive = directory / "interrupted" / f"{planned.ordinal:04d}"
+        archive.mkdir(parents=True, exist_ok=True)
+        attempt = archive / f"attempt-{len(tuple(archive.iterdir())) + 1:04d}"
+        run_dir.rename(attempt)
     try:
         saved = _execute_cell(run_dir, config, planned)
     except MemoryFenceError as error:
@@ -192,6 +215,7 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
             num_predict=config.num_predict,
             timeout=config.timeout_seconds,
             max_calls=config.max_model_calls,
+            transport=RecordingTransport(UrllibTransport(), run_dir / "model-exchanges.jsonl"),
         )
         if config.transformation_backend == "ollama":
             transform_backend = agent_backend
@@ -213,6 +237,7 @@ def _record(planned: PlannedRun, result: BenchmarkResult, run_dir: Path) -> RunR
     stages = result.stages
     status = "completed" if result.failure_reason is None and stages is not None else "invalid"
     return RunRecord(
+        result_sha256=sha256_hex((run_dir / "benchmark-result.json").read_text()),
         ordinal=planned.ordinal,
         scenario_id=planned.scenario_id,
         status=status,
@@ -248,27 +273,83 @@ def _attach_digest(directory: Path) -> None:
 
 
 def audit(directory: Path) -> bool:
-    """Check the manifest and result files. This does not call a model."""
-    manifest_path = directory / MANIFEST_NAME
-    config_path = directory / "config.json"
-    if not manifest_path.exists() or not config_path.exists():
+    """Check completeness and internal consistency; never certify authenticity."""
+    try:
+        return _audit(directory)
+    except (OSError, ValueError, MemoryFenceError):
         return False
-    manifest = ExperimentManifest.model_validate_json(manifest_path.read_text(encoding="utf-8"))
-    config = load_config(config_path)
-    if config.fingerprint() != manifest.config_hash:
+
+
+def _audit(directory: Path) -> bool:
+    manifest = ExperimentManifest.model_validate_json((directory / MANIFEST_NAME).read_text())
+    config = load_config(directory / "config.json")
+    if config.fingerprint() != manifest.config_hash or manifest.backend != config.backend:
         return False
-    if config.backend == "ollama" and manifest.model_tag != config.model_tag:
+    if manifest.model_tag != config.model_tag:
         return False
-    for record in load_records(directory):
-        result_path = directory / "runs" / f"{record.ordinal:04d}" / "benchmark-result.json"
-        if record.status == "completed" and not result_path.exists():
+    matrix = build_matrix(config)
+    if (directory / MATRIX_NAME).read_text() != canonical_json(matrix.model_dump(mode="json")):
+        return False
+    records = load_records(directory)
+    if tuple(record.ordinal for record in records) != tuple(run.ordinal for run in matrix.runs):
+        return False
+    for record, planned in zip(records, matrix.runs, strict=True):
+        run_dir = directory / "runs" / f"{record.ordinal:04d}"
+        result_path = run_dir / "benchmark-result.json"
+        if not result_path.exists():
             return False
+        result = BenchmarkResult.model_validate_json(result_path.read_text())
+        expected = _record(planned, result, run_dir).model_copy(
+            update={"directory": record.directory}
+        )
+        if record != expected:
+            return False
+        if (
+            result.scenario_id != planned.scenario_id
+            or result.defense != planned.defense.defense.value
+            or result.deletion_policy != planned.deletion_policy
+            or result.fidelity != planned.fidelity
+            or result.agent_backend != config.backend
+        ):
+            return False
+        if config.backend == "ollama" and record.status == "completed":
+            if not result.model_digest or result.model_digest != manifest.model_digest:
+                return False
+            if result.model_tag != config.model_tag or result.kind != "local-model-benchmark":
+                return False
+            if not _has_chat_response(run_dir / "model-exchanges.jsonl"):
+                return False
     return True
+
+
+def _has_chat_response(path: Path) -> bool:
+    requests: set[int] = set()
+    for line in path.read_text().splitlines():
+        item = json.loads(line)
+        if not isinstance(item, dict) or not isinstance(item.get("sequence"), int):
+            return False
+        if not isinstance(item.get("url", ""), str):
+            return False
+        if item.get("event") == "request" and item.get("url", "").endswith("/api/chat"):
+            requests.add(item["sequence"])
+        if (
+            item.get("event") == "response"
+            and item.get("sequence") in requests
+            and item.get("status") == 200
+        ):
+            return True
+    return False
 
 
 def _write_records(directory: Path, records: list[RunRecord]) -> None:
     lines = [record.model_dump_json() for record in records]
-    (directory / "runs.jsonl").write_text("".join(f"{line}\n" for line in lines), encoding="utf-8")
+    path = directory / "runs.jsonl"
+    temporary = directory / ".runs.jsonl.tmp"
+    with temporary.open("w", encoding="utf-8") as stream:
+        stream.write("".join(f"{line}\n" for line in lines))
+        stream.flush()
+        os.fsync(stream.fileno())
+    temporary.replace(path)
 
 
 def export_json(directory: Path) -> str:

@@ -486,7 +486,7 @@ def _result(
         oracle_tools=defense.oracle_tools,
         risk_threshold=defense.risk_threshold,
         missingness=missingness,
-        confirmatory=missingness is MissingnessMode.SILENT,
+        confirmatory=False,
         transformation_chain=tuple(step.transformation.value for step in spec.transforms),
         stages=stages,
         authorization_reason=reason,
