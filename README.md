@@ -43,7 +43,8 @@ broader than this completed [bounded protocol](docs/research/FINAL_BOUNDED_PROTO
 
 ![Declared paired provenance and deletion results](experiments/2026-10-25-bounded/provenance-deletion-outcomes.svg)
 
-The final panel counts retrieved memories, not task utility. These are conditional
+The final panel counts retrieved memories, not task utility; one clean TT3 output
+lost the query words. These are conditional
 measurements on shared generated text. The study contains
 **108 declared state views and 36 extra LF0.0 views**, not 144 model trials. An enum
 iteration defect caused the extra views; all are retained, separately labeled and
