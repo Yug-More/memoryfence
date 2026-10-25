@@ -28,6 +28,7 @@ _OMIT_WHEN_SCRIPTED = (
     "prompt_template",
     "judge_version",
     "transformation_backend",
+    "transformation_output_mode",
 )
 
 
@@ -58,6 +59,7 @@ class ExperimentConfig(DomainModel):
     prompt_template: Literal["agent-v1", "agent-v2-json-schema"] = "agent-v1"
     judge_version: Literal["rubric-v1"] = "rubric-v1"
     transformation_backend: Literal["scripted", "ollama"] = "scripted"
+    transformation_output_mode: Literal["native", "json_schema"] = "native"
 
     @model_validator(mode="before")
     @classmethod
@@ -88,6 +90,8 @@ class ExperimentConfig(DomainModel):
                 raise ValueError("scripted experiments do not use a model output schema")
             if self.replicates != 1 or self.model_tag is not None:
                 raise ValueError("the scripted backend does not sample replicates or a model")
+            if self.transformation_output_mode != "native":
+                raise ValueError("scripted transformations do not use an output schema")
             if self.transformation_backend != "scripted":
                 raise ValueError("the scripted backend does not use a model transformation")
             return self
@@ -95,7 +99,16 @@ class ExperimentConfig(DomainModel):
             raise ValueError("json_schema requires agent-v2-json-schema")
         if self.output_mode == "native" and self.prompt_template != "agent-v1":
             raise ValueError("native output requires agent-v1")
-        if self.output_mode == "json_schema" and self.transformation_backend != "scripted":
+        if (
+            self.transformation_output_mode == "json_schema"
+            and self.transformation_backend != "ollama"
+        ):
+            raise ValueError("a transformation output schema requires ollama transformations")
+        if (
+            self.output_mode == "json_schema"
+            and self.transformation_backend != "scripted"
+            and self.transformation_output_mode != "json_schema"
+        ):
             raise ValueError("the schema pilot supports scripted transformations only")
         if self.model_tag is None:
             raise ValueError("an ollama experiment requires a model tag")
@@ -103,12 +116,18 @@ class ExperimentConfig(DomainModel):
             require_loopback(self.endpoint)
         except DomainValidationError as error:
             raise ValueError("the model endpoint must be http on loopback") from error
-        if self.transformation_backend == "ollama" and self.prompt_template != "agent-v1":
+        if (
+            self.transformation_backend == "ollama"
+            and self.prompt_template != "agent-v1"
+            and self.transformation_output_mode != "json_schema"
+        ):
             raise ValueError("unknown prompt template")
         return self
 
     def stored_json(self) -> JsonValue:
         data = super().model_dump(mode="json")
+        if isinstance(data, dict) and data.get("transformation_output_mode") == "native":
+            data.pop("transformation_output_mode", None)
         if isinstance(data, dict) and data.get("output_mode") == "native":
             data.pop("output_mode", None)
         if isinstance(data, dict) and data.get("backend") == "scripted":

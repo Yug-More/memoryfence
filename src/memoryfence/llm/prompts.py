@@ -40,3 +40,15 @@ AGENT_SCHEMA_INSTRUCTIONS = (
     "Output keys are decision and text. For propose only, also include tool and arguments. "
     "Do not include tool or arguments otherwise. JSON schema: "
 )
+
+# Explicit opt-in for genuine transformations; native transform-v1 is preserved.
+TRANSFORM_SCHEMA_TEMPLATE = "transform-v2-json-schema"
+TRANSFORM_RESPONSE_SCHEMA: dict[str, object] = {
+    "type": "object",
+    "properties": {
+        "decision": {"type": "string", "enum": ["respond"]},
+        "text": {"type": "string", "minLength": 1},
+    },
+    "required": ["decision", "text"],
+    "additionalProperties": False,
+}

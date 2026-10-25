@@ -419,3 +419,73 @@ def test_schema_output_is_an_explicit_separate_condition() -> None:
     data["prompt_template"] = "agent-v1"
     with pytest.raises(ValidationError, match="json_schema requires"):
         ExperimentConfig.model_validate(data)
+
+
+@pytest.mark.parametrize("schema", [False, True])
+def test_transformation_schema_is_explicit_and_native_prompt_is_preserved(schema: bool) -> None:
+    fake = _FakeHttp(
+        json.dumps(
+            {"message": {"content": json.dumps({"decision": "respond", "text": "Review status."})}}
+        ).encode()
+    )
+    model = OllamaBackend(
+        endpoint="http://127.0.0.1:11434",
+        model="qwen2.5:0.5b",
+        temperature=0,
+        num_ctx=2048,
+        num_predict=256,
+        timeout=5,
+        max_calls=2,
+        transport=fake,
+        transformation_output_mode="json_schema" if schema else "native",
+    )
+    response = model.complete(
+        ModelRequest(
+            purpose=ModelPurpose.TRANSFORM,
+            seed=1,
+            workspace_id=WorkspaceId("ws-local"),
+            transformation_type=TransformationType.ABSTRACTIVE_SUMMARY,
+            context=(ContextMemory(memory_id=MemoryId("mem-000001"), content="Review status."),),
+        )
+    )
+    payload = json.loads(fake.payloads[-1])
+    assert ("format" in payload) is schema
+    assert "tools" not in payload
+    assert response.script_id == ("transform-v2-json-schema" if schema else "transform-v1")
+    if schema:
+        assert payload["format"]["properties"]["decision"]["enum"] == ["respond"]
+    assert "Review status." in payload["messages"][1]["content"]
+
+
+def test_transformations_reject_nonrespond_decisions() -> None:
+    fake = _FakeHttp(
+        json.dumps(
+            {"message": {"content": json.dumps({"decision": "refuse", "text": "No."})}}
+        ).encode()
+    )
+    with pytest.raises(ModelBackendError, match="transformation must return respond"):
+        _backend(fake).complete(
+            ModelRequest(
+                purpose=ModelPurpose.TRANSFORM,
+                seed=1,
+                workspace_id=WorkspaceId("ws-local"),
+                context=(
+                    ContextMemory(memory_id=MemoryId("mem-000001"), content="Review status."),
+                ),
+            )
+        )
+
+
+def test_explicit_transform_schema_configuration_preserves_historical_hashes() -> None:
+    base = load_config(Path("configs/ollama-schema-pilot.json"))
+    assert base.fingerprint() == "3244cca46db8b782c3e845a8508993d0374b40853f95c981a779eab163e92e85"
+    stored = base.stored_json()
+    assert isinstance(stored, dict)
+    assert "transformation_output_mode" not in stored
+    changed = ExperimentConfig.model_validate(
+        {**stored, "transformation_backend": "ollama", "transformation_output_mode": "json_schema"}
+    )
+    assert changed.transformation_output_mode == "json_schema"
+    assert changed.fingerprint() != base.fingerprint()
+    with pytest.raises(ValidationError, match="schema pilot supports"):
+        ExperimentConfig.model_validate({**stored, "transformation_backend": "ollama"})

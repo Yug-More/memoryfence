@@ -16,6 +16,8 @@ from memoryfence.llm.prompts import (
     AGENT_SCHEMA_TEMPLATE,
     AGENT_SYSTEM,
     AGENT_TEMPLATE,
+    TRANSFORM_RESPONSE_SCHEMA,
+    TRANSFORM_SCHEMA_TEMPLATE,
     TRANSFORM_SYSTEM,
     TRANSFORM_TEMPLATE,
 )
@@ -91,10 +93,12 @@ class OllamaBackend:
         max_calls: int,
         transport: HttpTransport | None = None,
         output_mode: Literal["native", "json_schema"] = "native",
+        transformation_output_mode: Literal["native", "json_schema"] = "native",
     ) -> None:
         if not model or len(model) > 128:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the model tag is missing")
         self.output_mode = output_mode
+        self.transformation_output_mode = transformation_output_mode
         self.agent_template = (
             AGENT_SCHEMA_TEMPLATE if output_mode == "json_schema" else AGENT_TEMPLATE
         )
@@ -116,7 +120,11 @@ class OllamaBackend:
         self._ensure_identity()
         if request.purpose is ModelPurpose.TRANSFORM:
             messages = _transform_messages(request)
-            template = TRANSFORM_TEMPLATE
+            template = (
+                TRANSFORM_SCHEMA_TEMPLATE
+                if self.transformation_output_mode == "json_schema"
+                else TRANSFORM_TEMPLATE
+            )
             tools: tuple[object, ...] = ()
         elif request.purpose is ModelPurpose.AGENT:
             messages = _agent_messages(request)
@@ -140,6 +148,12 @@ class OllamaBackend:
         if request.purpose is ModelPurpose.AGENT and self.output_mode == "json_schema":
             messages[0]["content"] += AGENT_SCHEMA_INSTRUCTIONS + json.dumps(AGENT_RESPONSE_SCHEMA)
             body["format"] = AGENT_RESPONSE_SCHEMA
+        if (
+            request.purpose is ModelPurpose.TRANSFORM
+            and self.transformation_output_mode == "json_schema"
+        ):
+            messages[0]["content"] += "\nJSON schema: " + json.dumps(TRANSFORM_RESPONSE_SCHEMA)
+            body["format"] = TRANSFORM_RESPONSE_SCHEMA
         status, raw = self._transport.request(
             "POST",
             f"{self._base}/api/chat",
@@ -148,7 +162,12 @@ class OllamaBackend:
         )
         if status != 200:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the local model request failed")
-        return _parse_chat(decode_json(raw), template)
+        response = _parse_chat(decode_json(raw), template)
+        if request.purpose is ModelPurpose.TRANSFORM and (
+            response.decision is not DecisionKind.RESPOND or response.tool_name is not None
+        ):
+            raise ModelBackendError(ReasonCode.MODEL_OUTPUT, "a transformation must return respond")
+        return response
 
     def _ensure_identity(self) -> None:
         if self.identity is not None:
