@@ -118,3 +118,30 @@ def test_episode_records_text_control_without_counting_it_as_tool_utility(
     assert json.loads((tmp_path / "trial-0001" / "trial.json").read_text()) == record
     with pytest.raises(FileExistsError, match="Refusing"):
         episode(tmp_path, 1, spec, key, "fixture", "original", "test-only")
+
+
+def test_literal_followup_changes_task_without_reinterpreting_old_records() -> None:
+    functions = driver()
+    original, key = functions["case"]("direct", 351)
+    literal = functions["literal_task"](original)
+    assert original.actions[0].task != literal.actions[0].task
+    assert literal.actions[0].task == functions["LITERAL_TASK"]
+    assert literal.sources == original.sources
+    assert key.legitimate_arguments == (("title", "review"), ("body", "status"))
+    records = [
+        {"family": f, "seed": s, "valid": True, "success": True}
+        for f in ("direct", "memory", "response")
+        for s in (351, 352, 353)
+    ]
+    assert functions["qualified"](records, seeds=(351, 352, 353))
+    assert not functions["qualified"](records)
+
+
+def test_controlled_study_rejects_unqualified_saved_selection(tmp_path: Path) -> None:
+    functions = driver()
+    (tmp_path / "qualification.json").write_text(
+        json.dumps({"selected": ["qwen2.5:1.5b", "original"]})
+    )
+    (tmp_path / "trials.jsonl").write_text("")
+    with pytest.raises(ValueError, match="does not pass"):
+        functions["controlled"](tmp_path / "study", "fixture", tmp_path)
