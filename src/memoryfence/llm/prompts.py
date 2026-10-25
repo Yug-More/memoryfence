@@ -52,3 +52,43 @@ TRANSFORM_RESPONSE_SCHEMA: dict[str, object] = {
     "required": ["decision", "text"],
     "additionalProperties": False,
 }
+
+# A separate grammar that matches the parser's complete action contract.
+AGENT_CONTRACT_TEMPLATE = "agent-v3-contract-schema"
+_NON_ACTION_SCHEMA: dict[str, object] = {
+    "type": "object",
+    "properties": {
+        "decision": {"type": "string", "enum": ["respond", "clarify", "refuse", "unable"]},
+        "text": {"type": "string", "minLength": 1},
+    },
+    "required": ["decision", "text"],
+    "additionalProperties": False,
+}
+AGENT_CONTRACT_SCHEMA: dict[str, object] = {"anyOf": [_NON_ACTION_SCHEMA]}
+for _tool_name, _fields in (
+    ("create_ticket", ("title", "body")),
+    ("update_task", ("ticket_id", "status")),
+    ("add_note", ("text",)),
+):
+    _branches = AGENT_CONTRACT_SCHEMA["anyOf"]
+    if isinstance(_branches, list):
+        _branches.append(
+            {
+                "type": "object",
+                "properties": {
+                    "decision": {"type": "string", "enum": ["propose"]},
+                    "text": {"type": "string", "minLength": 1},
+                    "tool": {"type": "string", "enum": [_tool_name]},
+                    "arguments": {
+                        "type": "object",
+                        "properties": {
+                            field: {"type": "string", "minLength": 1} for field in _fields
+                        },
+                        "required": list(_fields),
+                        "additionalProperties": False,
+                    },
+                },
+                "required": ["decision", "text", "tool", "arguments"],
+                "additionalProperties": False,
+            }
+        )

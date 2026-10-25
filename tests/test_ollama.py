@@ -489,3 +489,97 @@ def test_explicit_transform_schema_configuration_preserves_historical_hashes() -
     assert changed.fingerprint() != base.fingerprint()
     with pytest.raises(ValidationError, match="schema pilot supports"):
         ExperimentConfig.model_validate({**stored, "transformation_backend": "ollama"})
+
+
+@pytest.mark.parametrize(
+    "arguments",
+    [
+        {"title": "review", "body": "status"},
+        {"body": "status"},
+        {"title": "review", "body": " "},
+        {"title": "review", "body": "status", "extra": "no"},
+    ],
+)
+def test_complete_action_contract_rejects_partial_or_extra_fields(
+    arguments: dict[str, str],
+) -> None:
+    content = {
+        "decision": "propose",
+        "text": "proposing",
+        "tool": "create_ticket",
+        "arguments": arguments,
+    }
+    fake = _FakeHttp(json.dumps({"message": {"content": json.dumps(content)}}).encode())
+    backend = OllamaBackend(
+        endpoint="http://127.0.0.1:11434",
+        model="qwen2.5:0.5b",
+        temperature=0,
+        num_ctx=2048,
+        num_predict=256,
+        timeout=5,
+        max_calls=1,
+        transport=fake,
+        output_mode="json_schema",
+        agent_output_contract="complete",
+    )
+    request = ModelRequest(
+        purpose=ModelPurpose.AGENT,
+        seed=651,
+        workspace_id=WorkspaceId("ws-local"),
+        task="Create a ticket.",
+        context=(),
+    )
+    if arguments == {"title": "review", "body": "status"}:
+        response = backend.complete(request)
+        assert response.tool_name == "create_ticket"
+        assert response.script_id == "agent-v3-contract-schema"
+    else:
+        with pytest.raises(ModelBackendError):
+            backend.complete(request)
+
+
+def test_complete_contract_configuration_is_explicit_and_legacy_hash_unchanged() -> None:
+    base = smoke_config().model_dump()
+    base.update(backend="ollama", model_tag="qwen2.5:0.5b")
+    legacy = ExperimentConfig(
+        **(
+            base
+            | {
+                "backend": "ollama",
+                "model_tag": "qwen2.5:0.5b",
+                "output_mode": "json_schema",
+                "prompt_template": "agent-v2-json-schema",
+            }
+        )
+    )
+    legacy_data = legacy.stored_json()
+    assert isinstance(legacy_data, dict)
+    assert "agent_output_contract" not in legacy_data
+    with pytest.raises(ValidationError, match="agent-v3-contract-schema"):
+        ExperimentConfig(
+            **(
+                base
+                | {
+                    "backend": "ollama",
+                    "model_tag": "qwen2.5:0.5b",
+                    "output_mode": "json_schema",
+                    "prompt_template": "agent-v2-json-schema",
+                    "agent_output_contract": "complete",
+                }
+            )
+        )
+    complete = ExperimentConfig(
+        **(
+            base
+            | {
+                "backend": "ollama",
+                "model_tag": "qwen2.5:0.5b",
+                "output_mode": "json_schema",
+                "prompt_template": "agent-v3-contract-schema",
+                "agent_output_contract": "complete",
+            }
+        )
+    )
+    complete_data = complete.stored_json()
+    assert isinstance(complete_data, dict)
+    assert complete_data["agent_output_contract"] == "complete"

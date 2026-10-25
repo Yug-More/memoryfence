@@ -216,6 +216,7 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
             timeout=config.timeout_seconds,
             max_calls=config.max_model_calls,
             output_mode=config.output_mode,
+            agent_output_contract=config.agent_output_contract,
             transformation_output_mode=config.transformation_output_mode,
             transport=RecordingTransport(UrllibTransport(), run_dir / "model-exchanges.jsonl"),
         )
