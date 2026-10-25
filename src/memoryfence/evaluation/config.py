@@ -19,6 +19,7 @@ BackendName = Literal["scripted", "ollama"]
 _OMIT_WHEN_SCRIPTED = (
     "output_mode",
     "agent_output_contract",
+    "agent_message_order",
     "model_tag",
     "endpoint",
     "temperature",
@@ -58,9 +59,10 @@ class ExperimentConfig(DomainModel):
     max_model_calls: int = Field(default=8, ge=1, le=32)
     output_mode: Literal["native", "json_schema"] = "native"
     agent_output_contract: Literal["legacy", "complete"] = "legacy"
-    prompt_template: Literal["agent-v1", "agent-v2-json-schema", "agent-v3-contract-schema"] = (
-        "agent-v1"
-    )
+    agent_message_order: Literal["legacy", "task_last"] = "legacy"
+    prompt_template: Literal[
+        "agent-v1", "agent-v2-json-schema", "agent-v3-contract-schema", "agent-v4-task-last"
+    ] = "agent-v1"
     judge_version: Literal["rubric-v1"] = "rubric-v1"
     transformation_backend: Literal["scripted", "ollama"] = "scripted"
     transformation_output_mode: Literal["native", "json_schema"] = "native"
@@ -90,6 +92,8 @@ class ExperimentConfig(DomainModel):
         if len(self.scenarios) != len(set(self.scenarios)):
             raise ValueError("scenario ids must be unique")
         if self.backend == "scripted":
+            if self.agent_message_order != "legacy":
+                raise ValueError("scripted experiments do not use a message order")
             if self.agent_output_contract != "legacy":
                 raise ValueError("scripted experiments do not use an action contract")
             if self.output_mode != "native" or self.prompt_template != "agent-v1":
@@ -101,8 +105,12 @@ class ExperimentConfig(DomainModel):
             if self.transformation_backend != "scripted":
                 raise ValueError("the scripted backend does not use a model transformation")
             return self
+        if self.agent_message_order == "task_last" and self.agent_output_contract != "complete":
+            raise ValueError("task_last requires complete contract")
         expected_template = (
-            "agent-v3-contract-schema"
+            "agent-v4-task-last"
+            if self.agent_message_order == "task_last"
+            else "agent-v3-contract-schema"
             if self.agent_output_contract == "complete"
             else "agent-v2-json-schema"
         )
@@ -139,6 +147,8 @@ class ExperimentConfig(DomainModel):
 
     def stored_json(self) -> JsonValue:
         data = super().model_dump(mode="json")
+        if isinstance(data, dict) and data.get("agent_message_order") == "legacy":
+            data.pop("agent_message_order", None)
         if isinstance(data, dict) and data.get("agent_output_contract") == "legacy":
             data.pop("agent_output_contract", None)
         if isinstance(data, dict) and data.get("transformation_output_mode") == "native":

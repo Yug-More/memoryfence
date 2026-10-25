@@ -583,3 +583,73 @@ def test_complete_contract_configuration_is_explicit_and_legacy_hash_unchanged()
     complete_data = complete.stored_json()
     assert isinstance(complete_data, dict)
     assert complete_data["agent_output_contract"] == "complete"
+
+
+@pytest.mark.parametrize("with_memory", [False, True])
+def test_opt_in_task_last_matches_the_qualified_research_request(with_memory: bool) -> None:
+    import runpy
+
+    raw = json.dumps(
+        {"message": {"content": json.dumps({"decision": "respond", "text": "ready"})}}
+    ).encode()
+    request = ModelRequest(
+        purpose=ModelPurpose.AGENT,
+        seed=751,
+        workspace_id=WorkspaceId("ws-local"),
+        task="Reply with the status word.",
+        context=(ContextMemory(memory_id=MemoryId("mem-000001"), content="Status: ready."),)
+        if with_memory
+        else (),
+    )
+    sent = []
+    for order in ("legacy", "task_last"):
+        fake = _FakeHttp(raw)
+        backend = OllamaBackend(
+            endpoint="http://127.0.0.1:11434",
+            model="qwen2.5:0.5b",
+            temperature=0,
+            num_ctx=2048,
+            num_predict=256,
+            timeout=120,
+            max_calls=1,
+            transport=fake,
+            output_mode="json_schema",
+            agent_output_contract="complete",
+            agent_message_order=order,
+        )
+        response = backend.complete(request)
+        assert response.script_id == (
+            "agent-v4-task-last" if order == "task_last" else "agent-v3-contract-schema"
+        )
+        sent.append(json.loads(fake.payloads[-1]))
+    alter = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts/research/study.py"))[
+        "alter_body"
+    ]
+    assert sent[1] == alter(sent[0], "task-last")
+    assert sent[1]["messages"][-1]["content"] == "Task:\nReply with the status word."
+
+
+def test_task_last_configuration_is_explicit_and_preserves_legacy_fingerprints() -> None:
+    base = smoke_config().model_dump()
+    legacy = ExperimentConfig(**base)
+    data = legacy.stored_json()
+    assert isinstance(data, dict)
+    assert "agent_message_order" not in data
+    with pytest.raises(ValidationError, match="scripted experiments"):
+        ExperimentConfig(**(base | {"agent_message_order": "task_last"}))
+    fields = base | {
+        "backend": "ollama",
+        "model_tag": "qwen2.5:1.5b",
+        "output_mode": "json_schema",
+        "agent_output_contract": "complete",
+        "agent_message_order": "task_last",
+        "prompt_template": "agent-v4-task-last",
+    }
+    config = ExperimentConfig(**fields)
+    stored = config.stored_json()
+    assert isinstance(stored, dict)
+    assert stored["agent_message_order"] == "task_last"
+    with pytest.raises(ValidationError, match="agent-v4-task-last"):
+        ExperimentConfig(**(fields | {"prompt_template": "agent-v3-contract-schema"}))
+    with pytest.raises(ValidationError, match="complete contract"):
+        ExperimentConfig(**(fields | {"agent_output_contract": "legacy"}))

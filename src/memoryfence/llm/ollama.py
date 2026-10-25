@@ -17,6 +17,7 @@ from memoryfence.llm.prompts import (
     AGENT_SCHEMA_INSTRUCTIONS,
     AGENT_SCHEMA_TEMPLATE,
     AGENT_SYSTEM,
+    AGENT_TASK_LAST_TEMPLATE,
     AGENT_TEMPLATE,
     TRANSFORM_RESPONSE_SCHEMA,
     TRANSFORM_SCHEMA_TEMPLATE,
@@ -97,6 +98,7 @@ class OllamaBackend:
         output_mode: Literal["native", "json_schema"] = "native",
         transformation_output_mode: Literal["native", "json_schema"] = "native",
         agent_output_contract: Literal["legacy", "complete"] = "legacy",
+        agent_message_order: Literal["legacy", "task_last"] = "legacy",
     ) -> None:
         if not model or len(model) > 128:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the model tag is missing")
@@ -104,11 +106,16 @@ class OllamaBackend:
             raise ModelBackendError(
                 ReasonCode.MODEL_OUTPUT, "complete contract requires json_schema"
             )
+        if agent_message_order == "task_last" and agent_output_contract != "complete":
+            raise ModelBackendError(ReasonCode.MODEL_OUTPUT, "task_last requires complete contract")
+        self.agent_message_order = agent_message_order
         self.agent_output_contract = agent_output_contract
         self.output_mode = output_mode
         self.transformation_output_mode = transformation_output_mode
         self.agent_template = (
-            AGENT_CONTRACT_TEMPLATE
+            AGENT_TASK_LAST_TEMPLATE
+            if agent_message_order == "task_last"
+            else AGENT_CONTRACT_TEMPLATE
             if agent_output_contract == "complete"
             else AGENT_SCHEMA_TEMPLATE
             if output_mode == "json_schema"
@@ -140,6 +147,8 @@ class OllamaBackend:
             tools: tuple[object, ...] = ()
         elif request.purpose is ModelPurpose.AGENT:
             messages = _agent_messages(request)
+            if self.agent_message_order == "task_last":
+                messages = [messages[0], messages[2], messages[1]]
             template = self.agent_template
             tools = _STANDING
         else:

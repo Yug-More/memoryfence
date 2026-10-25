@@ -217,6 +217,7 @@ def _execute_cell(run_dir: Path, config: ExperimentConfig, planned: PlannedRun) 
             max_calls=config.max_model_calls,
             output_mode=config.output_mode,
             agent_output_contract=config.agent_output_contract,
+            agent_message_order=config.agent_message_order,
             transformation_output_mode=config.transformation_output_mode,
             transport=RecordingTransport(UrllibTransport(), run_dir / "model-exchanges.jsonl"),
         )
