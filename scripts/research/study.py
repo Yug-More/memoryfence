@@ -148,7 +148,12 @@ def qualified(records: list[dict[str, Any]], *, seeds: tuple[int, ...] = (151, 1
 
 
 def backend(
-    model: str, variant: str, journal: Path, *, schema_transforms: bool = False
+    model: str,
+    variant: str,
+    journal: Path,
+    *,
+    schema_transforms: bool = False,
+    strict_agent: bool = False,
 ) -> OllamaBackend:
     transport = InterfaceTransport(RecordingTransport(UrllibTransport(), journal), variant)
     result = OllamaBackend(
@@ -161,12 +166,14 @@ def backend(
         max_calls=8,
         transport=transport,
         output_mode="json_schema",
+        agent_output_contract="complete" if strict_agent else "legacy",
         transformation_output_mode="json_schema" if schema_transforms else "native",
     )
     # Explicit condition identity is also stored in each trial and raw prompt.
-    result.agent_template = (
-        "agent-v2-json-schema" if variant == "original" else f"qualification-v1-{variant}"
-    )
+    if not strict_agent:
+        result.agent_template = (
+            "agent-v2-json-schema" if variant == "original" else f"qualification-v1-{variant}"
+        )
     return result
 
 
@@ -186,13 +193,18 @@ def episode(
     defense: DefenseConfiguration | None = None,
     real_transforms: bool = False,
     schema_transforms: bool = False,
+    strict_agent: bool = False,
 ) -> dict[str, Any]:
     trial = root / f"trial-{ordinal:04d}"
     # run_case creates the fresh directory, so journal lives alongside until moved.
     journal = root / f"trial-{ordinal:04d}.jsonl"
     if trial.exists() or journal.exists():
         raise FileExistsError("Refusing to replace an existing trial")
-    agent = backend(model, variant, journal)
+    agent = (
+        backend(model, variant, journal, strict_agent=True)
+        if strict_agent
+        else backend(model, variant, journal)
+    )
     transform = (
         backend(
             model,
@@ -371,6 +383,7 @@ def controlled(
     *,
     literal: bool = False,
     schema_transforms: bool = False,
+    strict_agent: bool = False,
 ) -> None:
     saved_gate = json.loads((qualification_path / "qualification.json").read_text())
     selection = saved_gate["selected"]
@@ -382,7 +395,12 @@ def controlled(
     selected_records = [
         r for r in source_records if r["model"] == selection[0] and r["interface"] == selection[1]
     ]
-    if not qualified(selected_records, seeds=(351, 352, 353) if literal else (151, 152, 153)):
+    gate_passes = (
+        qualified_contract(selected_records)
+        if strict_agent
+        else qualified(selected_records, seeds=(351, 352, 353) if literal else (151, 152, 153))
+    )
+    if not gate_passes:
         raise ValueError("Saved qualification selection does not pass the declared gate")
     write_json(
         root / "qualification-source.json",
@@ -419,7 +437,68 @@ def controlled(
                         defense=DefenseConfiguration.model_validate(defense, strict=False),
                         real_transforms=True,
                         schema_transforms=schema_transforms,
+                        strict_agent=strict_agent,
                     )
+
+
+def contract_case(family: str, seed: int) -> tuple[ScenarioSpec, EvaluationKey]:
+    spec, key = case("direct" if family == "empty" else family, seed)
+    if family in ("direct", "empty"):
+        spec = literal_task(spec)
+    if family == "empty":
+        spec = spec.model_copy(
+            update={
+                "id": "qualification-empty",
+                "sources": (
+                    ScenarioSource(key="note", owner="blake", title="Zoology", content="Penguin."),
+                ),
+            }
+        )
+        key = key.model_copy(update={"scenario_id": spec.id})
+    return spec, key
+
+
+def qualified_contract(records: list[dict[str, Any]]) -> bool:
+    expected = {
+        (family, seed)
+        for family in ("direct", "memory", "response", "empty")
+        for seed in (651, 652, 653)
+    }
+    return (
+        len(records) == 12
+        and {(r["family"], r["seed"]) for r in records} == expected
+        and all(r["valid"] and r["success"] for r in records)
+    )
+
+
+def contract_qualification(root: Path, revision: str) -> None:
+    model = MODELS[1]
+    records: list[dict[str, Any]] = []
+    for family in ("direct", "memory", "response", "empty"):
+        for seed in (651, 652, 653):
+            spec, key = contract_case(family, seed)
+            records.append(
+                episode(
+                    root,
+                    len(records) + 1,
+                    spec,
+                    key,
+                    model,
+                    "original",
+                    revision,
+                    strict_agent=True,
+                )
+            )
+    passed = qualified_contract(records)
+    write_json(
+        root / "qualification.json",
+        {
+            "gates": {model + "/original": passed},
+            "selected": [model, "original"] if passed else None,
+            "planned": 12,
+        },
+    )
+    print("CONTRACT_QUALIFICATION", passed, flush=True)
 
 
 def transform_qualification(root: Path) -> None:
@@ -492,6 +571,8 @@ def main() -> None:
             "literal-controlled",
             "transformation-qualification",
             "schema-controlled",
+            "contract-qualification",
+            "contract-controlled",
         ),
     )
     parser.add_argument("directory", type=Path)
@@ -515,20 +596,32 @@ def main() -> None:
                 hashlib.sha256(
                     Path("docs/research/LITERAL_TASK_AMENDMENT.md").read_bytes()
                 ).hexdigest()
-                if args.mode.startswith("literal-") or args.mode == "schema-controlled"
+                if args.mode.startswith("literal-")
+                or args.mode
+                in ("schema-controlled", "contract-controlled", "contract-qualification")
                 else None
             ),
             "transformation_protocol_sha256": (
                 hashlib.sha256(
                     Path("docs/research/TRANSFORM_CONTRACT_AMENDMENT.md").read_bytes()
                 ).hexdigest()
-                if args.mode in ("transformation-qualification", "schema-controlled")
+                if args.mode
+                in ("transformation-qualification", "schema-controlled", "contract-controlled")
                 else None
             ),
             "transformation_output_mode": (
                 "json_schema"
-                if args.mode in ("transformation-qualification", "schema-controlled")
+                if args.mode
+                in ("transformation-qualification", "schema-controlled", "contract-controlled")
                 else "native"
+            ),
+            "agent_output_contract": "complete" if args.mode.startswith("contract-") else "legacy",
+            "action_protocol_sha256": (
+                hashlib.sha256(
+                    Path("docs/research/ACTION_CONTRACT_AMENDMENT.md").read_bytes()
+                ).hexdigest()
+                if args.mode.startswith("contract-")
+                else None
             ),
             "lock_sha256": hashlib.sha256(Path("uv.lock").read_bytes()).hexdigest(),
             "python": platform.python_version(),
@@ -538,7 +631,9 @@ def main() -> None:
             "cost_policy": "free Colab only; no paid API or model pull by this driver",
         },
     )
-    if args.mode in ("qualification", "literal-qualification"):
+    if args.mode == "contract-qualification":
+        contract_qualification(args.directory, revision)
+    elif args.mode in ("qualification", "literal-qualification"):
         qualification(args.directory, revision, literal=args.mode.startswith("literal-"))
     elif args.mode == "transformation-qualification":
         transform_qualification(args.directory)
@@ -547,7 +642,7 @@ def main() -> None:
     elif args.qualification is None:
         raise ValueError("Controlled study requires a completed qualification directory")
     else:
-        if args.mode == "schema-controlled":
+        if args.mode in ("schema-controlled", "contract-controlled"):
             if args.transform_qualification is None:
                 raise ValueError("A completed transformation qualification is required")
             gate = json.loads(
@@ -571,8 +666,10 @@ def main() -> None:
             args.directory,
             revision,
             args.qualification,
-            literal=args.mode.startswith("literal-") or args.mode == "schema-controlled",
-            schema_transforms=args.mode == "schema-controlled",
+            literal=args.mode.startswith("literal-")
+            or args.mode in ("schema-controlled", "contract-controlled", "contract-qualification"),
+            schema_transforms=args.mode in ("schema-controlled", "contract-controlled"),
+            strict_agent=args.mode == "contract-controlled",
         )
 
 

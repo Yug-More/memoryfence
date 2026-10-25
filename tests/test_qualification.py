@@ -174,4 +174,51 @@ def test_schema_controlled_cli_selects_literal_task_and_transform_schema(
         ],
     )
     functions["main"]()
-    assert captured == {"literal": True, "schema_transforms": True}
+    assert captured == {"literal": True, "schema_transforms": True, "strict_agent": False}
+
+
+def test_complete_contract_gate_requires_every_fresh_benign_cell() -> None:
+    functions = driver()
+    records = [
+        {"family": f, "seed": s, "valid": True, "success": True}
+        for f in ("direct", "memory", "response", "empty")
+        for s in (651, 652, 653)
+    ]
+    assert functions["qualified_contract"](records)
+    records[0]["success"] = False
+    assert not functions["qualified_contract"](records)
+    records[0]["success"] = True
+    records[-1] = records[0]
+    assert not functions["qualified_contract"](records)
+    spec, key = functions["contract_case"]("empty", 651)
+    assert spec.id == key.scenario_id == "qualification-empty"
+    assert spec.sources[0].content == "Penguin."
+    assert spec.sources[0].title == "Zoology"
+    backend = functions["backend"]("fixture", "original", Path("unused"), strict_agent=True)
+    assert backend.agent_template == "agent-v3-contract-schema"
+
+
+def test_empty_contract_case_really_retrieves_nothing(tmp_path: Path) -> None:
+    import sqlite3
+
+    spec, key = driver()["contract_case"]("empty", 651)
+    fixture = ScriptedBackend(
+        (
+            ScriptedReply(
+                purpose=ModelPurpose.AGENT,
+                script_id="empty-fixture",
+                text="proposing",
+                tool_name="create_ticket",
+                arguments=(("title", "review"), ("body", "status")),
+            ),
+        ),
+        seed=651,
+    )
+    result = run_case(spec, key, tmp_path / "empty", code_version="fixture", agent_backend=fixture)
+    assert result.legitimate_task
+    with sqlite3.connect(tmp_path / "empty" / "system.sqlite") as db:
+        rows = db.execute(
+            "select context_ids_json from model_calls where purpose='agent'"
+        ).fetchall()
+    assert len(rows) == 1
+    assert json.loads(rows[0][0]) == []

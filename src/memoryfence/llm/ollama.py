@@ -11,6 +11,8 @@ from memoryfence.domain.ids import WorkspaceId
 from memoryfence.domain.model import ModelRequest, ModelResponse
 from memoryfence.llm.endpoint import require_loopback
 from memoryfence.llm.prompts import (
+    AGENT_CONTRACT_SCHEMA,
+    AGENT_CONTRACT_TEMPLATE,
     AGENT_RESPONSE_SCHEMA,
     AGENT_SCHEMA_INSTRUCTIONS,
     AGENT_SCHEMA_TEMPLATE,
@@ -94,13 +96,23 @@ class OllamaBackend:
         transport: HttpTransport | None = None,
         output_mode: Literal["native", "json_schema"] = "native",
         transformation_output_mode: Literal["native", "json_schema"] = "native",
+        agent_output_contract: Literal["legacy", "complete"] = "legacy",
     ) -> None:
         if not model or len(model) > 128:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the model tag is missing")
+        if agent_output_contract == "complete" and output_mode != "json_schema":
+            raise ModelBackendError(
+                ReasonCode.MODEL_OUTPUT, "complete contract requires json_schema"
+            )
+        self.agent_output_contract = agent_output_contract
         self.output_mode = output_mode
         self.transformation_output_mode = transformation_output_mode
         self.agent_template = (
-            AGENT_SCHEMA_TEMPLATE if output_mode == "json_schema" else AGENT_TEMPLATE
+            AGENT_CONTRACT_TEMPLATE
+            if agent_output_contract == "complete"
+            else AGENT_SCHEMA_TEMPLATE
+            if output_mode == "json_schema"
+            else AGENT_TEMPLATE
         )
         self._base = require_loopback(endpoint)
         self._model = model
@@ -145,9 +157,30 @@ class OllamaBackend:
         }
         if tools:
             body["tools"] = list(tools)
+            if self.agent_output_contract == "complete":
+                corrected = json.loads(json.dumps(body["tools"]))
+                for tool in corrected:
+                    function = tool["function"]
+                    tool_fields = {
+                        "create_ticket": ("title", "body"),
+                        "update_task": ("ticket_id", "status"),
+                        "add_note": ("text",),
+                    }[function["name"]]
+                    function["parameters"] = {
+                        "type": "object",
+                        "properties": {field: {"type": "string"} for field in tool_fields},
+                        "required": list(tool_fields),
+                        "additionalProperties": False,
+                    }
+                body["tools"] = corrected
         if request.purpose is ModelPurpose.AGENT and self.output_mode == "json_schema":
-            messages[0]["content"] += AGENT_SCHEMA_INSTRUCTIONS + json.dumps(AGENT_RESPONSE_SCHEMA)
-            body["format"] = AGENT_RESPONSE_SCHEMA
+            schema = (
+                AGENT_CONTRACT_SCHEMA
+                if self.agent_output_contract == "complete"
+                else AGENT_RESPONSE_SCHEMA
+            )
+            messages[0]["content"] += AGENT_SCHEMA_INSTRUCTIONS + json.dumps(schema)
+            body["format"] = schema
         if (
             request.purpose is ModelPurpose.TRANSFORM
             and self.transformation_output_mode == "json_schema"
@@ -162,7 +195,31 @@ class OllamaBackend:
         )
         if status != 200:
             raise ModelBackendError(ReasonCode.MODEL_UNAVAILABLE, "the local model request failed")
-        response = _parse_chat(decode_json(raw), template)
+        payload = decode_json(raw)
+        response = _parse_chat(payload, template)
+        if request.purpose is ModelPurpose.AGENT and self.agent_output_contract == "complete":
+            message = payload.get("message")
+            if isinstance(message, dict) and not message.get("tool_calls"):
+                parsed = json.loads(str(message["content"]))
+                expected_keys = (
+                    {"decision", "text", "tool", "arguments"}
+                    if response.tool_name
+                    else {"decision", "text"}
+                )
+                if set(parsed) != expected_keys:
+                    raise ModelBackendError(ReasonCode.MODEL_OUTPUT, "unexpected contract fields")
+            if response.tool_name:
+                fields = {
+                    "create_ticket": {"title", "body"},
+                    "update_task": {"ticket_id", "status"},
+                    "add_note": {"text"},
+                }.get(response.tool_name)
+                if (
+                    fields is None
+                    or set(dict(response.arguments)) != fields
+                    or any(not value.strip() for _, value in response.arguments)
+                ):
+                    raise ModelBackendError(ReasonCode.MODEL_OUTPUT, "incomplete action contract")
         if request.purpose is ModelPurpose.TRANSFORM and (
             response.decision is not DecisionKind.RESPOND or response.tool_name is not None
         ):

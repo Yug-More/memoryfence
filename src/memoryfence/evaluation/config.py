@@ -18,6 +18,7 @@ BlockName = Literal["custom", "smoke", "e3"]
 BackendName = Literal["scripted", "ollama"]
 _OMIT_WHEN_SCRIPTED = (
     "output_mode",
+    "agent_output_contract",
     "model_tag",
     "endpoint",
     "temperature",
@@ -56,7 +57,10 @@ class ExperimentConfig(DomainModel):
     timeout_seconds: float = Field(default=30, ge=1, le=120)
     max_model_calls: int = Field(default=8, ge=1, le=32)
     output_mode: Literal["native", "json_schema"] = "native"
-    prompt_template: Literal["agent-v1", "agent-v2-json-schema"] = "agent-v1"
+    agent_output_contract: Literal["legacy", "complete"] = "legacy"
+    prompt_template: Literal["agent-v1", "agent-v2-json-schema", "agent-v3-contract-schema"] = (
+        "agent-v1"
+    )
     judge_version: Literal["rubric-v1"] = "rubric-v1"
     transformation_backend: Literal["scripted", "ollama"] = "scripted"
     transformation_output_mode: Literal["native", "json_schema"] = "native"
@@ -86,6 +90,8 @@ class ExperimentConfig(DomainModel):
         if len(self.scenarios) != len(set(self.scenarios)):
             raise ValueError("scenario ids must be unique")
         if self.backend == "scripted":
+            if self.agent_output_contract != "legacy":
+                raise ValueError("scripted experiments do not use an action contract")
             if self.output_mode != "native" or self.prompt_template != "agent-v1":
                 raise ValueError("scripted experiments do not use a model output schema")
             if self.replicates != 1 or self.model_tag is not None:
@@ -95,8 +101,15 @@ class ExperimentConfig(DomainModel):
             if self.transformation_backend != "scripted":
                 raise ValueError("the scripted backend does not use a model transformation")
             return self
-        if self.output_mode == "json_schema" and self.prompt_template != "agent-v2-json-schema":
-            raise ValueError("json_schema requires agent-v2-json-schema")
+        expected_template = (
+            "agent-v3-contract-schema"
+            if self.agent_output_contract == "complete"
+            else "agent-v2-json-schema"
+        )
+        if self.agent_output_contract == "complete" and self.output_mode != "json_schema":
+            raise ValueError("complete contract requires json_schema")
+        if self.output_mode == "json_schema" and self.prompt_template != expected_template:
+            raise ValueError(f"json_schema requires {expected_template}")
         if self.output_mode == "native" and self.prompt_template != "agent-v1":
             raise ValueError("native output requires agent-v1")
         if (
@@ -126,6 +139,8 @@ class ExperimentConfig(DomainModel):
 
     def stored_json(self) -> JsonValue:
         data = super().model_dump(mode="json")
+        if isinstance(data, dict) and data.get("agent_output_contract") == "legacy":
+            data.pop("agent_output_contract", None)
         if isinstance(data, dict) and data.get("transformation_output_mode") == "native":
             data.pop("transformation_output_mode", None)
         if isinstance(data, dict) and data.get("output_mode") == "native":
