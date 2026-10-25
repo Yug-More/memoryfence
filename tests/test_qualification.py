@@ -200,6 +200,7 @@ def test_complete_contract_gate_requires_every_fresh_benign_cell() -> None:
 
 def test_empty_contract_case_really_retrieves_nothing(tmp_path: Path) -> None:
     import sqlite3
+    from contextlib import closing
 
     spec, key = driver()["contract_case"]("empty", 651)
     fixture = ScriptedBackend(
@@ -216,7 +217,7 @@ def test_empty_contract_case_really_retrieves_nothing(tmp_path: Path) -> None:
     )
     result = run_case(spec, key, tmp_path / "empty", code_version="fixture", agent_backend=fixture)
     assert result.legitimate_task
-    with sqlite3.connect(tmp_path / "empty" / "system.sqlite") as db:
+    with closing(sqlite3.connect(tmp_path / "empty" / "system.sqlite")) as db:
         rows = db.execute(
             "select context_ids_json from model_calls where purpose='agent'"
         ).fetchall()
