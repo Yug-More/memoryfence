@@ -209,3 +209,16 @@ intervals with `uv run python scripts/recalculate.py <experiment-directory>`. Th
 script uses the standard library and imports no evaluator. It verifies arithmetic,
 not model authenticity, semantic labels or every conditional/utility metric.
 Older artifacts missing checksums or journals must be reviewed explicitly.
+
+
+## Saved empirical evidence and opt-in contracts
+
+Use the [controlled-study guide](guides/controlled-study.md) to independently verify
+saved records without inference and to distinguish pinned execution revisions.
+Agent `agent-v1` native and `agent-v2-json-schema` remain historical defaults.
+Explicit `agent_output_contract=complete` requires `agent-v3-contract-schema` and
+JSON-schema mode. It requires complete proposal fields and aligns opt-in tool
+arguments with the sandbox. It never repairs an earlier reply. The research driver
+requires a separately declared 12/12 benign gate including empty retrieval before
+new contract-controlled security execution. Transformation schema qualification
+is separate. Do not infer real-model performance from mocked transport tests.

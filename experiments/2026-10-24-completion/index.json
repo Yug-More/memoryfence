@@ -102,6 +102,22 @@
       "valid": 52,
       "recorded_agent_responses": 80,
       "recorded_transform_responses": 112
+    },
+    {
+      "accession": "contract-qualification",
+      "archive": "contract-qualification.zip.xz",
+      "transport_sha256": "3b40d05f815aebb0038d36c6f52e5980179f65872f0f996c8d0031e12e721f30",
+      "transport_bytes": 35876,
+      "original_zip_sha256": "f0c85b23bf2f2758f4549d98e892e853eccf45b0e54c0d61fc21c794916468f8",
+      "original_zip_bytes": 4792471,
+      "members": 109,
+      "mode": "contract-qualification",
+      "created_at_utc": "2026-10-25T06:52:44.668731+00:00",
+      "code_revision": "baa29fac9156c1e6e4a68eea013eb2a79d6a138a",
+      "planned": 12,
+      "valid": 12,
+      "recorded_agent_responses": 12,
+      "recorded_transform_responses": 0
     }
   ]
 }

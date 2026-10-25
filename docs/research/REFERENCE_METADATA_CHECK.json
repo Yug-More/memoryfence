@@ -1,0 +1,32 @@
+{
+  "checked_date": "2026-10-24",
+  "scope": "Primary-source metadata and abstracts for the three references cited in the completion report; not a complete inherited bibliography audit or full-paper replication.",
+  "references": [
+    {
+      "id": "2302.12173",
+      "title": "Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+      "authors": ["Kai Greshake", "Sahar Abdelnabi", "Shailesh Mishra", "Christoph Endres", "Thorsten Holz", "Mario Fritz"],
+      "submitted": "2023-02-23",
+      "version": "v2",
+      "revised": "2023-05-05",
+      "source": "https://arxiv.org/abs/2302.12173"
+    },
+    {
+      "id": "2511.17671",
+      "title": "MURMUR: Using cross-user chatter to break collaborative language agents in groups",
+      "authors": ["Atharv Singh Patlan", "Peiyao Sheng", "S. Ashwin Hebbar", "Prateek Mittal", "Pramod Viswanath"],
+      "submitted": "2025-11-21",
+      "version": "v1",
+      "source": "https://arxiv.org/abs/2511.17671"
+    },
+    {
+      "id": "2607.29167",
+      "title": "Memory Provenance Laundering in LLM Agents: A Non-Amplification Firewall for Persistent Memory",
+      "authors": ["Jinghan Xu", "Yiyong Xiao", "Wanru Shao", "Hankai Liu", "Xinjin Li"],
+      "submitted": "2026-07-31",
+      "version": "v1",
+      "source": "https://arxiv.org/abs/2607.29167",
+      "status_note": "The source reports submission, not acceptance. No peer-review or publication claim is made."
+    }
+  ]
+}

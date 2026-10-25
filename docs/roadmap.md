@@ -10,10 +10,14 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | 4 | Scripted scenarios and replay benchmark | Merged |
 | 5 | Defense baselines | Merged |
 | 6 | Evaluation runner, metrics, and reproducibility | Merged |
-| 7 | Model integration, pilots, preregistration, and confirmatory study | Integration merged; empirical work pending |
-| 7B | Free Colab workflow for the development pilot | Merged; hosted execution unverified |
-| 8 | Analysis, report, and audit | Planned |
+| 7 | Model integration, pilots, preregistration, and confirmatory study | Integration and bounded empirical follow-up merged; confirmatory study incomplete |
+| 7B | Free Colab workflow for the development pilot | Merged; free CPU execution and raw evidence verified |
+| 8 | Analysis, report, and audit | Bounded report and integrity audit delivered; full-study analysis incomplete |
 | 9 | Release audit | Planned |
+
+Current bounded findings are in the [completion report](research/COMPLETION_REPORT.md)
+and [evidence index](../experiments/2026-10-24-completion/index.json). Preserved
+failures, limited scope and uncompleted confirmatory requirements remain explicit.
 
 See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and the remaining evidence requirements. A merged implementation phase does not establish completion of its proposed study.
 

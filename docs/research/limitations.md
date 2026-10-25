@@ -49,3 +49,19 @@
 ## 7. Ethical limitations
 
 - Publishing payload styles that survive summarization could inform attackers. Mitigations: payloads are generic and inert, there is no tuning against named production systems, and findings that indicate a vulnerability in a specific product are disclosed responsibly before publication.
+
+
+## Bounded empirical follow-up — 24 October 2026
+
+The [completion report](COMPLETION_REPORT.md) preserves the failed historical pilot,
+prospective capability gates, task amendments, native transformation failures and
+separate corrected records. Literal-task 1.5B qualification does not establish
+arbitrary-task competence. The corrected lifecycle run has 52 valid and 28 invalid
+outcomes; invalid replies are not protection. DS1 exact-canary memory retention is
+observed without a post-deletion objective action; DS3 state removal does not
+establish usable behavioral protection. Source-alive context can include primary
+and derived memory. One payload pattern, two seeds per cell and independently
+repeated transformations do not support causal or general security claims.
+Human semantic validation, judge reliability, held-outs, common paired transforms,
+incomplete lineage and independent replication remain outstanding. Later opt-in
+contracts are separate experimental conditions, never repairs of earlier evidence.
