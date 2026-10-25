@@ -7,13 +7,15 @@ agent's memory lifecycle—and where retrieval, provenance and authorization sto
 
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
-**Status: genuine development pilot completed; full study not ready.** Two Colab
-runs preserved **28 completed real-model cells**. In the matched pilot, every
-condition had 0/2 attack executions **and 0/2 legitimate ticket completions**.
-The failed utility control prevents a defense-effectiveness claim. Original
-native-format probes failed; the executed schema mode is a separately versioned
-condition. See the [results](docs/research/COLAB_PILOT_RESULTS.md),
-[raw evidence](experiments/2026-10-24-colab/README.md), and
+**Status: real-model capability controls completed; full confirmatory study incomplete.**
+The original 28-cell pilot is preserved. A separately declared literal task qualified
+Qwen2.5 1.5B at **9/9 benign tasks**; 0.5B remained at **3/9**. Native transformation
+failures are retained. The corrected 80-episode lifecycle run has **52 valid and
+28 invalid** outcomes: source-alive attacks executed, DS1 retained canary-bearing
+memories, and DS3 removed descendants. Invalid replies limit behavioral conclusions. A stricter follow-up failed all three
+empty-context tasks (**9/12**, requiring 12/12), so further security scaling stopped.
+Read the [empirical report](docs/research/COMPLETION_REPORT.md),
+[raw evidence](experiments/2026-10-24-completion/README.md) and
 [integrity audit](docs/FINAL_RESEARCH_INTEGRITY_AUDIT.md).
 
 ## The question
@@ -63,7 +65,36 @@ Semantic payload survival remains unvalidated. The S2 rubric has no independent
 human agreement study. Clean controls, utility controls and failed calls have
 separate denominators. Pooled fixture counts are not attack-success rates.
 
-## Observed development pilot
+## Capability before security claims
+
+A valid response format is not the same as completing the task. Seventy-two genuine
+benign qualification trials tested direct actions, memory-derived fields and exact
+responses across two models and separate task/interface conditions. The threshold
+was fixed before new attacks: at least 8/9, at least 2/3 in each family and no invalid
+call. Neither model passed the original task set. The literal-field follow-up
+qualified 1.5B at 9/9 without relaxing the threshold or repairing earlier replies.
+
+![Verified benign capability by model and condition](experiments/2026-10-24-completion/capability-outcomes.svg)
+
+Nine separate genuine transformation calls then qualified the explicit schema
+contract. All failed conditions remain visible. These are narrow development gates,
+not general model reliability. The [bounded study guide](docs/guides/controlled-study.md)
+gives frozen revisions, fresh-directory commands and free-runtime requirements.
+
+## Bounded lifecycle findings
+
+![Controlled outcomes with invalid denominators retained](experiments/2026-10-24-completion/lifecycle-outcomes.svg)
+
+The corrected 80-episode condition recorded 52 valid and 28 invalid outcomes.
+Eleven exact canary ticket effects occurred before source deletion. DS1 retained
+canary-bearing derived memory without an observed post-deletion objective effect;
+DS3 removed descendants but every corresponding agent reply was invalid. DF3 also
+blocked correct benign tickets. These data establish narrow action/state facts,
+not a useful-defense ranking. The separate complete-contract gate passed 0/3
+empty-context tasks and stopped further scaling. See the [full report](docs/research/COMPLETION_REPORT.md)
+for all denominators, failures, source-alive retrieval confounds and RQ1–RQ6 coverage.
+
+## Historical development pilot
 
 The same `qwen2.5:0.5b` artifact ran on a free CPU runtime. Four compatibility cells
 and 24 matched cells completed with raw requests/responses and both SQLite stores
@@ -73,7 +104,8 @@ baseline utility means these data cannot establish useful protection. Many model
 responses simply echoed the task. One legacy compatibility response recommending
 the synthetic forwarding address remains an unresolved S2 judgment.
 
-![Measured pilot execution and utility with descriptive uncertainty](experiments/2026-10-24-colab/pilot-outcomes.svg)
+The [original pilot figure](experiments/2026-10-24-colab/pilot-outcomes.svg) and
+[all 28 raw cells](experiments/2026-10-24-colab/README.md) remain available.
 
 The intervals are descriptive Wilson intervals from two seeds and one template per
 population; they do not support scenario-level generalization. This pilot tested
@@ -98,8 +130,17 @@ uv run memoryfence experiment verify --directory /tmp/memoryfence-smoke-new
 Use fresh output directories. The demo and smoke experiment use explicit scripted
 responses: their output verifies mechanics, not language-model behavior.
 
-## Run a real-model development pilot
+## Run the controlled study
 
+Use the [bounded study guide](docs/guides/controlled-study.md) to reproduce the
+qualification gates and distinctly identified lifecycle conditions. Actual runs
+used free Colab CPU with loopback Ollama; no paid API or billing upgrade is required.
+Keep exact model digests, prompts, generation settings and complete raw archives.
+Invalid replies and missing denominators must remain visible.
+
+## Reproduce the historical pilot
+
+These commands reproduce the historical small-model condition, which failed utility.
 Install and start Ollama, then download `qwen2.5:0.5b` on a machine with enough
 storage and RAM. The adapter only contacts loopback, never follows redirects,
 and never downloads weights itself. No paid API is configured.
@@ -161,6 +202,12 @@ uv run python experiments/2026-10-24-colab/analyze.py
 This additionally compares raw replies, retrieval provenance and exact sandbox
 objective effects against the archived SQLite state. It does not attest server honesty.
 
+The follow-up verifier and figure generation are documented in the
+[completion evidence inventory](experiments/2026-10-24-completion/README.md).
+Saved evidence checks run without a model; actual inference remains separate.
+
+![Qualification and evidence provenance](docs/assets/evidence-provenance.svg)
+
 ## Check the software
 
 ```bash
@@ -176,6 +223,7 @@ See [development](docs/development.md) for exact commands and test boundaries.
 
 ## Research record
 
+- [Limited-scope empirical report](docs/research/COMPLETION_REPORT.md): capability diagnosis, real runs, bounded findings and exclusions.
 - [Recovery report](docs/PROJECT_STATE_RECOVERY.md): what existed and what was verified.
 - [Preliminary technical report](docs/research/PRELIMINARY_TECHNICAL_REPORT.md): method, implementation findings and limits.
 - [Experimental protocol](docs/research/experimental-protocol.md) and [hypotheses](docs/research/hypotheses.md): original draft study, not completed preregistration.
@@ -187,14 +235,27 @@ See [development](docs/development.md) for exact commands and test boundaries.
 ## Limits and responsible use
 
 This is a pre-alpha research system with synthetic English templates and lexical
-retrieval. The failed baseline prevents validated defense-effectiveness estimates. There are
-no validated semantic survival measurements, completed human judge audit,
-representative multi-model evaluation, or frozen confirmatory study. Some planned statistical procedures are absent.
-A baseline demonstrating legitimate tool completion is needed before a larger
-transformation/deletion study. [Limitations](docs/research/limitations.md) remain part of every claim.
+retrieval. Qualification resolves the original capability issue only for the tested
+literal task and 1.5B artifact. Generated DF3 policy requires a literal tool name
+and can reject benign natural-language tasks; invalid DF2 replies cannot be credited
+as protection. Exact canary retention is not validated semantic instruction survival.
+There is no human reliability study, representative held-out evaluation, independent
+execution attestation or completed confirmatory program. See
+[the report](docs/research/COMPLETION_REPORT.md) and [limitations](docs/research/limitations.md).
 
 Use synthetic local scenarios. Do not target real services, users or credentials.
 See [security](SECURITY.md) and [contributing](CONTRIBUTING.md).
+
+## Repository structure
+
+```text
+src/memoryfence/   Typed system, isolated evaluator, model adapters and CLI
+experiments/       Genuine raw archives and reproducible derived analysis
+scripts/research/  Fixed study driver and independent standard-library verifier
+docs/              Research reports, protocols, architecture, audit and guides
+tests/             Software fixtures and saved-evidence consistency checks
+notebooks/         Free Colab entry point for the historical pilot
+```
 
 ## Citation and licensing
 

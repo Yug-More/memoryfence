@@ -24,6 +24,7 @@ VERIFY = ROOT / "scripts" / "research" / "verify.py"
         "literal-controlled-native",
         "transformation-qualification",
         "schema-controlled",
+        "contract-qualification",
     ],
 )
 def test_independent_completion_analysis_matches_saved(name: str) -> None:

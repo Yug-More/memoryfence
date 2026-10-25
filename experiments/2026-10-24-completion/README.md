@@ -27,6 +27,18 @@ role, original code revision, timestamps, complete hashes, byte sizes and counts
   test words `review` and `status`; this is interoperability and a narrow content
   check, not validated semantic quality or human evaluation.
 
+- **schema-controlled:** 80 recorded episodes, 52 valid and 28 invalid; 112 valid
+  committed model transformations and 80 agent responses. Eleven exact objective
+  effects occurred at source-alive stages. DS1 retained canary-bearing derived
+  memories, but no post-deletion objective action was observed. DS3 removed all
+  descendants, yet all corresponding agent replies were invalid. Behavioral
+  protection is not established; see the [full report](../../docs/research/COMPLETION_REPORT.md).
+
+- **contract-qualification:** 12/12 valid replies, 9/12 exact successes. Direct,
+  memory-field and response tasks each passed 3/3; empty retrieval passed 0/3,
+  with three refusals. The predeclared 12/12 gate failed. No new security matrix
+  was executed and no threshold was changed.
+
 ![Independently verified capability counts](capability-outcomes.svg)
 
 The qualified task is unusually explicit, and nine trials cannot establish general
@@ -34,7 +46,12 @@ competence. A 9/9 Wilson 95% interval is approximately [0.701, 1]. The source pa
 small models, repeated seeds and development amendments limit generalization.
 No defense-efficacy claim follows from these pooled counts; populations and modes
 must remain separate. The prospectively gated corrected schema-transformation run
-is a distinct workstream, not a replacement for native failures.
+is independently preserved, not a replacement for native failures.
+
+The seven accessions contain 277 heterogeneous records and 389 recorded chat
+responses. These are inventory totals, never a security denominator. The preserved
+historical pilot and its diagnostics remain separate. The later free runtime was
+reset and restored with only the previously approved 1.5B artifact.
 
 ## Originals and provenance
 
@@ -57,7 +74,8 @@ Executed code revisions:
 
 - `cfb86165da1dc80cef0df908918ca8003ac4d09b`: original qualification/diagnostics.
 - `cd858ba0433de07a661e2eefe318330ad2498100`: literal agent gate/native lifecycle.
-- `cde45335ff0c1d04a3cb2be01fe38fbb809d5f79`: transformation-schema gate.
+- `cde45335ff0c1d04a3cb2be01fe38fbb809d5f79`: transformation-schema gate and corrected lifecycle.
+- `baa29fac9156c1e6e4a68eea013eb2a79d6a138a`: complete-contract benign gate (failed).
 
 Models actually executed are Qwen2.5 0.5B and 1.5B Q4_K_M, with exact digests in
 `installed-models.json` in each archive. Ollama 0.40.11, project Python 3.12.3 and
@@ -75,6 +93,8 @@ python3 scripts/research/verify.py experiments/2026-10-24-completion/diagnostics
 python3 scripts/research/verify.py experiments/2026-10-24-completion/literal-qualification.zip.xz --output /tmp/literal-qualification-analysis.json
 python3 scripts/research/verify.py experiments/2026-10-24-completion/literal-controlled-native.zip.xz --output /tmp/literal-controlled-native-analysis.json
 python3 scripts/research/verify.py experiments/2026-10-24-completion/transformation-qualification.zip.xz --output /tmp/transformation-qualification-analysis.json
+python3 scripts/research/verify.py experiments/2026-10-24-completion/schema-controlled.zip.xz --output /tmp/schema-controlled-analysis.json
+python3 scripts/research/verify.py experiments/2026-10-24-completion/contract-qualification.zip.xz --output /tmp/contract-qualification-analysis.json
 ```
 
 The verifier imports no MemoryFence evaluator. It checks unique trials, raw

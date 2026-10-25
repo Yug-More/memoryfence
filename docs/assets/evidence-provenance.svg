@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+<title id="title">Qualification and evidence provenance</title>
+<desc id="desc">Declared protocols feed benign qualification gates. Qualified conditions run fresh clean and attack episodes. Raw model journals and separate system and evaluator databases feed independent verification and the bounded report. Failed gates and malformed replies remain archived. Hashes establish consistency, not independent attestation.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#68c8b9"/></marker></defs>
+<rect width="1200" height="370" rx="12" fill="#141e24"/>
+<g font-family="Arial,sans-serif" fill="#edf3f4">
+<text x="34" y="40" font-size="23" font-weight="700">Evidence before claims</text>
+<text x="34" y="68" font-size="15" fill="#b4c3c8">Implemented execution path · prospective development conditions · separate raw and derived records</text>
+<g fill="#202e36" stroke="#566a74"><rect x="34" y="110" width="195" height="90" rx="5"/><rect x="269" y="110" width="195" height="90" rx="5"/><rect x="504" y="110" width="195" height="90" rx="5"/><rect x="739" y="110" width="195" height="90" rx="5"/><rect x="974" y="110" width="192" height="90" rx="5"/></g>
+<g text-anchor="middle" font-size="17"><text x="131" y="139">Declared conditions</text><text x="366" y="139">Benign gates</text><text x="601" y="139">Fresh paired episodes</text><text x="836" y="139">Preserved originals</text><text x="1070" y="139">Independent checks</text></g>
+<g text-anchor="middle" font-size="13" fill="#b4c3c8"><text x="131" y="164">Code + protocol hashes</text><text x="131" y="183">Model / task / interface</text><text x="366" y="164">Exact action + response</text><text x="366" y="183">Transformation contract</text><text x="601" y="164">Clean / attack / defense</text><text x="601" y="183">Actual memory lifecycle</text><text x="836" y="164">Raw HTTP + SQLite</text><text x="836" y="183">System ≠ evaluator state</text><text x="1070" y="164">Raw replies → effects</text><text x="1070" y="183">Counts → bounded report</text></g>
+<g stroke="#68c8b9" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M229 155h34"/><path d="M464 155h34"/><path d="M699 155h34"/><path d="M934 155h34"/><path d="M366 200v50h464v-44"/><path d="M601 200v50"/></g>
+<text x="385" y="273" font-size="14" fill="#b4c3c8">Failed gates, malformed replies and partial runs stay visible</text>
+<path d="M34 284H1166" stroke="#3b505a"/>
+<text x="34" y="315" font-size="14" fill="#b4c3c8">Checksums verify supplied bytes. They do not independently attest inference or validate semantic judgments.</text>
+<text x="34" y="341" font-size="14" fill="#68c8b9">Scripted fixtures ≠ genuine inference · proposals ≠ execution · zero valid outcomes ≠ zero attack risk</text>
+</g>
+</svg>
