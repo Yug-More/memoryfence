@@ -86,6 +86,22 @@
       "valid": 9,
       "recorded_agent_responses": 0,
       "recorded_transform_responses": 9
+    },
+    {
+      "accession": "schema-controlled",
+      "archive": "schema-controlled.zip.xz",
+      "transport_sha256": "cb97640519cd5f26ebbcf8bc30b9a3d87cf824e94ab8d48ced0f7af45c197b3d",
+      "transport_bytes": 93904,
+      "original_zip_sha256": "6aefe254aa13b2025cc61939d0d9603c3004d34484808aad54b7992b65c942a7",
+      "original_zip_bytes": 33866062,
+      "members": 721,
+      "mode": "schema-controlled",
+      "created_at_utc": "2026-10-25T03:18:06.532038+00:00",
+      "code_revision": "cde45335ff0c1d04a3cb2be01fe38fbb809d5f79",
+      "planned": 80,
+      "valid": 52,
+      "recorded_agent_responses": 80,
+      "recorded_transform_responses": 112
     }
   ]
 }
