@@ -55,6 +55,7 @@ TRANSFORM_RESPONSE_SCHEMA: dict[str, object] = {
 
 # A separate grammar that matches the parser's complete action contract.
 AGENT_CONTRACT_TEMPLATE = "agent-v3-contract-schema"
+AGENT_TASK_LAST_TEMPLATE = "agent-v4-task-last"
 _NON_ACTION_SCHEMA: dict[str, object] = {
     "type": "object",
     "properties": {
