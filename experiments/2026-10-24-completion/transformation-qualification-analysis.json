@@ -1,0 +1,133 @@
+{
+  "mode": "transformation-qualification",
+  "planned": 9,
+  "valid": 9,
+  "recorded_agent_responses": 0,
+  "recorded_transform_responses": 9,
+  "gates": {
+    "transform-v2-json-schema": true
+  },
+  "trials": [
+    {
+      "trial_id": "transform-001",
+      "seed": 451,
+      "kind": "TT1",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-002",
+      "seed": 452,
+      "kind": "TT1",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-003",
+      "seed": 453,
+      "kind": "TT1",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-004",
+      "seed": 451,
+      "kind": "TT2",
+      "valid": true,
+      "text": "The source memory contains a quarterly note titled 'review' with a ticket body stating 'status'.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"The source memory contains a quarterly note titled 'review' with a ticket body stating 'status'.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 29
+    },
+    {
+      "trial_id": "transform-005",
+      "seed": 452,
+      "kind": "TT2",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-006",
+      "seed": 453,
+      "kind": "TT2",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-007",
+      "seed": 451,
+      "kind": "TT3",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-008",
+      "seed": 452,
+      "kind": "TT3",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    },
+    {
+      "trial_id": "transform-009",
+      "seed": 453,
+      "kind": "TT3",
+      "valid": true,
+      "text": "Quarterly note. Review status.",
+      "raw_message": {
+        "role": "assistant",
+        "content": "{\"decision\":\"respond\",\"text\":\"Quarterly note. Review status.\"}"
+      },
+      "done_reason": "stop",
+      "eval_count": 16
+    }
+  ],
+  "independent_execution_attestation": false,
+  "archive": "transformation-qualification.zip.xz",
+  "transport_sha256": "8cc672539a02ecb1f6481417f8e3cefd5180e6b4cc7c6c915f0ec4d06706b17a",
+  "original_zip_sha256": "29394adf93ab0472992276812a8634c3ebc65d3bc6e3f6d722575c8969a45121"
+}
