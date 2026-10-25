@@ -78,7 +78,8 @@ if (ROOT / "paired-state-study-analysis.json").exists():
     study = json.loads((ROOT / "paired-state-study-analysis.json").read_text())
     fidelities = ("LF1.0", "LF0.75", "LF0.5")
     policies = ("DS0", "DS1", "DS3")
-    fig, axes = plt.subplots(1, 4, figsize=(14, 4.8))
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7.6))
+    axes = axes.ravel()
     panels = (
         ("attack", "DF0", "active_derived_total", 6, "Active attack descendants / 6"),
         ("attack", "DF0", "exposed_views", 3, "DF0 ancestry exposure / 3"),
@@ -108,7 +109,11 @@ if (ROOT / "paired-state-study-analysis.json").exists():
                 )
         ax.set_title(title, loc="left", fontsize=10, pad=14, weight="bold")
         ax.set_xticks(
-            range(3), ("No deletion", "Source only", "Recorded cascade"), rotation=30, ha="right"
+            range(3),
+            ("DS0\nNo deletion", "DS1\nSource only", "DS3\nRecorded cascade"),
+            rotation=0,
+            ha="center",
+            fontsize=9,
         )
         ax.set_yticks(range(3), fidelities)
         ax.spines[:].set_visible(False)
@@ -121,24 +126,26 @@ if (ROOT / "paired-state-study-analysis.json").exists():
     )
     fig.text(
         0.065,
-        0.11,
+        0.14,
         "Three generated chains per population; identical text across all "
         "paired conditions. LF is seeded edge retention, not measured completeness.",
         fontsize=9,
     )
     fig.text(
         0.065,
-        0.06,
+        0.09,
         "State/retrieval endpoints are deterministic conditional on those "
         "chains. Exposure is true ancestry, not semantic following or a tool effect.",
         fontsize=9,
     )
     fig.text(
         0.065,
-        0.015,
+        0.02,
         "Source: paired-state-study-analysis.json · six real TT2→TT3 chains, "
-        "12 transformation responses, 108 paired state views · 25 October 2026",
+        "12 transformation responses.\n108 primary state views · "
+        "36 extra LF0.0 views retained separately · 25 October 2026",
         fontsize=8,
+        va="bottom",
     )
-    fig.subplots_adjust(left=0.065, right=0.99, top=0.78, bottom=0.32, wspace=0.55)
+    fig.subplots_adjust(left=0.1, right=0.98, top=0.88, bottom=0.25, wspace=0.38, hspace=0.8)
     save(fig, "provenance-deletion-outcomes")

@@ -1,7 +1,8 @@
-"""Scripted TT1-TT4 transformations.
+"""TT1-TT4 transformations through an injected backend.
 
 ``TT0`` is the absence of a transformation: the primary memory is retrieved as stored.
-These functions do not call a language model. The text comes from an explicit fixture.
+Scripted backends provide named fixtures; local model backends perform inference.
+Both persist the returned text with its provenance and model-call record.
 """
 
 from memoryfence.domain.enums import (
@@ -31,7 +32,7 @@ PROMPT_VERSION: dict[TransformationType, str] = {
 
 
 class TransformService:
-    """Apply one scripted transformation and store the derived memory."""
+    """Request a backend transformation and store the derived memory."""
 
     def __init__(
         self,
@@ -56,11 +57,12 @@ class TransformService:
         parent_ids: tuple[MemoryId, ...],
         complete_task_id: TaskId | None = None,
     ) -> Memory:
-        """Read the parents, select a fixture, and persist one derived memory.
+        """Read parents, request a transformation, and persist one derived memory.
 
         The derived memory is workspace-visible only when every parent is. Otherwise
-        it is private to the acting user. The fixture is matched on parent content
-        hashes in parent order, never on evaluator labels.
+        it is private to the acting user. Scripted fixtures match parent content hashes
+        in input order. Model backends receive parent text and seed. Neither receives
+        evaluator labels.
         """
         if not parent_ids:
             raise ProvenanceIntegrityError(
