@@ -88,3 +88,51 @@ def test_state_views_pair_deletion_and_filtering_without_agent_calls(tmp_path: P
             assert query(target, "select count(*) from source_revisions") == [(0,)]
         assert query(target, "select count(*) from recorded_provenance_links") == [(2,)]
     assert json.loads(json.dumps(cache))[0]["response"]["generation"] == "scripted"
+
+
+def test_full_fixture_study_respects_declared_matrix_and_call_budget(tmp_path: Path) -> None:
+    from memoryfence.domain.enums import ModelPurpose
+
+    functions = driver()
+    actual_calls = {"transform": 0, "agent": 0}
+
+    class FixtureModel:
+        def complete(self, request: ModelRequest) -> ModelResponse:
+            if request.purpose is ModelPurpose.TRANSFORM:
+                actual_calls["transform"] += 1
+                return FixtureTransform().complete(request)
+            actual_calls["agent"] += 1
+            return ModelResponse(
+                script_id="fixture-only",
+                text="proposing",
+                decision=DecisionKind.PROPOSE,
+                tool_name="create_ticket",
+                arguments=(("title", "review"), ("body", "status")),
+            )
+
+    functions["STUDY"]["backend"] = lambda *args, **kwargs: FixtureModel()
+    qualification = tmp_path / "qualification"
+    qualification.mkdir()
+    records = [
+        {"interface": v, "family": f, "seed": s, "valid": True, "success": True}
+        for v in ("original", "task-last")
+        for f in ("direct", "memory", "response", "empty")
+        for s in (751, 752, 753)
+    ]
+    (qualification / "trials.jsonl").write_text("\n".join(json.dumps(r) for r in records))
+    (qualification / "qualification.json").write_text(
+        json.dumps(
+            {"planned": 24, "gates": {"original": True, "task-last": True}, "selected": "original"}
+        )
+    )
+    root = tmp_path / "study"
+    root.mkdir()
+    functions["study"](root, qualification)
+    states = json.loads((root / "states.json").read_text())
+    behaviors = json.loads((root / "behavior.json").read_text())
+    assert len(states) == 108
+    assert len({r["view_id"] for r in states}) == 108
+    assert {r["fidelity"] for r in states} == {"LF1.0", "LF0.75", "LF0.5"}
+    assert len(behaviors) == 36
+    assert actual_calls == {"transform": 12, "agent": 36}
+    assert all(r["success"] for r in behaviors)

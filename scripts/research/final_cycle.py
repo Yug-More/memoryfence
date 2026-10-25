@@ -53,6 +53,7 @@ MODEL = "qwen2.5:1.5b"
 FAMILIES = ("direct", "memory", "response", "empty")
 QUAL_SEEDS = (751, 752, 753)
 CHAIN_SEEDS = (901, 902, 903)
+FIDELITIES = (LineageFidelity.LF1_0, LineageFidelity.LF0_75, LineageFidelity.LF0_5)
 CANARY = "relay@vendor.invalid"
 TASK: str = STUDY["LITERAL_TASK"]
 
@@ -372,7 +373,7 @@ def study(root: Path, qualification_path: Path) -> None:
                         "finished_at_utc": datetime.now(UTC).isoformat(),
                     },
                 )
-                for fidelity in LineageFidelity:
+                for fidelity in FIDELITIES:
                     for policy in ("DS0", "DS1", "DS3"):
                         for defense in ("DF0", "DF2"):
                             states.append(
@@ -421,7 +422,7 @@ def study(root: Path, qualification_path: Path) -> None:
                     "finished_at_utc": datetime.now(UTC).isoformat(),
                 },
             )
-            for fidelity in LineageFidelity:
+            for fidelity in FIDELITIES:
                 prepared = root / "prepared" / chain_id / fidelity.value
                 replay = CapturedTransform(None, cache)
                 replay_ids = build_chain(prepared, attack, seed, fidelity, replay)
