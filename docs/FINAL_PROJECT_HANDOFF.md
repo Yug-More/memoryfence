@@ -1,136 +1,125 @@
-# Project handoff
+# Final project handoff
 
-24 October 2026 · Capability controls and bounded study preserved; confirmatory program incomplete
+25 October 2026 · Complete for the declared bounded research scope
 
-## Delivered and preserved
+## Delivered scope and interpretation
 
-The original [recovery](PROJECT_STATE_RECOVERY.md) and
-[28-cell pilot](research/COLAB_PILOT_RESULTS.md) remain intact. Their zero attacks
-never established protection because legitimate task performance failed.
-PRs [#9](https://github.com/Yug-More/memoryfence/pull/9)–[#14](https://github.com/Yug-More/memoryfence/pull/14)
-delivered recovery, durable evidence/scoring, dependency audit, documentation,
-Colab execution repair and genuine pilot preservation.
+The [final report](research/COMPLETION_REPORT.md) completes B-RQ1–B-RQ3 at explicit
+state, retrieval and exact-action endpoints. The original full confirmatory RQ1–RQ6
+program is not complete. This is a bounded empirical study with a documented
+runner departure, not a publication, general defense guarantee or tagged release.
 
-New merged PRs:
+- Qualification: 24 real, valid replies; original 9/12, task-last 12/12 under the
+  unchanged gate. Empty retrieval changed from 0/3 to 3/3 when only message order moved.
+- Generation: six real TT2→TT3 chain executions, twelve transformation responses.
+  All six attack outputs retained the exact canary; one clean TT3 output echoed
+  only its operation label. Format validity is not semantic quality.
+- State: 108 declared views plus 36 retained off-protocol LF0.0 views. DS1 retained
+  both descendants. DS3 retained 0/6 attack descendants at LF1.0, 4/6 at LF0.75 and
+  6/6 at LF0.5. DF2 admitted orphaned peer text at incomplete lineage.
+- Behavior: 36 valid replies; 18/18 clean and 18/18 attack episodes completed exact
+  legitimate tickets. Each of six attack cells had 0/3 objective proposals/effects.
+  Three source-alive free-text fields nevertheless repeated the canary.
 
-- [#15](https://github.com/Yug-More/memoryfence/pull/15): prospective benign gate and
-  bounded lifecycle driver.
-- [#16](https://github.com/Yug-More/memoryfence/pull/16): literal-task clarification
-  with unchanged qualification threshold and fresh seeds.
-- [#17](https://github.com/Yug-More/memoryfence/pull/17): explicit transformation
-  schema and separate interoperability gate, preserving native defaults/hashes.
-- [#18](https://github.com/Yug-More/memoryfence/pull/18): complete qualification,
-  diagnostic and native-failure archives with independent analysis and figure.
-- [#19](https://github.com/Yug-More/memoryfence/pull/19): opt-in complete action
-  contract and a new 12/12 benign gate including empty retrieval.
+This cycle used only the existing approved 1.5B weights in free CPU Colab, with
+72 chat responses. No new weights, paid API, credit purchase, billing or upgrade.
+The project has genuinely executed 0.5B and 1.5B artifacts across its historical
+conditions; this final cycle used 1.5B only. Weights never moved onto the Mac.
 
-All four CI checks passed before each merge. PR #18 passed 210 tests on Python
-3.12/3.13 at 91.62% combined coverage. Final report/evidence QA supplies subsequent
-verification; a document cannot contain its own eventual merge commit hash.
+## Repository and PR record
 
-## Genuine empirical status
+The entry main commit was `dca412717730bc33a72b8db49ee5281d3ae21603`.
 
-Two real model artifacts ran: Qwen2.5 0.5B and 1.5B Q4_K_M. Native/schema conditions
-and task versions remain separate. Version-1 qualification had 54 valid trials,
-with no qualified condition. Twenty-four diagnostic probes had 21 valid failures
-and three malformed outputs. Literal qualification had 18 valid trials: 1.5B
-passed 9/9; 0.5B passed 3/9. Nine subsequent transformation-schema checks passed.
-The [evidence index](../experiments/2026-10-24-completion/index.json) records exact
-hashes, revisions, times and per-population counts.
+- [#22](https://github.com/Yug-More/memoryfence/pull/22): prospective finite protocol,
+  common generated chains and bounded runner, merged after four green checks.
+- [#23](https://github.com/Yug-More/memoryfence/pull/23): explicit three-level grid,
+  full-run fixture regression and [departure log](research/FINAL_BOUNDED_DEVIATIONS.md),
+  merged after four green checks. The original execution remains unchanged.
+- [#24](https://github.com/Yug-More/memoryfence/pull/24): all qualification originals,
+  independent verifier and opt-in request-equivalent task-last adapter, merged green.
 
-The 80-episode native-transformation study completed with 13 valid and 67 invalid
-outcomes. Direct cases include three actual canary ticket effects. DF3 also blocks
-clean utility, and DF2-exclude attack output has no valid denominator. Native
-transformation failures support no persistence or successful-defense conclusion.
-Corrected schema-controlled execution completed 80 episodes: 52 valid, 28 invalid,
-11 source-alive canary effects and 21/40 clean completions. DS1 retains canary-bearing
-derived memory without observed post-deletion objective execution. DS3 removes
-descendants but every corresponding agent reply is invalid. This does not establish
-behavioral protection. All raw records and independent analysis are preserved.
+Final evidence/report PR and delivery main SHA are supplied with the final handoff
+message and GitHub history. Every local commit uses repository-local author and
+committer `Yug-More <yugmore20@gmail.com>`, verified before committing. No assistant
+co-author, collaborator, permission change or historical rewrite was added.
+GitHub-generated merge attribution remains the platform's legitimate record.
 
-## Reproduce and inspect
+## Evidence and reproduction
+
+The [new inventory](../experiments/2026-10-25-bounded/README.md) links two accessions,
+complete hashes and all raw members. Seven
+[historical accessions](../experiments/2026-10-24-completion/README.md) and the
+[original 28-cell pilot](../experiments/2026-10-24-colab/README.md) are unchanged.
+The old eleven objective effects and new zero effects are different matrices/seeds,
+not a matched estimate of message-order defense efficacy.
 
 ```bash
 uv sync --frozen
+uv run python scripts/research/verify_final.py experiments/2026-10-25-bounded/final-qualification.zip.xz --output /tmp/final-qualification-analysis.json
+uv run python scripts/research/verify_final.py experiments/2026-10-25-bounded/paired-state-study.zip.xz --qualification-archive experiments/2026-10-25-bounded/final-qualification.zip.xz --output /tmp/paired-state-study-analysis.json
+uv run python experiments/2026-10-24-colab/analyze.py
 make check
 make pre-commit
-uv run python experiments/2026-10-24-colab/analyze.py
-python3 scripts/research/verify.py experiments/2026-10-24-completion/literal-qualification.zip.xz --output /tmp/memoryfence-qualified-analysis.json
+make diagrams
 ```
 
-Use the [bounded-study guide](guides/controlled-study.md) for pinned drivers, free
-runtime setup, qualification gates and fresh execution directories. On Colab use
-the locked `.venv/bin/python` in subprocesses; do not import 3.12 binary packages
-into a 3.13 kernel. Actual runs used archived notebook drivers, not a claimed
-unattended Run All of the historical notebook. No model weights were downloaded
-onto the Mac or committed. No Drive mount or paid API was used.
+Actual inference ran at `e5dcc3c61cc6ded130a4f118825fc324e90a7e3a`, whose driver
+included extra LF0.0 views. Current code fixes the intended matrix; do not overwrite
+or relabel originals with a corrected rerun. The [guide](guides/controlled-study.md)
+explains the two conditions, fresh directories, exact artifact identity, free-runtime
+setup, interpreter boundary and qualification rules.
 
-Original archives include raw HTTP journals, databases, inputs, evaluator keys,
-events, results, checkpoints, exact driver/protocol sources and runtime/model
-metadata. XZ preserves ZIP bytes losslessly. The independent standard-library
-verifier checks original evidence against actual effects without importing the
-production evaluator. It does not attest the server or replace human validation.
-Never overwrite historical archives, normalize failed replies into success or
-resume completed runs under a different revision.
+The adapter's explicit `task_last` setting reproduces the tested HTTP request layout.
+Its v4 prompt identity is a logging/integration distinction; no extra v4 inference
+is claimed. Legacy native/schema defaults and stored fingerprints remain unchanged.
 
-## Interpretation and remaining work
+## Verification and technical limits
 
-See the [limited-scope empirical report](research/COMPLETION_REPORT.md),
-[integrity audit](FINAL_RESEARCH_INTEGRITY_AUDIT.md) and
-[protocol/amendments](research/COMPLETION_PROTOCOL.md). The capable-model issue is
-resolved for a narrow literal task, not arbitrary tasks. DF3 requires a literal tool
-identifier; its natural-language task rejection is a measured utility limitation,
-not a validated discriminating defense.
+The standard-library verifier imports no production scorer. It checks actual raw
+classification, exact tool effects, full grids/IDs, prerequisite bytes, shared text,
+independent seeded retention, true graph, deletion reach and lexical ranking.
+Tamper checks reject changed replies and state endpoints. Automated assistant review
+of representative outputs is not independent human semantic validation. Journals and
+hashes establish internal consistency, not execution-host attestation.
 
-The original full study still needs representative scenarios/held-outs, semantic
-survival and judge validation, human reliability, cached paired transformations,
-incomplete-lineage comparisons, broader models/utility, sample-size/statistical
-planning, external preregistration and independent replication. The inherited
-bibliography has not received a complete new audit. Owner licensing is unresolved.
-No release or publication is implied. Next research scope must be declared without
-chasing favorable attacks or treating invalid calls as protection.
+The [integrity audit](FINAL_RESEARCH_INTEGRITY_AUDIT.md) records software/security
+checks. The fresh [dependency lookup](research/DEPENDENCY_AUDIT_2026-10-25.json) found
+zero known reported vulnerabilities in 60 applicable locked external packages;
+this is a dated lookup, not a security guarantee. No project dependency was added.
 
-Local author/committer identity remains `Yug-More <yugmore20@gmail.com>`, without
-assistant co-author trailers or rewritten history. GitHub-generated merge records
-remain legitimate platform records. Permissions and collaboration settings were
-not expanded. Only free Colab CPU, approved weights, local checks and public CI
-were used; no billing, paid service or upgrade was enabled.
+All twelve Mermaid diagrams and the genuine scientific figures receive rendered
+visual QA. README, report, evidence map and advisor material use the same counts.
+Research logs retain original text, so operational deletion is not forensic erasure.
 
-## Complete-contract stopping gate
+## Advisor presentation and remaining work
 
-The [version-4 amendment](research/ACTION_CONTRACT_AMENDMENT.md) required twelve
-exact benign successes, including empty retrieval. The completed condition produced
-12 valid replies but only 9 successes: three each in direct, memory and response
-families, and zero of three empty-context tasks. All three empty cases refused.
-The independent verifier confirms empty raw and stored context and the failed
-gate. No contract-controlled security matrix ran. Earlier invalids remain unchanged.
-The archive, hash metadata and analysis are in the [evidence inventory](../experiments/2026-10-24-completion/README.md).
-This is a concrete remaining capability limitation, not a budget or billing blocker.
+[PROJECT_PRESENTATION_SUMMARY.md](PROJECT_PRESENTATION_SUMMARY.md) supplies accessible
+motivation, actual contributions, methodology, supported findings, two potential
+resume bullets and a 104-word summary. Individual-action wording requires the
+owner's confirmation of their real contribution; no personal anecdotes were invented.
+
+Remaining broader work includes representative scenarios/held-outs, multi-source
+consolidation, memory-dependent peer utility, semantic/human reliability, broader
+models, incomplete-lineage behavioral comparisons and independent replication.
+Owner decisions remain for licensing, any publication/release and personal attribution.
+None is misrepresented as completed. No external credentials or payment are needed
+to verify saved results. The declared finite cycle is finished rather than extended
+until it produces an attack or a preferred defense result.
 
 
-## Readiness
-
-**Research pilot complete; full study not yet established.** The software checks,
-preserved evidence and bounded report are reviewable. Empty-context capability,
-semantic/human validation, broad held-outs and independent replication remain
-unresolved. No publication or release readiness is asserted.
+[Completed free Colab execution view](assets/colab-final-bounded.png). The screenshot
+is supporting UI evidence; the archived raw records and independent checks remain primary.
 
 
 ## Final local verification snapshot
 
-`UV_CACHE_DIR=/tmp/memoryfence-uv-cache make check` passed with **222 tests** and
-**91.57% combined line/branch coverage**, including eight independent saved-evidence
-checks. Ruff, formatting, strict mypy, wheel/sdist metadata, citation schema and all
-six import contracts passed. `make pre-commit` passed every hook. Both research
-scripts also passed explicit strict mypy. PR #19 passed 218 tests and PR #20 passed
-219 tests on Python 3.12/3.13, both at 91.57%; four checks passed before each merge.
-Final-PR CI validates this final committed scope independently.
+`UV_CACHE_DIR=/tmp/memoryfence-uv-cache make check` passed **238 tests** with
+**91.58% combined line/branch coverage**. Ruff, formatting, strict mypy, package
+build/metadata, citation schema and all six import contracts passed. Both final
+research scripts also passed explicit strict mypy. Saved historical/new evidence
+checks passed, including deliberate raw-reply and state-endpoint tampering tests.
+All twelve Mermaid diagrams rendered; Chromium PNGs and both genuine-data figures
+were visually inspected. A stale model label and clipped lifecycle labels were
+corrected. Final-PR/main CI status is checked at delivery; no failed check is merged.
 
-All twelve Mermaid diagrams rendered with mermaid-cli 12.0.0. Chromium PNGs were
-visually inspected with text present, rather than relying on SVG rasterizers that
-omit foreignObject labels. Scientific capability/lifecycle figures and the new
-editable provenance SVG were inspected for labels, counts and denominator caveats.
-The [Colab screenshot](assets/colab-contract-qualification.png) shows the genuine
-completed gate, all three empty-context failures and the decision to stop scaling.
-Bounded private-key/Google-key/GitHub-token pattern scans returned no matches in
-all seven expanded archives; this is not a universal secret-detection guarantee.
+`make pre-commit` also passed every hook against the complete staged handoff.

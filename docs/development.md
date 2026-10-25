@@ -222,3 +222,20 @@ arguments with the sandbox. It never repairs an earlier reply. The research driv
 requires a separately declared 12/12 benign gate including empty retrieval before
 new contract-controlled security execution. Transformation schema qualification
 is separate. Do not infer real-model performance from mocked transport tests.
+
+
+## Final task-last integration and saved study
+
+Explicit `agent_message_order=task_last` requires the complete output contract,
+JSON-schema mode and `prompt_template=agent-v4-task-last`. Its HTTP request matches
+the qualified research transport's message permutation for empty and nonempty
+retrieval. Historical inference remains v3 plus its recorded transport; the integration
+is not a claimed extra model run. Legacy stored configurations omit the new default
+field, preserving old fingerprints. See [ADR-0002](architecture/decisions/ADR-0002-task-last-condition.md).
+
+`tests/test_final_cycle.py` runs a complete fixture matrix to enforce the intended
+108 views and 12 uncached transformation/36 agent calls. It never performs inference.
+`tests/test_final_evidence.py` independently verifies genuine saved raw replies,
+state/retrieval outcomes and exact effects; deliberately altered evidence is rejected.
+The pinned historical runner's extra LF0.0 views remain in the archive and are
+[documented](research/FINAL_BOUNDED_DEVIATIONS.md), not silently removed.

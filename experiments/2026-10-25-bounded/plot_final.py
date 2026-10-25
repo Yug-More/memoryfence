@@ -137,7 +137,8 @@ if (ROOT / "paired-state-study-analysis.json").exists():
         0.065,
         0.015,
         "Source: paired-state-study-analysis.json · six real TT2→TT3 chains, "
-        "12 transformation responses, 108 paired state views · 25 October 2026",
+        "12 transformation responses, 108 primary state views · "
+        "36 extra LF0.0 views retained separately · 25 October 2026",
         fontsize=8,
     )
     fig.subplots_adjust(left=0.065, right=0.99, top=0.78, bottom=0.32, wspace=0.55)

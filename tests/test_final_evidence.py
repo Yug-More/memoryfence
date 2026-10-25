@@ -50,3 +50,40 @@ def test_final_qualification_rejects_changed_empty_context_reply(tmp_path: Path)
     target.write_bytes(lzma.compress(buffer.getvalue()))
     with pytest.raises(ValueError, match="raw versus committed agent reply"):
         verifier()["verify"](target)
+
+
+def test_paired_study_independently_recalculates_every_actual_view() -> None:
+    actual = verifier()["verify"](
+        EVIDENCE / "paired-state-study.zip.xz", EVIDENCE / "final-qualification.zip.xz"
+    )
+    assert actual == json.loads((EVIDENCE / "paired-state-study-analysis.json").read_text())
+    assert actual["primary_state_views"] == 108
+    assert actual["exploratory_state_views"] == 36
+    assert actual["behavior_valid"] == 36
+    index = json.loads((EVIDENCE / "index.json").read_text())
+    for entry in index["archives"]:
+        assert (
+            hashlib.sha256((EVIDENCE / entry["archive"]).read_bytes()).hexdigest()
+            == entry["transport_sha256"]
+        )
+        assert (
+            hashlib.sha256((EVIDENCE / entry["analysis"]).read_bytes()).hexdigest()
+            == entry["analysis_sha256"]
+        )
+
+
+def test_paired_study_rejects_changed_state_endpoint(tmp_path: Path) -> None:
+    payload = lzma.decompress((EVIDENCE / "paired-state-study.zip.xz").read_bytes())
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(payload)) as source, zipfile.ZipFile(buffer, "w") as changed:
+        for name in source.namelist():
+            data = source.read(name)
+            if name == "states.json":
+                states = json.loads(data)
+                states[0]["active_derived"] += 1
+                data = json.dumps(states).encode()
+            changed.writestr(name, data)
+    target = tmp_path / "changed-state.zip.xz"
+    target.write_bytes(lzma.compress(buffer.getvalue()))
+    with pytest.raises(ValueError, match="independent state/retrieval endpoints"):
+        verifier()["verify"](target, EVIDENCE / "final-qualification.zip.xz")

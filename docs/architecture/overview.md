@@ -67,7 +67,7 @@ flowchart LR
         DEL -.-> MEM
     end
 
-    LLM["LanguageModel protocol:<br/>scripted backend"]:::implemented
+    LLM["LanguageModel boundary:<br/>scripted / loopback Ollama"]:::implemented
     DEF["Defense policies<br/>DF0-DF5"]:::implemented
     OBS[("Event log and SQLite<br/>per episode")]:::implemented
 
@@ -263,10 +263,10 @@ stateDiagram-v2
     }
     state "Memory" as Memory {
         [*] --> Retrievable: extraction (primary) or transformation (derived)
-        Retrievable --> Revoked: DS2 and within recorded reach
-        Retrievable --> Removed: DS1 primary, or DS3 within recorded reach
-        Retrievable --> Replaced: DS4 within recorded reach
-        Replaced --> [*]: re-derived memory created with a new ID
+        Retrievable --> Revoked: DS2 in reach
+        Retrievable --> Removed: DS1 primary / DS3 in reach
+        Retrievable --> Replaced: DS4 in reach
+        Replaced --> [*]: new memory ID
         Revoked --> [*]
         Removed --> [*]
     }

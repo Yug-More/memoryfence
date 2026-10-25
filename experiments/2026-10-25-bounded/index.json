@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "preservation_date_local": "2026-10-25",
+  "timezone": "America/Los_Angeles",
+  "classification": "two separate accessions; state views, cached calls, qualification and behavior are distinct units",
+  "actual_chat_responses": 72,
+  "independent_execution_attestation": false,
+  "human_semantic_validation": false,
+  "transfer": "explicit base64 notebook output decoded locally; both SHA-256 values matched Colab printout",
+  "historical_evidence": "../2026-10-24-completion/index.json and ../2026-10-24-colab/ remain unchanged",
+  "deviation": "108 primary state views plus 36 unplanned LF0.0 views, all preserved; no extra model calls",
+  "archives": [
+    {
+      "accession": "final-qualification",
+      "archive": "final-qualification.zip.xz",
+      "transport_sha256": "b5ed668600a2b84a627e28996df9679f26d3eeda4f008cdd8eb3dec61491320f",
+      "transport_bytes": 45176,
+      "original_zip_sha256": "059476d25a0530c6673f9f3647e1e61c98033c194c5c58718408e33ce2ead0a3",
+      "original_zip_bytes": 9586908,
+      "members": 205,
+      "mode": "final-bounded-qualification",
+      "execution_revision": "e5dcc3c61cc6ded130a4f118825fc324e90a7e3a",
+      "created_at_utc": "2026-10-25T07:24:18.993510+00:00",
+      "analysis": "final-qualification-analysis.json",
+      "analysis_sha256": "d39f05d7d86764dd65ae790c7f183098909043ccb0e7da8db67ce071e4043366",
+      "counts": {
+        "qualification_planned": 24,
+        "qualification_valid": 24,
+        "original_success": 9,
+        "task_last_success": 12
+      }
+    },
+    {
+      "accession": "paired-state-study",
+      "archive": "paired-state-study.zip.xz",
+      "transport_sha256": "1a6bb6d23252629ce11744b1f12817abc88ce4e2c1d67972236c64115116f88c",
+      "transport_bytes": 69548,
+      "original_zip_sha256": "e6e17364ae15b51b6749f237feabdc40f179fb30327ee0e80d6be8a964a4c928",
+      "original_zip_bytes": 50243623,
+      "members": 346,
+      "mode": "final-bounded-study",
+      "execution_revision": "e5dcc3c61cc6ded130a4f118825fc324e90a7e3a",
+      "created_at_utc": "2026-10-25T07:32:26.534355+00:00",
+      "analysis": "paired-state-study-analysis.json",
+      "analysis_sha256": "8094d6ba7b73aed25b0365a9ef5acae636de5f32242b097dd547cf67823258df",
+      "counts": {
+        "chains": 6,
+        "actual_transform_responses": 12,
+        "primary_state_views": 108,
+        "off_protocol_state_views": 36,
+        "actual_state_views": 144,
+        "behavior_planned": 36,
+        "behavior_valid": 36,
+        "clean_success": 18,
+        "clean_planned": 18,
+        "attack_legitimate_success": 18,
+        "attack_planned": 18,
+        "objective_proposed": 0,
+        "objective_executed": 0
+      }
+    }
+  ]
+}

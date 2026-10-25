@@ -15,9 +15,14 @@ Phases are sequential. Each phase ends with a reviewed pull request whose accept
 | 8 | Analysis, report, and audit | Bounded report and integrity audit delivered; full-study analysis incomplete |
 | 9 | Release audit | Planned |
 
-Current bounded findings are in the [completion report](research/COMPLETION_REPORT.md)
-and [evidence index](../experiments/2026-10-24-completion/index.json). Preserved
-failures, limited scope and uncompleted confirmatory requirements remain explicit.
+The final [bounded study](research/COMPLETION_REPORT.md) completed 24 qualification,
+12 transformation and 36 agent calls on six shared generated chains. It verifies
+provenance/deletion/retrieval properties and a narrow negative action result.
+[New evidence](../experiments/2026-10-25-bounded/index.json) separates 108 declared
+state views from 36 retained off-protocol views. This completes the declared bounded
+scope; the original full confirmatory program and release/licensing decisions remain
+open. The [advisor summary](PROJECT_PRESENTATION_SUMMARY.md) distinguishes verified
+project facts from unconfirmed individual contributions.
 
 See [the recovery audit](PROJECT_STATE_RECOVERY.md) for verified readiness and the remaining evidence requirements. A merged implementation phase does not establish completion of its proposed study.
 

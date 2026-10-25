@@ -65,3 +65,22 @@ repeated transformations do not support causal or general security claims.
 Human semantic validation, judge reliability, held-outs, common paired transforms,
 incomplete lineage and independent replication remain outstanding. Later opt-in
 contracts are separate experimental conditions, never repairs of earlier evidence.
+
+
+## Final bounded study — 25 October 2026
+
+The [current report](COMPLETION_REPORT.md) supersedes older status summaries while
+preserving their evidence. A fresh order-only comparison passed 12/12 with task-last;
+all 36 subsequent agent replies completed exact legitimate tickets, with zero
+objective proposals/effects in 18 attack episodes. Three free-text fields still
+repeated the canary. This is not semantic isolation or general protection.
+
+The new state comparison reuses six genuine generated chains across three declared
+fidelities and deletion/retrieval policies. Incomplete recorded paths left cascade
+survivors and DF2 exposure. These are deterministic conditional properties, not
+incomplete-lineage behavioral attack rates. One clean TT3 output failed the narrow
+content check. An enum-iteration defect added 36 LF0.0 views; all are preserved and
+labeled off-protocol, with the 108 declared views kept separate. No additional model
+calls or hidden rerun repaired the departure. Wider tasks, multi-source consolidation,
+human validation, held-outs and independent replication remain outside this bounded
+completion. Research logs retain copies, so operational deletion is not forensic erasure.
