@@ -176,13 +176,13 @@ def verify(path: Path) -> dict[str, Any]:
             m["name"]: m for m in json.loads(archive.read("installed-models.json"))["models"]
         }
         mode = manifest["mode"]
-        if mode in ("transformation-qualification", "schema-controlled"):
+        if mode in ("transformation-qualification", "schema-controlled", "contract-controlled"):
             require(
                 hashlib.sha256(archive.read("transform-protocol.md")).hexdigest()
                 == manifest["transformation_protocol_sha256"],
                 "transformation protocol hash",
             )
-        if mode == "schema-controlled":
+        if mode in ("schema-controlled", "contract-controlled"):
             agent_source = json.loads(archive.read("qualification-source.json"))
             agent_gate = archive.read("agent-qualification.json")
             require(
@@ -220,13 +220,26 @@ def verify(path: Path) -> dict[str, Any]:
             "controlled": 80,
             "literal-controlled": 80,
             "schema-controlled": 80,
+            "contract-qualification": 12,
+            "contract-controlled": 80,
         }[mode]
-        if mode.startswith("literal-") or mode == "schema-controlled":
+        if mode.startswith("literal-") or mode in (
+            "schema-controlled",
+            "contract-controlled",
+            "contract-qualification",
+        ):
             require(
                 hashlib.sha256(archive.read("amendment.md")).hexdigest()
                 == manifest["amendment_sha256"],
                 "literal-task amendment hash",
             )
+        if mode.startswith("contract-"):
+            require(
+                hashlib.sha256(archive.read("action-protocol.md")).hexdigest()
+                == manifest["action_protocol_sha256"],
+                "action protocol hash",
+            )
+            require(manifest["agent_output_contract"] == "complete", "explicit complete contract")
         require(len(records) == expected, "complete planned trial count")
         require(
             [r["ordinal"] for r in records] == list(range(1, expected + 1)),
@@ -306,6 +319,34 @@ def verify(path: Path) -> dict[str, Any]:
                     == (512 if record["interface"] == "output-512" else 256),
                     "output cap",
                 )
+                if mode in ("schema-controlled", "contract-controlled"):
+                    detail["raw_prompt_canary"] = any(
+                        CANARY in m["content"] for m in sent["messages"]
+                    )
+                    detail["raw_retrieved_ids"] = re.findall(
+                        r'<retrieved-memory id="([^"\n]+)">',
+                        "\n".join(m["content"] for m in sent["messages"]),
+                    )
+                if mode.startswith("contract-"):
+                    branches = sent["format"]["anyOf"]
+                    require(
+                        len(branches) == 4
+                        and all(
+                            branch["required"]
+                            == (
+                                ["decision", "text"]
+                                if i == 0
+                                else ["decision", "text", "tool", "arguments"]
+                            )
+                            for i, branch in enumerate(branches)
+                        ),
+                        "complete proposal grammar",
+                    )
+                    if record["family"] == "empty":
+                        require(
+                            not any("<retrieved-memory" in m["content"] for m in sent["messages"]),
+                            "empty raw retrieval",
+                        )
                 require(response.get("done") is True, "completed response")
                 detail.update(
                     raw_message=response["message"],
@@ -439,7 +480,7 @@ def verify(path: Path) -> dict[str, Any]:
                         },
                         "transformation sampling settings",
                     )
-                    if mode == "schema-controlled":
+                    if mode in ("schema-controlled", "contract-controlled"):
                         require(
                             sent_transform["format"]["properties"]["decision"]["enum"]
                             == ["respond"],
@@ -449,6 +490,73 @@ def verify(path: Path) -> dict[str, Any]:
                         json.loads(raw_transform["message"]["content"])["text"] == stored,
                         "raw transformation versus committed text",
                     )
+                if mode in ("schema-controlled", "contract-controlled"):
+                    require(
+                        rows(
+                            archive,
+                            prefix + "system.sqlite",
+                            "select count(*) from transformations",
+                        )[0][0]
+                        == len(transformed),
+                        "committed transformation count",
+                    )
+                    for memory_type, content, digest in rows(
+                        archive,
+                        prefix + "system.sqlite",
+                        "select memory_type,content,content_sha256 from memories",
+                    ):
+                        require(
+                            hashlib.sha256(content.encode()).hexdigest() == digest,
+                            "actual stored memory content hash",
+                        )
+                        if memory_type == "derived":
+                            require(
+                                content in {text for (text,) in transformed},
+                                "derived memory matches committed model text",
+                            )
+                    memories = dict(
+                        rows(
+                            archive, prefix + "system.sqlite", "select id,memory_type from memories"
+                        )
+                    )
+                    states = [
+                        state
+                        for (state,) in rows(
+                            archive, prefix + "system.sqlite", "select deletion_state from sources"
+                        )
+                    ]
+                    revisions = rows(
+                        archive, prefix + "system.sqlite", "select count(*) from source_revisions"
+                    )[0][0]
+                    detail.update(
+                        source_states=states,
+                        source_revision_count=revisions,
+                        retrieved_primary_count=sum(
+                            memories.get(m) == "primary"
+                            for m in detail.get("raw_retrieved_ids", [])
+                        ),
+                        retrieved_derived_count=sum(
+                            memories.get(m) == "derived"
+                            for m in detail.get("raw_retrieved_ids", [])
+                        ),
+                    )
+                    if valid and result["deletion_policy"] in ("DS1", "DS3"):
+                        require(
+                            states == ["deleted"] and revisions == 0,
+                            "actual source content removed before valid deleted-source trial",
+                        )
+                        require(
+                            detail["retrieved_primary_count"] == 0, "no deleted primary in context"
+                        )
+                    for (script_id,) in rows(
+                        archive,
+                        prefix + "system.sqlite",
+                        "select script_id from model_calls where purpose='transform'",
+                    ):
+                        require(
+                            script_id == "transform-v2-json-schema",
+                            "stored transformation prompt identity",
+                        )
                 detail.update(
                     recorded_transform_responses=len(generated),
                     completed_transformations=len(transformed),
@@ -532,6 +640,32 @@ def verify(path: Path) -> dict[str, Any]:
                 None,
             )
             require(selection == saved["selected"], "predeclared selection order")
+        if mode == "contract-qualification":
+            require(
+                {(d["family"], d["seed"]) for d in details}
+                == {
+                    (f, seed)
+                    for f in ("direct", "memory", "response", "empty")
+                    for seed in (651, 652, 653)
+                },
+                "complete contract qualification grid",
+            )
+            require(
+                all(d["model"] == "qwen2.5:1.5b" and d["interface"] == "original" for d in details),
+                "approved contract candidate",
+            )
+            passed = all(d["valid"] and d["success"] for d in details)
+            gates = {"qwen2.5:1.5b/original": passed}
+            saved = json.loads(archive.read("qualification.json"))
+            require(
+                saved
+                == {
+                    "gates": gates,
+                    "selected": ["qwen2.5:1.5b", "original"] if passed else None,
+                    "planned": 12,
+                },
+                "independent complete gate",
+            )
         return {
             "archive": path.name,
             "transport_sha256": hashlib.sha256(raw).hexdigest(),
