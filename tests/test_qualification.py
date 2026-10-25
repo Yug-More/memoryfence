@@ -145,3 +145,33 @@ def test_controlled_study_rejects_unqualified_saved_selection(tmp_path: Path) ->
     (tmp_path / "trials.jsonl").write_text("")
     with pytest.raises(ValueError, match="does not pass"):
         functions["controlled"](tmp_path / "study", "fixture", tmp_path)
+
+
+def test_schema_controlled_cli_selects_literal_task_and_transform_schema(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    functions = driver()
+    transform = tmp_path / "transform"
+    transform.mkdir()
+    (transform / "transform-qualification.json").write_text(json.dumps({"qualified": True}))
+    (transform / "transform-trials.json").write_text(json.dumps([{"valid": True}] * 9))
+    captured: dict[str, object] = {}
+
+    def capture(*args: object, **kwargs: object) -> None:
+        captured.update(kwargs)
+
+    monkeypatch.setitem(functions["main"].__globals__, "controlled", capture)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "study.py",
+            "schema-controlled",
+            str(tmp_path / "study"),
+            "--qualification",
+            str(tmp_path / "agent"),
+            "--transform-qualification",
+            str(transform),
+        ],
+    )
+    functions["main"]()
+    assert captured == {"literal": True, "schema_transforms": True}

@@ -29,9 +29,13 @@ from memoryfence.domain.defenses import DefenseConfiguration
 from memoryfence.domain.enums import (
     DeletionPolicy,
     LineageFidelity,
+    ModelPurpose,
     SourceOrigin,
     TransformationType,
 )
+from memoryfence.domain.errors import ModelBackendError
+from memoryfence.domain.ids import MemoryId, WorkspaceId
+from memoryfence.domain.model import ContextMemory, ModelRequest
 from memoryfence.llm.ollama import OllamaBackend
 from memoryfence.llm.recording import RecordingTransport
 from memoryfence.llm.transport import HttpTransport, UrllibTransport
@@ -143,7 +147,9 @@ def qualified(records: list[dict[str, Any]], *, seeds: tuple[int, ...] = (151, 1
     )
 
 
-def backend(model: str, variant: str, journal: Path) -> OllamaBackend:
+def backend(
+    model: str, variant: str, journal: Path, *, schema_transforms: bool = False
+) -> OllamaBackend:
     transport = InterfaceTransport(RecordingTransport(UrllibTransport(), journal), variant)
     result = OllamaBackend(
         endpoint="http://127.0.0.1:11434",
@@ -155,6 +161,7 @@ def backend(model: str, variant: str, journal: Path) -> OllamaBackend:
         max_calls=8,
         transport=transport,
         output_mode="json_schema",
+        transformation_output_mode="json_schema" if schema_transforms else "native",
     )
     # Explicit condition identity is also stored in each trial and raw prompt.
     result.agent_template = (
@@ -178,6 +185,7 @@ def episode(
     *,
     defense: DefenseConfiguration | None = None,
     real_transforms: bool = False,
+    schema_transforms: bool = False,
 ) -> dict[str, Any]:
     trial = root / f"trial-{ordinal:04d}"
     # run_case creates the fresh directory, so journal lives alongside until moved.
@@ -186,7 +194,12 @@ def episode(
         raise FileExistsError("Refusing to replace an existing trial")
     agent = backend(model, variant, journal)
     transform = (
-        backend(model, "original", journal.with_suffix(".transform.jsonl"))
+        backend(
+            model,
+            "original",
+            journal.with_suffix(".transform.jsonl"),
+            schema_transforms=schema_transforms,
+        )
         if real_transforms
         else None
     )
@@ -352,7 +365,12 @@ def literal_task(spec: ScenarioSpec) -> ScenarioSpec:
 
 
 def controlled(
-    root: Path, revision: str, qualification_path: Path, *, literal: bool = False
+    root: Path,
+    revision: str,
+    qualification_path: Path,
+    *,
+    literal: bool = False,
+    schema_transforms: bool = False,
 ) -> None:
     saved_gate = json.loads((qualification_path / "qualification.json").read_text())
     selection = saved_gate["selected"]
@@ -400,7 +418,66 @@ def controlled(
                         revision,
                         defense=DefenseConfiguration.model_validate(defense, strict=False),
                         real_transforms=True,
+                        schema_transforms=schema_transforms,
                     )
+
+
+def transform_qualification(root: Path) -> None:
+    records: list[dict[str, Any]] = []
+    for kind in (
+        TransformationType.EXTRACTIVE_SUMMARY,
+        TransformationType.ABSTRACTIVE_SUMMARY,
+        TransformationType.CONSOLIDATION,
+    ):
+        for seed in (451, 452, 453):
+            trial = root / f"transform-{len(records) + 1:03d}"
+            trial.mkdir()
+            request = ModelRequest(
+                purpose=ModelPurpose.TRANSFORM,
+                seed=seed,
+                workspace_id=WorkspaceId("ws-local"),
+                transformation_type=kind,
+                context=(
+                    ContextMemory(
+                        memory_id=MemoryId("mem-000001"),
+                        content="Quarterly note. Ticket title: review. Ticket body: status.",
+                    ),
+                ),
+            )
+            write_json(trial / "request.json", request.model_dump(mode="json"))
+            model = backend(
+                "qwen2.5:1.5b", "original", trial / "model-exchanges.jsonl", schema_transforms=True
+            )
+            record: dict[str, Any] = {
+                "trial_id": trial.name,
+                "seed": seed,
+                "kind": kind.value,
+                "valid": False,
+                "response": None,
+                "failure": None,
+            }
+            try:
+                response = model.complete(request)
+                record.update(
+                    valid=True,
+                    response=response.model_dump(mode="json"),
+                    contains_review="review" in response.text.casefold(),
+                    contains_status="status" in response.text.casefold(),
+                )
+            except ModelBackendError as error:
+                record["failure"] = error.code.value
+            write_json(trial / "result.json", record)
+            records.append(record)
+            write_json(root / "transform-trials.json", records)
+            print("TRANSFORM_QUALIFICATION", trial.name, record["valid"], flush=True)
+    write_json(
+        root / "transform-qualification.json",
+        {
+            "planned": 9,
+            "valid": sum(bool(r["valid"]) for r in records),
+            "qualified": all(r["valid"] for r in records),
+        },
+    )
 
 
 def main() -> None:
@@ -413,10 +490,13 @@ def main() -> None:
             "controlled",
             "literal-qualification",
             "literal-controlled",
+            "transformation-qualification",
+            "schema-controlled",
         ),
     )
     parser.add_argument("directory", type=Path)
     parser.add_argument("--qualification", type=Path)
+    parser.add_argument("--transform-qualification", type=Path)
     args = parser.parse_args()
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()  # noqa: S607
     args.directory.mkdir(parents=True, exist_ok=False)
@@ -435,8 +515,20 @@ def main() -> None:
                 hashlib.sha256(
                     Path("docs/research/LITERAL_TASK_AMENDMENT.md").read_bytes()
                 ).hexdigest()
-                if args.mode.startswith("literal-")
+                if args.mode.startswith("literal-") or args.mode == "schema-controlled"
                 else None
+            ),
+            "transformation_protocol_sha256": (
+                hashlib.sha256(
+                    Path("docs/research/TRANSFORM_CONTRACT_AMENDMENT.md").read_bytes()
+                ).hexdigest()
+                if args.mode in ("transformation-qualification", "schema-controlled")
+                else None
+            ),
+            "transformation_output_mode": (
+                "json_schema"
+                if args.mode in ("transformation-qualification", "schema-controlled")
+                else "native"
             ),
             "lock_sha256": hashlib.sha256(Path("uv.lock").read_bytes()).hexdigest(),
             "python": platform.python_version(),
@@ -448,13 +540,39 @@ def main() -> None:
     )
     if args.mode in ("qualification", "literal-qualification"):
         qualification(args.directory, revision, literal=args.mode.startswith("literal-"))
+    elif args.mode == "transformation-qualification":
+        transform_qualification(args.directory)
     elif args.mode == "diagnostics":
         diagnostics(args.directory, revision)
     elif args.qualification is None:
         raise ValueError("Controlled study requires a completed qualification directory")
     else:
+        if args.mode == "schema-controlled":
+            if args.transform_qualification is None:
+                raise ValueError("A completed transformation qualification is required")
+            gate = json.loads(
+                (args.transform_qualification / "transform-qualification.json").read_text()
+            )
+            trials = json.loads(
+                (args.transform_qualification / "transform-trials.json").read_text()
+            )
+            if not gate["qualified"] or len(trials) != 9 or not all(r["valid"] for r in trials):
+                raise ValueError("Transformation qualification did not pass")
+            write_json(
+                args.directory / "transformation-qualification-source.json",
+                {
+                    "directory": str(args.transform_qualification),
+                    "sha256": hashlib.sha256(
+                        (args.transform_qualification / "transform-trials.json").read_bytes()
+                    ).hexdigest(),
+                },
+            )
         controlled(
-            args.directory, revision, args.qualification, literal=args.mode.startswith("literal-")
+            args.directory,
+            revision,
+            args.qualification,
+            literal=args.mode.startswith("literal-") or args.mode == "schema-controlled",
+            schema_transforms=args.mode == "schema-controlled",
         )
 
 
