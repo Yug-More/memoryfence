@@ -58,3 +58,13 @@ check: lint format-check typecheck coverage build citation contracts ## Run the 
 clean: ## Remove caches and build artifacts
 	rm -rf build dist .diagrams .mypy_cache .pytest_cache .ruff_cache .coverage htmlcov
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+TECTONIC ?= tectonic
+.PHONY: paper-data paper
+paper-data: ## Verify genuine archives and regenerate paper tables/figures (optional Matplotlib)
+	$(UV) run --no-project --with matplotlib==3.10.7 --python .venv/bin/python paper/generate.py
+
+paper: paper-data ## Build the manuscript with the optional free Tectonic compiler
+	mkdir -p .paper-build
+	$(TECTONIC) --keep-logs --outdir .paper-build paper/main.tex
+	cp .paper-build/main.pdf paper/memoryfence-paper.pdf

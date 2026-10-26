@@ -1,0 +1,16 @@
+{
+  "qualification_calls": 24,
+  "original_success": 9,
+  "task_last_success": 12,
+  "chains": 6,
+  "transform_calls": 12,
+  "primary_views": 108,
+  "extra_views": 36,
+  "behavior_calls": 36,
+  "behavior_valid": 36,
+  "legitimate_effects": 36,
+  "attack_effects": 0,
+  "attack_episodes": 18,
+  "text_echoes": 3,
+  "sensitivity_configurations": 278
+}

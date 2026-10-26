@@ -1,0 +1,3 @@
+Rendering docs/research/threat-model.md
+Rendering docs/research/experimental-protocol.md
+Rendering docs/architecture/overview.md

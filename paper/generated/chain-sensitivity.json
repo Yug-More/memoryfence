@@ -1,0 +1,2805 @@
+{
+  "schema_version": 1,
+  "classification": "exhaustive abstract graph sensitivity",
+  "model_calls": 0,
+  "configurations": 278,
+  "depths": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "rows": [
+    {
+      "depth": 1,
+      "mask": 0,
+      "retained_edges": 0,
+      "reached_ids": [],
+      "source_only_survivors": 1,
+      "cascade_survivors": 1
+    },
+    {
+      "depth": 1,
+      "mask": 1,
+      "retained_edges": 1,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 1,
+      "cascade_survivors": 0
+    },
+    {
+      "depth": 2,
+      "mask": 0,
+      "retained_edges": 0,
+      "reached_ids": [],
+      "source_only_survivors": 2,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 2,
+      "mask": 1,
+      "retained_edges": 1,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 2,
+      "cascade_survivors": 1
+    },
+    {
+      "depth": 2,
+      "mask": 2,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 2,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 2,
+      "mask": 3,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 2,
+      "cascade_survivors": 0
+    },
+    {
+      "depth": 4,
+      "mask": 0,
+      "retained_edges": 0,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 1,
+      "retained_edges": 1,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 4,
+      "mask": 2,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 3,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 4,
+      "mask": 4,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 5,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 4,
+      "mask": 6,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 7,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 1
+    },
+    {
+      "depth": 4,
+      "mask": 8,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 9,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 4,
+      "mask": 10,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 11,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 4,
+      "mask": 12,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 13,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 4,
+      "mask": 14,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 4,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 4,
+      "mask": 15,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 4,
+      "cascade_survivors": 0
+    },
+    {
+      "depth": 8,
+      "mask": 0,
+      "retained_edges": 0,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 1,
+      "retained_edges": 1,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 2,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 3,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 4,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 5,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 6,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 7,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 8,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 9,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 10,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 11,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 12,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 13,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 14,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 15,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 16,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 17,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 18,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 19,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 20,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 21,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 22,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 23,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 24,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 25,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 26,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 27,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 28,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 29,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 30,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 31,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 8,
+      "mask": 32,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 33,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 34,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 35,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 36,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 37,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 38,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 39,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 40,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 41,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 42,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 43,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 44,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 45,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 46,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 47,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 48,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 49,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 50,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 51,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 52,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 53,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 54,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 55,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 56,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 57,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 58,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 59,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 60,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 61,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 62,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 63,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 8,
+      "mask": 64,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 65,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 66,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 67,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 68,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 69,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 70,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 71,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 72,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 73,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 74,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 75,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 76,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 77,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 78,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 79,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 80,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 81,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 82,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 83,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 84,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 85,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 86,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 87,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 88,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 89,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 90,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 91,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 92,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 93,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 94,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 95,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 8,
+      "mask": 96,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 97,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 98,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 99,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 100,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 101,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 102,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 103,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 104,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 105,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 106,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 107,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 108,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 109,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 110,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 111,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 112,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 113,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 114,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 115,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 116,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 117,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 118,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 119,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 120,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 121,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 122,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 123,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 124,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 125,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 126,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 127,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 1
+    },
+    {
+      "depth": 8,
+      "mask": 128,
+      "retained_edges": 1,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 129,
+      "retained_edges": 2,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 130,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 131,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 132,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 133,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 134,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 135,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 136,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 137,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 138,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 139,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 140,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 141,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 142,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 143,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 144,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 145,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 146,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 147,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 148,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 149,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 150,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 151,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 152,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 153,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 154,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 155,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 156,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 157,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 158,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 159,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 8,
+      "mask": 160,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 161,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 162,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 163,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 164,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 165,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 166,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 167,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 168,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 169,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 170,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 171,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 172,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 173,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 174,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 175,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 176,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 177,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 178,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 179,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 180,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 181,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 182,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 183,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 184,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 185,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 186,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 187,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 188,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 189,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 190,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 191,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 2
+    },
+    {
+      "depth": 8,
+      "mask": 192,
+      "retained_edges": 2,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 193,
+      "retained_edges": 3,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 194,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 195,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 196,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 197,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 198,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 199,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 200,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 201,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 202,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 203,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 204,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 205,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 206,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 207,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 208,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 209,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 210,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 211,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 212,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 213,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 214,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 215,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 216,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 217,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 218,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 219,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 220,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 221,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 222,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 223,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 3
+    },
+    {
+      "depth": 8,
+      "mask": 224,
+      "retained_edges": 3,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 225,
+      "retained_edges": 4,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 226,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 227,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 228,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 229,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 230,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 231,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 232,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 233,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 234,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 235,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 236,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 237,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 238,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 239,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 4
+    },
+    {
+      "depth": 8,
+      "mask": 240,
+      "retained_edges": 4,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 241,
+      "retained_edges": 5,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 242,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 243,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 244,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 245,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 246,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 247,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2",
+        "3"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 5
+    },
+    {
+      "depth": 8,
+      "mask": 248,
+      "retained_edges": 5,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 249,
+      "retained_edges": 6,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 250,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 251,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1",
+        "2"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 6
+    },
+    {
+      "depth": 8,
+      "mask": 252,
+      "retained_edges": 6,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 253,
+      "retained_edges": 7,
+      "reached_ids": [
+        "1"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 7
+    },
+    {
+      "depth": 8,
+      "mask": 254,
+      "retained_edges": 7,
+      "reached_ids": [],
+      "source_only_survivors": 8,
+      "cascade_survivors": 8
+    },
+    {
+      "depth": 8,
+      "mask": 255,
+      "retained_edges": 8,
+      "reached_ids": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "source_only_survivors": 8,
+      "cascade_survivors": 0
+    }
+  ],
+  "groups": [
+    {
+      "depth": 1,
+      "retained_edges": 0,
+      "masks": 1,
+      "min_survivors": 1,
+      "max_survivors": 1,
+      "sum_survivors": 1
+    },
+    {
+      "depth": 1,
+      "retained_edges": 1,
+      "masks": 1,
+      "min_survivors": 0,
+      "max_survivors": 0,
+      "sum_survivors": 0
+    },
+    {
+      "depth": 2,
+      "retained_edges": 0,
+      "masks": 1,
+      "min_survivors": 2,
+      "max_survivors": 2,
+      "sum_survivors": 2
+    },
+    {
+      "depth": 2,
+      "retained_edges": 1,
+      "masks": 2,
+      "min_survivors": 1,
+      "max_survivors": 2,
+      "sum_survivors": 3
+    },
+    {
+      "depth": 2,
+      "retained_edges": 2,
+      "masks": 1,
+      "min_survivors": 0,
+      "max_survivors": 0,
+      "sum_survivors": 0
+    },
+    {
+      "depth": 4,
+      "retained_edges": 0,
+      "masks": 1,
+      "min_survivors": 4,
+      "max_survivors": 4,
+      "sum_survivors": 4
+    },
+    {
+      "depth": 4,
+      "retained_edges": 1,
+      "masks": 4,
+      "min_survivors": 3,
+      "max_survivors": 4,
+      "sum_survivors": 15
+    },
+    {
+      "depth": 4,
+      "retained_edges": 2,
+      "masks": 6,
+      "min_survivors": 2,
+      "max_survivors": 4,
+      "sum_survivors": 20
+    },
+    {
+      "depth": 4,
+      "retained_edges": 3,
+      "masks": 4,
+      "min_survivors": 1,
+      "max_survivors": 4,
+      "sum_survivors": 10
+    },
+    {
+      "depth": 4,
+      "retained_edges": 4,
+      "masks": 1,
+      "min_survivors": 0,
+      "max_survivors": 0,
+      "sum_survivors": 0
+    },
+    {
+      "depth": 8,
+      "retained_edges": 0,
+      "masks": 1,
+      "min_survivors": 8,
+      "max_survivors": 8,
+      "sum_survivors": 8
+    },
+    {
+      "depth": 8,
+      "retained_edges": 1,
+      "masks": 8,
+      "min_survivors": 7,
+      "max_survivors": 8,
+      "sum_survivors": 63
+    },
+    {
+      "depth": 8,
+      "retained_edges": 2,
+      "masks": 28,
+      "min_survivors": 6,
+      "max_survivors": 8,
+      "sum_survivors": 216
+    },
+    {
+      "depth": 8,
+      "retained_edges": 3,
+      "masks": 56,
+      "min_survivors": 5,
+      "max_survivors": 8,
+      "sum_survivors": 420
+    },
+    {
+      "depth": 8,
+      "retained_edges": 4,
+      "masks": 70,
+      "min_survivors": 4,
+      "max_survivors": 8,
+      "sum_survivors": 504
+    },
+    {
+      "depth": 8,
+      "retained_edges": 5,
+      "masks": 56,
+      "min_survivors": 3,
+      "max_survivors": 8,
+      "sum_survivors": 378
+    },
+    {
+      "depth": 8,
+      "retained_edges": 6,
+      "masks": 28,
+      "min_survivors": 2,
+      "max_survivors": 8,
+      "sum_survivors": 168
+    },
+    {
+      "depth": 8,
+      "retained_edges": 7,
+      "masks": 8,
+      "min_survivors": 1,
+      "max_survivors": 8,
+      "sum_survivors": 36
+    },
+    {
+      "depth": 8,
+      "retained_edges": 8,
+      "masks": 1,
+      "min_survivors": 0,
+      "max_survivors": 0,
+      "sum_survivors": 0
+    }
+  ]
+}
