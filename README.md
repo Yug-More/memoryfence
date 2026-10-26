@@ -14,6 +14,12 @@ legitimate tickets, including 18 poisoned-memory episodes, without an objective
 attack effect. Missing recorded ancestry still left poisoned descendants retrievable.
 The [report](docs/research/COMPLETION_REPORT.md) separates these findings and their limits.
 
+**Research manuscript:** [When Memory Outlives Its Source](paper/memoryfence-paper.pdf)
+([LaTeX and build instructions](paper/README.md)). Ten pages of main text plus
+references and a reproducibility appendix; not submitted or peer reviewed. The
+[publication audit](docs/research/FINAL_PUBLICATION_AUDIT.md) and
+[plain-English outcome](docs/research/FINAL_OUTCOME.md) state exactly what is supported.
+
 ## The question
 
 > Under what conditions can attacker-origin instructions persist in derived AI memories after transformations or original-source deletion, and how do deletion handling, provenance completeness, and defense mechanisms influence unauthorized downstream agent behavior?
@@ -125,8 +131,15 @@ Use fresh output directories. For actual inference, the
 resource checks, qualification gates and the archived/corrected matrix distinction.
 No paid endpoint or billing upgrade is required; free Colab availability is not promised.
 
+The publication pass also checks [278 exhaustive abstract graph masks](paper/generated/chain-sensitivity.json)
+at depths 1, 2, 4 and 8. This zero-inference exercise shows sensitivity to missing-edge
+position; it is separate from the genuine model study.
+
 ## Evidence and research record
 
+- [Publication research synthesis](docs/research/FINAL_RESEARCH_REPORT.md),
+  [claim matrix](docs/research/CLAIM_EVIDENCE_MATRIX.md), and
+  [observed reproduction commands](docs/research/REPRODUCIBILITY_REPORT.md).
 - [Final report](docs/research/COMPLETION_REPORT.md): methodology, bounded findings,
   uncertainty, unfavorable outputs and the uncompleted original research program.
 - [Evidence inventory](experiments/2026-10-25-bounded/README.md) and

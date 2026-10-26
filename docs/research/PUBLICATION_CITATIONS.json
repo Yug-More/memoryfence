@@ -1,0 +1,9 @@
+{
+  "checked_date": "2026-10-25",
+  "scope": "All three manuscript bibliography entries; primary abstract/version/author records. Focused relevance review, not exhaustive novelty search or peer-review audit.",
+  "sources": [
+    {"key":"greshake2023","url":"https://arxiv.org/abs/2302.12173v2","title":"Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection","authors":["Kai Greshake","Sahar Abdelnabi","Shailesh Mishra","Christoph Endres","Thorsten Holz","Mario Fritz"],"version_date":"2023-05-05","status_used":"versioned arXiv preprint","relevance":"retrieved application data crossing instruction boundaries","review_depth":"primary metadata and relevant HTML framing; no numerical results borrowed"},
+    {"key":"patlan2025","url":"https://arxiv.org/abs/2511.17671v1","title":"MURMUR: Using cross-user chatter to break collaborative language agents in groups","authors":["Atharv Singh Patlan","Peiyao Sheng","S. Ashwin Hebbar","Prateek Mittal","Pramod Viswanath"],"version_date":"2025-11-21","status_used":"versioned arXiv preprint","relevance":"cross-user poisoning of collaborative agent state","review_depth":"primary metadata and relevant HTML framing; no attack rates borrowed"},
+    {"key":"xu2026","url":"https://arxiv.org/abs/2607.29167v1","title":"Memory Provenance Laundering in LLM Agents: A Non-Amplification Firewall for Persistent Memory","authors":["Jinghan Xu","Yiyong Xiao","Wanru Shao","Hankai Liu","Xinjin Li"],"version_date":"2026-07-31","status_used":"versioned arXiv preprint; abstract says EMNLP2026 submitted, not accepted","relevance":"memory consolidation and source-authority preservation","review_depth":"primary abstract and metadata only; not a replication or full-text efficacy review"}
+  ]
+}

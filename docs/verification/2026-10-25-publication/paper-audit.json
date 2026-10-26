@@ -1,0 +1,49 @@
+{
+  "classification": "algorithmic manuscript audit; no independent human review",
+  "facts": {
+    "qualification_calls": 24,
+    "original_success": 9,
+    "task_last_success": 12,
+    "chains": 6,
+    "transform_calls": 12,
+    "primary_views": 108,
+    "extra_views": 36,
+    "behavior_calls": 36,
+    "behavior_valid": 36,
+    "legitimate_effects": 36,
+    "attack_effects": 0,
+    "attack_episodes": 18,
+    "text_echoes": 3,
+    "sensitivity_configurations": 278
+  },
+  "citations_checked": [
+    "greshake2023",
+    "patlan2025",
+    "xu2026"
+  ],
+  "unresolved_source_refs": 0,
+  "wilson_descriptive": {
+    "12/12": [
+      0.7575059933447592,
+      1
+    ],
+    "0/3": [
+      5.551115123125783e-17,
+      0.5614970317550454
+    ],
+    "3/3": [
+      0.4385029682449546,
+      1
+    ]
+  },
+  "sha256": {
+    "paper/figures/message-order-qualification.png": "605a4ba46123441b687d81b68b13ec21b919a1a575fa02bad45089078ce82390",
+    "paper/figures/provenance-deletion-outcomes.png": "c716d441d81508a0cdb04de1a0f19254c5d833bdb49e049e4fb9fce04d18a892",
+    "paper/figures/chain-sensitivity.png": "a187e8545a739087aa80f8be0cbcaaa3949e86f885fba7acc2e00f2b32fa1b2d",
+    "paper/generated/state-rows.tex": "f8c8236af4d2823c6f845cb9ceb7ad6bcc8f5b99f5bacb61913fdde9c72c84a1",
+    "paper/generated/behavior-rows.tex": "133810eba29869e3480703e8e46c53c3aaa59c5d935367bc019e29999f7867aa",
+    "paper/main.tex": "f2dcb825e83aa80135d118b77bb110fc0f5362e8937543522c7c14a12f4c58c0",
+    "paper/references.bib": "18be0528e43e32ccbb4dbc31fd7fe033346b8f939a12427bfecd8854af8b0bec",
+    "paper/memoryfence-paper.pdf": "a4eb1619e67b76b66bcabfd79cb6d2ef0254a4f82a97848beb7891caac190b91"
+  }
+}
