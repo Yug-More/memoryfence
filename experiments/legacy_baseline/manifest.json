@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "label": "Original Study; byte-preservation manifest, not new inference",
+  "entry_revision": "f51a8360aca39a428ca41bfc9afe10447d175d72",
+  "original_execution_revision": "e5dcc3c61cc6ded130a4f118825fc324e90a7e3a",
+  "pre_manuscript_revision": "5ca7c2d45ba83334c85fc219f5d287ea8aed6f61",
+  "historical_test_revision": "aaf144456b00c026a8445810346f11440da08105",
+  "capture_date_local": "2026-11-07",
+  "pre_existing_user_change": "paper/memoryfence-paper.pdf deleted in working copy; leave untouched",
+  "files": [
+    {
+      "path": "experiments/2026-10-24-colab/README.md",
+      "bytes": 5217,
+      "sha256": "d8f01c79bd80564ab8c53f9e945535813c3ce1b0cc7e37d050373a52673a6212"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/analyze.py",
+      "bytes": 13318,
+      "sha256": "2cc44a0155dbb487a69e24bad511e13b0a264c485942d32764d39dc14a47dda2"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/independent-analysis.json",
+      "bytes": 34665,
+      "sha256": "ee2ac23342e81c2b0c18a3a7a825c1c42ebdba7ec8b53d147baf1ff919dd27ee"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/manifest.json",
+      "bytes": 3142,
+      "sha256": "c43865006b97b1f5cc3eade7a7a41ef2b7bcf7d6c6296acb3fea38cb9e8a333b"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/native-diagnostics.zip",
+      "bytes": 19375,
+      "sha256": "b737e1d5924b551763ae42b25050ab505d4ad79ca3f079a08c7169e79c954519"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/pilot-outcomes.png",
+      "bytes": 112578,
+      "sha256": "1a91e83c4d1d66b1b2d2c772cc405f93cbbc6c93bb643ed1f219a728a70a6ef8"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/pilot-outcomes.svg",
+      "bytes": 22891,
+      "sha256": "3475074c3351a6cc72f79d512a4573b119081c5c6670240107c2ab753183b706"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/plot.py",
+      "bytes": 3084,
+      "sha256": "81ba83805ffea8dcbe9fce148c2b333daf457b3965e8627302d95129b260114f"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/schema-compatibility.zip.xz",
+      "bytes": 77576,
+      "sha256": "4b62f77ac46386f0b76e1684234a49cab05ab521564dd7356f2b85aa9df85867"
+    },
+    {
+      "path": "experiments/2026-10-24-colab/schema-matched.zip.xz",
+      "bytes": 267188,
+      "sha256": "2809aa59374819614dbd5ca79a7b301a2aad119753efa5003ce366138841dcc3"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/README.md",
+      "bytes": 7859,
+      "sha256": "588b76f82cc56d41df6a0c5813cbe55887a2ac060098398de10cd5384cbcf726"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/capability-outcomes.png",
+      "bytes": 112057,
+      "sha256": "03d9a06ac55e55bd8e3862d7508e43e66675d61cf0d73b4d83a4c97cb05ade63"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/capability-outcomes.svg",
+      "bytes": 98010,
+      "sha256": "391a58b4705c5829e4bbe96c814aeb84465057259f131951b87f75dc6c62f178"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/contract-qualification-analysis.json",
+      "bytes": 14787,
+      "sha256": "560a2dde59737c9432514868546a5b15ba5624c79efe0519fe9a7a4cf8225d5b"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/contract-qualification-export.json",
+      "bytes": 291,
+      "sha256": "b571be44a33484ecf31295e0c349836deb4d3fd0f1c734f1c011fe7955a6f2a6"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/contract-qualification.zip.xz",
+      "bytes": 35876,
+      "sha256": "3b40d05f815aebb0038d36c6f52e5980179f65872f0f996c8d0031e12e721f30"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/diagnostics-v1-analysis.json",
+      "bytes": 30943,
+      "sha256": "218a2f91a7bba0bb32184be585b9ec090098b1714d955d74a1e97713b1dd862d"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/diagnostics-v1.zip.xz",
+      "bytes": 56024,
+      "sha256": "7cd90aeb8a974e335cc48f3006b316b8aef1c6e27de0ce4a518a4ecde76180d9"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/index.json",
+      "bytes": 5151,
+      "sha256": "8c828be0e5b5f5b337c6a1de1d764ce6727415deeead0f72ef94eb8fcf9418b6"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/lifecycle-outcomes.png",
+      "bytes": 164792,
+      "sha256": "e9c6d3f5ce7334d1f53513507743164aeb358ffbbbc778398332c0cfb12a76de"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/lifecycle-outcomes.svg",
+      "bytes": 148149,
+      "sha256": "a87b0dca5eca5892d38032e3dfdc3718db464ebf7ae1b0b25d8cad6ebb855ab8"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/literal-controlled-native-analysis.json",
+      "bytes": 88631,
+      "sha256": "f2bef5315e37a637e1d2543e03976a9dfc2bac1d359291399225830d33b44d28"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/literal-controlled-native.zip.xz",
+      "bytes": 67272,
+      "sha256": "47e613fc9a9ca6eb0c04fc9fa828f1ae4f0c52fe40a69cf2b5e3a3e00d150eb6"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/literal-qualification-analysis.json",
+      "bytes": 21928,
+      "sha256": "6554d4548210ed358e0598d635436f6dd20ea5fae16ee1d5aa55c529b501d96e"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/literal-qualification.zip.xz",
+      "bytes": 36368,
+      "sha256": "1b5180ba76c28963bf6a52dfa86064aaa6d8d95909a50fd53161cfc97f265501"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/plot.py",
+      "bytes": 3490,
+      "sha256": "0c0b2b9e4d197131b2d3630adaf28bbcb0e688a1bf3c348b05bfbcd0c765b7a2"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/plot_study.py",
+      "bytes": 3446,
+      "sha256": "897df52eeb913dac77c4a949de0b9c8c24fe717b91b58e30d66d0f013128930a"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/qualification-v1-analysis.json",
+      "bytes": 64238,
+      "sha256": "a7f53c3d8674ec0bd11f24d9922d5ec22e07acc52ea9bf627e0be1bad4cc388b"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/qualification-v1.zip.xz",
+      "bytes": 55264,
+      "sha256": "547c57efac393c8a749ebc76c2022f467d503f8333895d406d24c779126c7c40"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/schema-controlled-analysis.json",
+      "bytes": 149302,
+      "sha256": "b5af76883db45f048470977d350d33446b5ca26e49eae64f039a9c763bd02cf9"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/schema-controlled-export.json",
+      "bytes": 287,
+      "sha256": "fb3405cf3d07f6352b6e9f92e330e8e7cf925263faed77bc1c6a00644dfac9a2"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/schema-controlled.zip.xz",
+      "bytes": 93904,
+      "sha256": "cb97640519cd5f26ebbcf8bc30b9a3d87cf824e94ab8d48ced0f7af45c197b3d"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/transformation-qualification-analysis.json",
+      "bytes": 3889,
+      "sha256": "4b568f6698a80c28b1c17e4502c1292ec36d785768564e49b08b385d91bd6079"
+    },
+    {
+      "path": "experiments/2026-10-24-completion/transformation-qualification.zip.xz",
+      "bytes": 20240,
+      "sha256": "8cc672539a02ecb1f6481417f8e3cefd5180e6b4cc7c6c915f0ec4d06706b17a"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/README.md",
+      "bytes": 5859,
+      "sha256": "29ba28a3b2838484dd7fd66174f983afbe9918e54c952915e60227529686876c"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/final-qualification-analysis.json",
+      "bytes": 17183,
+      "sha256": "d39f05d7d86764dd65ae790c7f183098909043ccb0e7da8db67ce071e4043366"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/final-qualification-export.json",
+      "bytes": 288,
+      "sha256": "5d49f4dcb93bdea8f5491b6d5db66e5db8c6842b9133567a4bf89aaa0db303ad"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/final-qualification.zip.xz",
+      "bytes": 45176,
+      "sha256": "b5ed668600a2b84a627e28996df9679f26d3eeda4f008cdd8eb3dec61491320f"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/index.json",
+      "bytes": 2711,
+      "sha256": "20c2bd9c70b70766a7afdae4e31702bf11e9e38fba5f0859f4edc0aea0b4e6b8"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/message-order-qualification.png",
+      "bytes": 73076,
+      "sha256": "605a4ba46123441b687d81b68b13ec21b919a1a575fa02bad45089078ce82390"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/message-order-qualification.svg",
+      "bytes": 65277,
+      "sha256": "6c967b9f2f722094af748d9f14bad0e7b6f57f3dd8a2b580f03af48365aad613"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/paired-state-study-analysis.json",
+      "bytes": 161545,
+      "sha256": "8094d6ba7b73aed25b0365a9ef5acae636de5f32242b097dd547cf67823258df"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/paired-state-study-export.json",
+      "bytes": 288,
+      "sha256": "1504432046ae4f785e319b82c534b55ee1b05d350297d5916c548d84e169262d"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/paired-state-study.zip.xz",
+      "bytes": 69548,
+      "sha256": "1a6bb6d23252629ce11744b1f12817abc88ce4e2c1d67972236c64115116f88c"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/plot_final.py",
+      "bytes": 5456,
+      "sha256": "a019d6e20cb0bdb9314674bd91000a8f34f57c9fac21a1ca89562f0343335e22"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/provenance-deletion-outcomes.png",
+      "bytes": 137821,
+      "sha256": "c716d441d81508a0cdb04de1a0f19254c5d833bdb49e049e4fb9fce04d18a892"
+    },
+    {
+      "path": "experiments/2026-10-25-bounded/provenance-deletion-outcomes.svg",
+      "bytes": 127841,
+      "sha256": "aac6d63d3fdb85b0335e4976ea585c26d39c29bb4c9818274bfdce2cfd5f12d6"
+    },
+    {
+      "path": "configs/ollama-pilot.json",
+      "bytes": 619,
+      "sha256": "b67237dbf122f542b3efeedff6585c639579b39e3999fe54e4585ef1df727eab"
+    },
+    {
+      "path": "configs/ollama-schema-pilot.json",
+      "bytes": 722,
+      "sha256": "df97625a4241387456fdaf2d675c0da3e456be49c454452bcb1e76da829680f2"
+    },
+    {
+      "path": "configs/ollama-ticket-pilot.json",
+      "bytes": 747,
+      "sha256": "91cc056d2076a43e45d17ea5ec154a3bb4f4abe4db275404a347f452b11ef07a"
+    },
+    {
+      "path": "configs/ollama-ticket-schema-pilot.json",
+      "bytes": 884,
+      "sha256": "260722c6d1b66f06861d9c7dbb52407c16e9b895ae73452e13047423c38ab1da"
+    },
+    {
+      "path": "uv.lock",
+      "bytes": 362091,
+      "sha256": "b56c35ce80b7847c07508687c183ce2ce5408ffc90478354083b997748d99dca"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 5347,
+      "sha256": "3cdcdde58f46941bbd44c9cbb787da76b106ab6eca6ba0328c73b2d11d93d74b"
+    }
+  ]
+}
