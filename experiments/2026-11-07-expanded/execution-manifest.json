@@ -1,0 +1,32 @@
+{
+  "classification": "deterministic memory-system benchmark; zero model inference",
+  "code_revision": "4a430fa9939b1fa6438c64508368006e1e8b3fc6",
+  "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+  "finished_at_utc": "2026-11-07T19:22:11.181699+00:00",
+  "lock_sha256": "b56c35ce80b7847c07508687c183ce2ce5408ffc90478354083b997748d99dca",
+  "model_calls": 0,
+  "planned_cases": 80,
+  "planned_runs": 560,
+  "platform": "macOS-14.5-arm64-arm-64bit",
+  "python": "3.12.12",
+  "recorded_runs": 560,
+  "software": {
+    "memoryfence": "0.1.0.dev0",
+    "pydantic": "2.14.1",
+    "sqlalchemy": "2.1.5"
+  },
+  "split": "all",
+  "started_at_utc": "2026-11-07T19:21:45.320228+00:00",
+  "status": "completed",
+  "strategies": [
+    "source_only",
+    "keyword",
+    "direct",
+    "cascade",
+    "rederive",
+    "quarantine",
+    "memoryfence"
+  ],
+  "version": "expanded-v1",
+  "working_tree_changes": "D paper/memoryfence-paper.pdf"
+}

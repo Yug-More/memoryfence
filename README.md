@@ -7,18 +7,28 @@ provenance reveals, and what it is authorized to do.
 
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
-**The declared bounded study is complete. Broad behavioral protection is not established.**
-Six real model-generated memory chains support paired provenance, deletion and
-retrieval measurements. A qualified task-last interface completed all 36 final
-legitimate tickets, including 18 poisoned-memory episodes, without an objective
-attack effect. Missing recorded ancestry still left poisoned descendants retrievable.
-The [report](docs/research/COMPLETION_REPORT.md) separates these findings and their limits.
+**Two separate studies; broad behavioral protection is not established.**
 
-**Research manuscript:** [When Memory Outlives Its Source](paper/memoryfence-paper.pdf)
-([LaTeX and build instructions](paper/README.md)). Ten pages of main text plus
-references and a reproducibility appendix; not submitted or peer reviewed. The
-[publication audit](docs/research/FINAL_PUBLICATION_AUDIT.md) and
-[plain-English outcome](docs/research/FINAL_OUTCOME.md) state exactly what is supported.
+The **Original Study** preserves 72 genuine Qwen2.5 1.5B responses, including 36
+final agent replies (18 attack episodes). Missing recorded ancestry left poisoned
+descendants retrievable; complete-lineage behavior had 0/18 exact attacker-objective
+effects. [Historical claims and verification](docs/RESEARCH_CLAIMS.md) distinguish
+archived model evidence from the independently reproduced 238-test historical suite.
+
+The **Expanded Study v1** implements opt-in observable-lineage containment and
+compares seven strategies in **560 deterministic runs /80 configurations /16 graph
+families**, with four held-out families. Complete-lineage re-derivation preserves
+8/8 held-out benign facts versus cascade's 2/8. Marked-gap containment loses all
+8/8; silent gaps still expose malicious context in 3/4 cases. These are memory-system
+results with **zero new model calls**, not LLM attack success rates. The benchmark
+intentionally remains below the 150–300 planning target.
+
+Start with [results](docs/RESULTS.md), [architecture](docs/ARCHITECTURE.md),
+[threat model](docs/THREAT_MODEL.md), [finite protocol](docs/EXPERIMENTAL_METHODOLOGY.md),
+[limitations](docs/LIMITATIONS.md) and [reproduction](docs/REPRODUCIBILITY.md).
+The [expanded research manuscript](docs/RESEARCH_PAPER.md) is in preparation;
+[original LaTeX](paper/main.tex) and evidence remain preserved. No publication,
+peer review or general defense guarantee is claimed.
 
 ## The question
 
@@ -34,7 +44,7 @@ then change operational behavior without giving the system an evaluator's oracle
 The original [RQ1–RQ6](docs/research/problem-statement.md#7-research-question) remain
 broader than this completed [bounded protocol](docs/research/FINAL_BOUNDED_PROTOCOL.md).
 
-## What the final study found
+## What the Original Study found
 
 - **Source removal is not descendant removal.** DS1 retained both derived memories.
   With complete recorded provenance, DS3 removed all attack descendants. At LF0.75
@@ -106,6 +116,21 @@ Research journals and evaluator snapshots retain copies for audit; the project d
 not claim forensic erasure. The [architecture](docs/architecture/overview.md) and
 [threat model](docs/research/threat-model.md) define these boundaries. This is a
 library/CLI, not a hosted service or external agent integration.
+
+## Run the Expanded Study without a model
+
+```bash
+uv sync --frozen
+uv run --frozen memoryfence expanded validate --dataset benchmarks/expanded-v1/scenarios.json
+uv run --frozen memoryfence expanded run --dataset benchmarks/expanded-v1/scenarios.json --directory /tmp/memoryfence-expanded-new --split all
+uv run --frozen python scripts/research/verify_expanded.py experiments/2026-11-07-expanded/expanded-v1.zip.xz --output /tmp/expanded-verification-new.json
+```
+
+Use a fresh directory. The explicit deterministic fact-union backend tests memory
+lifecycle and derived-fact lookup; it does not simulate an LLM's semantic reasoning.
+[Dataset](benchmarks/expanded-v1/README.md), [raw accession](experiments/2026-11-07-expanded/README.md)
+and [new figures](docs/RESULTS.md#held-out-securityutility-tradeoff) include controls,
+counts and unfavorable outcomes. No API key, paid runtime or weights are needed.
 
 ## Reproduce without a model
 

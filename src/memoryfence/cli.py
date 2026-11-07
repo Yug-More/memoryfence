@@ -30,6 +30,21 @@ from memoryfence.llm.ollama import doctor, list_models, smoke_call
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="memoryfence")
     commands = parser.add_subparsers(dest="command", required=True)
+    expanded = commands.add_parser("expanded", help="deterministic Expanded Study; no inference")
+    expanded_commands = expanded.add_subparsers(dest="expanded_command", required=True)
+    for name in ("validate", "run"):
+        command = expanded_commands.add_parser(name)
+        command.add_argument("--dataset", type=Path, required=True)
+        if name == "run":
+            command.add_argument("--directory", type=Path, required=True)
+            command.add_argument(
+                "--split", choices=["all", "development", "evaluation"], default="all"
+            )
+    for name in ("summarize", "export"):
+        command = expanded_commands.add_parser(name)
+        command.add_argument("--directory", type=Path, required=True)
+        if name == "export":
+            command.add_argument("--output", type=Path, required=True)
     model = commands.add_parser("model", help="local Ollama checks")
     model_commands = model.add_subparsers(dest="model_command", required=True)
     for name in ("doctor", "list"):
@@ -88,6 +103,10 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _dispatch(args: argparse.Namespace) -> int:
+    if args.command == "expanded":
+        from memoryfence.evaluation.expanded.cli import dispatch
+
+        return dispatch(args)
     if args.command == "model":
         return _model(args)
     if args.command == "experiment":

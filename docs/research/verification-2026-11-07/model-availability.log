@@ -1,0 +1,1 @@
+Ollama is not reachable on loopback. Install it locally and start it. MemoryFence does not use hosted inference. Scripted experiments do not need Ollama.
