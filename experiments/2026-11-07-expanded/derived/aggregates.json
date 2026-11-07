@@ -1,0 +1,5106 @@
+{
+  "groups": {
+    "development/attack_complete/cascade": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_complete/direct": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 16,
+          "numerator": 14,
+          "rate": 0.875
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 16,
+          "numerator": 11,
+          "rate": 0.6875
+        },
+        "retrieval_recall": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/attack_complete/keyword": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_complete/memoryfence": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 15,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_complete/quarantine": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_complete/rederive": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 15,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_complete/source_only": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 28,
+          "rate": 0.9333333333333333
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 15,
+          "rate": 0.5
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        }
+      }
+    },
+    "development/attack_marked/cascade": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 18,
+          "numerator": 16,
+          "rate": 0.8888888888888888
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 18,
+          "numerator": 13,
+          "rate": 0.7222222222222222
+        },
+        "retrieval_recall": {
+          "denominator": 13,
+          "numerator": 13,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/attack_marked/direct": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 10
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 19,
+          "rate": 0.6785714285714286
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 9,
+          "rate": 0.32142857142857145
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 21,
+          "numerator": 19,
+          "rate": 0.9047619047619048
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 19,
+          "rate": 0.6785714285714286
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 21,
+          "numerator": 13,
+          "rate": 0.6190476190476191
+        },
+        "retrieval_recall": {
+          "denominator": 13,
+          "numerator": 13,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        }
+      }
+    },
+    "development/attack_marked/keyword": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_marked/memoryfence": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 4,
+          "rate": 0.5714285714285714
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 3,
+          "rate": 0.42857142857142855
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 3,
+          "rate": 0.42857142857142855
+        },
+        "malicious_retrieval": {
+          "denominator": 3,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 3,
+          "numerator": 3,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 3,
+          "numerator": 3,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_marked/quarantine": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_marked/rederive": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 19,
+          "numerator": 16,
+          "rate": 0.8421052631578947
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 19,
+          "numerator": 14,
+          "rate": 0.7368421052631579
+        },
+        "retrieval_recall": {
+          "denominator": 14,
+          "numerator": 14,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/attack_marked/source_only": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 28,
+          "rate": 0.9333333333333333
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 15,
+          "rate": 0.5
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        }
+      }
+    },
+    "development/attack_silent/cascade": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 18,
+          "numerator": 16,
+          "rate": 0.8888888888888888
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 18,
+          "numerator": 13,
+          "rate": 0.7222222222222222
+        },
+        "retrieval_recall": {
+          "denominator": 13,
+          "numerator": 13,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/attack_silent/direct": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 10
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 19,
+          "rate": 0.6785714285714286
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 9,
+          "rate": 0.32142857142857145
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 21,
+          "numerator": 19,
+          "rate": 0.9047619047619048
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 19,
+          "rate": 0.6785714285714286
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 21,
+          "numerator": 13,
+          "rate": 0.6190476190476191
+        },
+        "retrieval_recall": {
+          "denominator": 13,
+          "numerator": 13,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        }
+      }
+    },
+    "development/attack_silent/keyword": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/attack_silent/memoryfence": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 3
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 4,
+          "rate": 0.14285714285714285
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "malicious_retrieval": {
+          "denominator": 7,
+          "numerator": 4,
+          "rate": 0.5714285714285714
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 3,
+          "rate": 0.25
+        }
+      }
+    },
+    "development/attack_silent/quarantine": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 3
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 4,
+          "rate": 0.14285714285714285
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 3,
+          "rate": 0.42857142857142855
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 4,
+          "rate": 0.5714285714285714
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 4,
+          "rate": 0.5714285714285714
+        },
+        "malicious_retrieval": {
+          "denominator": 6,
+          "numerator": 4,
+          "rate": 0.6666666666666666
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 3,
+          "rate": 0.25
+        }
+      }
+    },
+    "development/attack_silent/rederive": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 12,
+          "rate": 0.42857142857142855
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 19,
+          "numerator": 16,
+          "rate": 0.8421052631578947
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 16,
+          "rate": 0.5714285714285714
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 19,
+          "numerator": 14,
+          "rate": 0.7368421052631579
+        },
+        "retrieval_recall": {
+          "denominator": 14,
+          "numerator": 14,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/attack_silent/source_only": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 28,
+          "rate": 0.9333333333333333
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 22,
+          "rate": 0.5641025641025641
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 15,
+          "rate": 0.5
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        }
+      }
+    },
+    "development/clean/cascade": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/clean/direct": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 1,
+          "rate": 0.14285714285714285
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 6,
+          "rate": 0.8571428571428571
+        },
+        "malicious_retrieval": {
+          "denominator": 16,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 14,
+          "rate": 0.5
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 16,
+          "numerator": 11,
+          "rate": 0.6875
+        },
+        "retrieval_recall": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 9,
+          "rate": 0.75
+        }
+      }
+    },
+    "development/clean/keyword": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 15,
+          "rate": 0.5
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        }
+      }
+    },
+    "development/clean/memoryfence": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 15,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/clean/quarantine": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 5,
+          "rate": 0.7142857142857143
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 2,
+          "rate": 0.2857142857142857
+        },
+        "malicious_retrieval": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/clean/rederive": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 15,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/clean/source_only": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 2,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 7,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 28,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 7,
+          "numerator": 7,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 28,
+          "numerator": 28,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 39,
+          "numerator": 39,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 15,
+          "rate": 0.5
+        },
+        "retrieval_recall": {
+          "denominator": 15,
+          "numerator": 15,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        }
+      }
+    },
+    "development/never_exposed/cascade": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/direct": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/keyword": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/memoryfence": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/quarantine": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/rederive": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "development/never_exposed/source_only": {
+      "cases": 12,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 30,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 35,
+          "numerator": 35,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 30,
+          "numerator": 30,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/cascade": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/direct": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 7,
+          "rate": 0.6363636363636364
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 4,
+          "rate": 0.36363636363636365
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        },
+        "malicious_retrieval": {
+          "denominator": 8,
+          "numerator": 7,
+          "rate": 0.875
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 7,
+          "rate": 0.6363636363636364
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        }
+      }
+    },
+    "evaluation/attack_complete/keyword": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/memoryfence": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 10,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/quarantine": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/rederive": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 10,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_complete/source_only": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_marked/cascade": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_marked/direct": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_marked/keyword": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_marked/memoryfence": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "malicious_retrieval": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "retrieval_recall": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_marked/quarantine": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "malicious_retrieval": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "retrieval_recall": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_marked/rederive": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_marked/source_only": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_silent/cascade": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_silent/direct": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_silent/keyword": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/attack_silent/memoryfence": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 5,
+          "rate": 0.45454545454545453
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        },
+        "malicious_retrieval": {
+          "denominator": 6,
+          "numerator": 5,
+          "rate": 0.8333333333333334
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        }
+      }
+    },
+    "evaluation/attack_silent/quarantine": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 5,
+          "rate": 0.45454545454545453
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        },
+        "malicious_retrieval": {
+          "denominator": 6,
+          "numerator": 5,
+          "rate": 0.8333333333333334
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 6,
+          "numerator": 6,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        }
+      }
+    },
+    "evaluation/attack_silent/rederive": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/attack_silent/source_only": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 11,
+          "rate": 0.9166666666666666
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 8,
+          "rate": 0.38095238095238093
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/clean/cascade": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/clean/direct": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 7,
+          "rate": 0.6363636363636364
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 4,
+          "rate": 0.36363636363636365
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        },
+        "malicious_retrieval": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 7,
+          "rate": 0.6363636363636364
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        }
+      }
+    },
+    "evaluation/clean/keyword": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/clean/memoryfence": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 10,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/clean/quarantine": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 6,
+          "rate": 0.75
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 2,
+          "rate": 0.25
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "malicious_retrieval": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/clean/rederive": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 10,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/clean/source_only": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 1,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 11,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 11,
+          "numerator": 11,
+          "rate": 1.0
+        },
+        "provenance_coverage": {
+          "denominator": 21,
+          "numerator": 21,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 10,
+          "rate": 0.8333333333333334
+        },
+        "retrieval_recall": {
+          "denominator": 10,
+          "numerator": 10,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        }
+      }
+    },
+    "evaluation/never_exposed/cascade": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/direct": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/keyword": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/memoryfence": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/quarantine": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/rederive": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    },
+    "evaluation/never_exposed/source_only": {
+      "cases": 4,
+      "exposure": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "metrics": {
+        "accessible_persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "benign_artifact_overdeletion": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_fact_loss": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "benign_retention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "deletion_completeness": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "fact_lookup_success": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "malicious_retrieval": {
+          "denominator": 12,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "persistence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "provenance_coverage": {
+          "denominator": 19,
+          "numerator": 19,
+          "rate": 1.0
+        },
+        "retrieval_precision": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "retrieval_recall": {
+          "denominator": 12,
+          "numerator": 12,
+          "rate": 1.0
+        },
+        "target_fact_persistence": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        }
+      }
+    }
+  },
+  "observations": {
+    "input_build_ms": {
+      "max": 159.362792,
+      "median": 46.089709,
+      "min": 31.036709,
+      "n": 80,
+      "q1": 40.4904065,
+      "q3": 53.85216675
+    },
+    "source_ingestion_ms": {
+      "max": 87.302,
+      "median": 5.0632285,
+      "min": 4.015417,
+      "n": 240,
+      "q1": 4.3856565,
+      "q3": 6.288896
+    },
+    "sqlite_bytes": {
+      "cascade": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 348160.0
+      },
+      "direct": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 348160.0
+      },
+      "keyword": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 348160.0
+      },
+      "memoryfence": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 356352.0
+      },
+      "quarantine": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 348160.0
+      },
+      "rederive": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 356352.0
+      },
+      "source_only": {
+        "max": 356352.0,
+        "median": 348160.0,
+        "min": 348160.0,
+        "n": 80,
+        "q1": 348160.0,
+        "q3": 348160.0
+      }
+    },
+    "timings_ms": {
+      "cascade": {
+        "deletion": {
+          "max": 22.212166,
+          "median": 7.286417,
+          "min": 6.145916,
+          "n": 80,
+          "q1": 6.658333,
+          "q3": 7.875396
+        },
+        "recomputation": {
+          "max": 0.004583,
+          "median": 0.000833,
+          "min": 0.000458,
+          "n": 80,
+          "q1": 0.000708,
+          "q3": 0.00105225
+        },
+        "retrieval": {
+          "max": 10.069917,
+          "median": 3.211708,
+          "min": 2.554041,
+          "n": 80,
+          "q1": 2.7787290000000002,
+          "q3": 3.757698
+        }
+      },
+      "direct": {
+        "deletion": {
+          "max": 95.25925,
+          "median": 9.511167,
+          "min": 8.0515,
+          "n": 80,
+          "q1": 8.830854,
+          "q3": 10.54388525
+        },
+        "recomputation": {
+          "max": 0.006959,
+          "median": 0.000916,
+          "min": 0.0005,
+          "n": 80,
+          "q1": 0.00075,
+          "q3": 0.001083
+        },
+        "retrieval": {
+          "max": 59.5705,
+          "median": 3.3228334999999998,
+          "min": 2.58125,
+          "n": 80,
+          "q1": 3.0031142500000003,
+          "q3": 3.83984325
+        }
+      },
+      "keyword": {
+        "deletion": {
+          "max": 30.787125,
+          "median": 7.211729500000001,
+          "min": 6.241625,
+          "n": 80,
+          "q1": 6.663499750000001,
+          "q3": 7.86714625
+        },
+        "recomputation": {
+          "max": 0.005541,
+          "median": 0.0008125,
+          "min": 0.0005,
+          "n": 80,
+          "q1": 0.000667,
+          "q3": 0.00092725
+        },
+        "retrieval": {
+          "max": 18.853875,
+          "median": 3.587667,
+          "min": 2.901209,
+          "n": 80,
+          "q1": 3.307708,
+          "q3": 4.021062500000001
+        }
+      },
+      "memoryfence": {
+        "deletion": {
+          "max": 112.677666,
+          "median": 8.008666999999999,
+          "min": 6.054667,
+          "n": 80,
+          "q1": 7.07129175,
+          "q3": 9.11396875
+        },
+        "recomputation": {
+          "max": 35.372125,
+          "median": 1.0731045,
+          "min": 0.896833,
+          "n": 80,
+          "q1": 0.97346875,
+          "q3": 11.85011425
+        },
+        "retrieval": {
+          "max": 57.414291,
+          "median": 6.9060415,
+          "min": 3.517292,
+          "n": 80,
+          "q1": 5.32660425,
+          "q3": 8.90574975
+        }
+      },
+      "quarantine": {
+        "deletion": {
+          "max": 70.369208,
+          "median": 7.1849585000000005,
+          "min": 6.234209,
+          "n": 80,
+          "q1": 6.828698,
+          "q3": 8.31323925
+        },
+        "recomputation": {
+          "max": 0.005708,
+          "median": 0.000833,
+          "min": 0.0005,
+          "n": 80,
+          "q1": 0.000708,
+          "q3": 0.001
+        },
+        "retrieval": {
+          "max": 14.478125,
+          "median": 6.262874999999999,
+          "min": 3.51975,
+          "n": 80,
+          "q1": 3.81049975,
+          "q3": 8.7251145
+        }
+      },
+      "rederive": {
+        "deletion": {
+          "max": 70.498083,
+          "median": 8.096083499999999,
+          "min": 6.249708,
+          "n": 80,
+          "q1": 7.6042705,
+          "q3": 9.06204175
+        },
+        "recomputation": {
+          "max": 35.6755,
+          "median": 1.111021,
+          "min": 0.908375,
+          "n": 80,
+          "q1": 0.9779685,
+          "q3": 10.001375499999998
+        },
+        "retrieval": {
+          "max": 4.908041,
+          "median": 3.341916,
+          "min": 2.55575,
+          "n": 80,
+          "q1": 2.9762915,
+          "q3": 3.5809172499999997
+        }
+      },
+      "source_only": {
+        "deletion": {
+          "max": 106.2485,
+          "median": 6.9625835,
+          "min": 6.27,
+          "n": 80,
+          "q1": 6.54096925,
+          "q3": 7.75152075
+        },
+        "recomputation": {
+          "max": 0.005416,
+          "median": 0.00075,
+          "min": 0.0005,
+          "n": 80,
+          "q1": 0.000625,
+          "q3": 0.001
+        },
+        "retrieval": {
+          "max": 7.574167,
+          "median": 3.609375,
+          "min": 2.927833,
+          "n": 80,
+          "q1": 3.3221042500000006,
+          "q3": 3.9975517500000004
+        }
+      }
+    }
+  },
+  "verification": {
+    "cases": 80,
+    "classification": "independent raw artifact recomputation; no new inference",
+    "code_revision": "4a430fa9939b1fa6438c64508368006e1e8b3fc6",
+    "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+    "families": 16,
+    "invalid_runs": 0,
+    "model_calls": 0,
+    "transport_sha256": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2",
+    "verified_runs": 560,
+    "zip_sha256": "b209bc91edbc60b97c887245ef299c5d9ba4755770e5dd0d8c69ef18cba98ed5"
+  }
+}

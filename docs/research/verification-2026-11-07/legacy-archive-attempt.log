@@ -1,0 +1,216 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.12, pytest-9.1.1, pluggy-1.7.0
+rootdir: /tmp/memoryfence-original-238-20261107
+configfile: pyproject.toml
+plugins: cov-7.1.0, platformdirs-4.13.4
+collected 238 items
+
+../../../../tmp/memoryfence-original-238-20261107/tests/test_atomicity.py . [  0%]
+...                                                                      [  1%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_authorization.py . [  2%]
+.........                                                                [  5%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_benchmark.py . [  6%]
+......                                                                   [  8%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_colab.py .. [  9%]
+..................F                                                      [ 17%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_completion_evidence.py . [ 18%]
+.......                                                                  [ 21%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_defenses.py . [ 21%]
+.......                                                                  [ 24%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_demo.py ... [ 25%]
+                                                                         [ 25%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_docs.py ... [ 26%]
+..........................................................               [ 51%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_evaluation.py . [ 51%]
+.........                                                                [ 55%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_final_cycle.py . [ 55%]
+...                                                                      [ 57%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_final_evidence.py . [ 57%]
+...                                                                      [ 58%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_imports.py . [ 59%]
+                                                                         [ 59%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_lifecycle.py . [ 59%]
+...............                                                          [ 65%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_ollama.py . [ 66%]
+........................                                                 [ 76%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_package.py . [ 76%]
+....                                                                     [ 78%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_persistence.py . [ 78%]
+.....                                                                    [ 81%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_provenance.py . [ 81%]
+.....                                                                    [ 83%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_qualification.py . [ 84%]
+..........                                                               [ 88%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_research_scoring.py . [ 88%]
+.                                                                        [ 89%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_saved_pilot_artifacts.py . [ 89%]
+                                                                         [ 89%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_simulation.py . [ 89%]
+.................                                                        [ 97%]
+../../../../tmp/memoryfence-original-238-20261107/tests/test_workspace_edges.py . [ 97%]
+......                                                                   [100%]
+
+=================================== FAILURES ===================================
+__________ test_notebook_project_steps_run_in_an_isolated_interpreter __________
+
+tmp_path = PosixPath('/private/var/folders/57/5_c0gzws2kzbkc1_vj90f8v40000gn/T/pytest-of-amolair/pytest-0/test_notebook_project_steps_ru0')
+
+    def test_notebook_project_steps_run_in_an_isolated_interpreter(tmp_path: Path) -> None:
+        import ast
+
+        notebook = json.loads(NOTEBOOK.read_text())
+        for cell in notebook["cells"]:
+            if cell["cell_type"] == "code":
+                tree = ast.parse("".join(cell["source"]))
+                for node in ast.walk(tree):
+                    if (
+                        isinstance(node, ast.Call)
+                        and isinstance(node.func, ast.Name)
+                        and node.func.id == "run_project"
+                        and node.args
+                    ):
+                        ast.parse(ast.literal_eval(node.args[0]))
+        setup = ast.parse("".join(notebook["cells"][4]["source"]))
+        function = next(
+            n for n in setup.body if isinstance(n, ast.FunctionDef) and n.name == "run_project"
+        )
+        state = tmp_path / "state.json"
+        namespace = {
+            "ROOT": ROOT,
+            "STATE_FILE": state,
+            "IN_COLAB": True,
+            "REVISION": SHA,
+            "FROZEN": True,
+            "SCHEMA_OUTPUT": True,
+            "PILOT_CONFIG": "configs/ollama-schema-pilot.json",
+            "subprocess": subprocess,
+        }
+        exec(  # noqa: S102
+            compile(ast.Module(body=[function], type_ignores=[]), "notebook-runner", "exec"), namespace
+        )
+        run = namespace["run_project"]
+        assert callable(run)
+>       run('STAMP = "isolated-test"\nprint("project subprocess imported successfully")')
+
+/tmp/memoryfence-original-238-20261107/tests/test_colab.py:834:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = 'STAMP = "isolated-test"\nprint("project subprocess imported successfully")'
+
+>   ???
+E   RuntimeError: Project step failed; keep its output and partial artifacts
+
+notebook-runner:89: RuntimeError
+----------------------------- Captured stdout call -----------------------------
+fatal: not a git repository (or any of the parent directories): .git
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+  File "/Users/amolair/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amolair/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-C', '/private/tmp/memoryfence-original-238-20261107', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.12.12-final-0 _______________
+
+Name                                                                                       Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------------------------------------------------------------------------------------
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/__init__.py                     4      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/__main__.py                     4      4      2      0     0%   1-6
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/access/__init__.py              3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/access/permissions.py           7      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/access/policy.py              153     14     84     12    88%   49, 55, 57, 76, 115, 119-121, 172, 177, 185, 205, 208, 256
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/agents/__init__.py              2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/agents/loop.py                 75      3     14      1    96%   79, 180-181
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/authorization/__init__.py       2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/authorization/gateway.py       45      1      6      1    96%   129
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/__init__.py           3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/catalog.py           73      4     10      4    90%   416, 419, 422, 425
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/judge.py             28      1     10      1    95%   25
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/labels.py            14      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/pilot.py             16      0      2      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/result.py            51      0      4      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/runner.py           225     11     62     13    92%   113, 118, 219->217, 283, 299, 336, 337->339, 402, 515, 519, 521, 524, 534
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/score.py             20      0      2      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/benchmark/spec.py              69      9     20      9    80%   65, 67, 69, 72, 76, 79, 85, 87, 89
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/cli.py                        181     20     62      8    87%   99, 103, 140, 148-156, 175-177, 179-181, 201, 205
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/colab/__init__.py               2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/colab/session.py              461      4    196      3    99%   189, 510, 625, 681
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/defenses/__init__.py            2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/defenses/policy.py             24      2     12      2    89%   28, 31
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/defenses/suite.py             123      6     32      6    92%   44, 143->148, 145->143, 148->158, 186-187, 201, 203, 206
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/__init__.py              0      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/access.py               24      2      4      2    86%   32, 34
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/base.py                  3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/defenses.py             29      2     12      2    90%   39, 43
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/deletion.py             67      3     10      3    92%   63, 66, 68
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/enums.py               184      5      4      0    95%   122-126
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/errors.py               78      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/experiments.py          59      5     10      5    86%   45, 47, 74, 76, 79
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/ids.py                  68      2      4      2    94%   65, 72
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/memories.py             54      9     20      9    76%   64, 67, 69, 71, 74, 76, 78, 80, 82
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/model.py                52      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/principals.py           69      4     10      4    90%   39, 75, 77, 100
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/protocols.py             5      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/provenance.py           75      7     10      4    85%   32, 55, 65-67, 98, 112
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/serialization.py         7      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/sources.py              51      4      8      4    86%   44, 46, 48, 66
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/time.py                 25      1      6      1    94%   14
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/domain/tools.py                32      0      2      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/__init__.py          3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/config.py          119     12     52     12    86%   74, 93, 98, 100, 102, 104, 106, 118, 122, 127, 135, 145
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/heldout.py          15      2      0      0    87%   102-103
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/hypotheses.py       13      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/matrix.py           69      3     24      1    96%   106-107, 114
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/metrics.py          29      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/report.py           51      1     10      1    97%   102
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/runner.py          232     53     82     17    69%   66, 74-75, 100, 112, 114, 117, 137, 139, 141, 182-183, 208-225, 263, 267-276, 283-284, 291, 293, 296, 304, 318, 320-329, 334-349
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/evaluation/stats.py            64      0     24      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/groundtruth/__init__.py         4      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/groundtruth/episode.py         12      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/groundtruth/recorder.py        19      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/groundtruth/schema.py          73      0      4      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/groundtruth/store.py           97      1     16      2    97%   58, 93->92
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/harness/__init__.py             2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/harness/episode.py             66      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/__init__.py                 2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/backend.py                 49      1     18      1    97%   76
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/endpoint.py                33      7     12      3    78%   24, 28-29, 32, 36-37, 39
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/ollama.py                 245     35     94     29    81%   104, 106, 110, 155, 206, 211->220, 219, 240, 248, 253, 260, 264->269, 297, 304-305, 310-311, 314, 330, 351-352, 361-362, 365, 401, 406, 408, 413, 419, 425, 428, 432, 448, 451, 473, 475, 479
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/prompts.py                 18      0      4      1    95%   75->69
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/recording.py               28      3      0      0    89%   40-42
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/llm/transport.py               50     15     10      3    63%   42, 58-59, 63, 65-70, 75, 81-83, 89-90, 92
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/__init__.py              5      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/calls.py                17      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/ingest.py               43      2      0      0    95%   90-91
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/rederive.py             56      3     14      3    91%   76, 91, 100
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/retrieve.py             71      3     12      2    94%   57, 91-92
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/memory/transforms.py           43      2     16      2    93%   126, 131
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/observability/__init__.py       3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/observability/events.py        71      5      4      1    92%   161-162, 169, 207-211
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/observability/manifest.py      28      2      6      0    94%   24-25
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/provenance/__init__.py          4      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/provenance/degradation.py      14      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/provenance/graph.py            28      0     14      1    98%   18->17
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/provenance/recorded.py         80      8     18      6    86%   38, 76-77, 164, 168, 172, 182, 194
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/storage/__init__.py             3      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/storage/database.py           125      6     32      5    93%   74, 105, 146, 164, 208, 210
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/storage/mappers.py             35      1      0      0    97%   130
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/storage/schema.py             239      1      8      1    99%   459
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/storage/types.py               20      0      4      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/tools/__init__.py               2      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/tools/sandbox.py               77      4     14      4    91%   106, 113, 139, 142
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/__init__.py           0      0      0      0   100%
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/authority.py         80      3     22      3    94%   53, 58, 102
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/deletion.py         124      2     42      3    97%   189, 301, 309->304
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/directory.py        140      1     30      1    99%   328
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/memories.py         121      8     20      4    91%   176-177, 192, 267, 269, 273, 347-348
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/sources.py          115      1     12      1    98%   166
+/private/tmp/memoryfence-original-238-20261107/src/memoryfence/workspace/tools.py             40      0     10      0   100%
+--------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                       5346    308   1246    203    92%
+Required test coverage of 90.0% reached. Total coverage: 91.58%
+=========================== short test summary info ============================
+FAILED ../../../../tmp/memoryfence-original-238-20261107/tests/test_colab.py::test_notebook_project_steps_run_in_an_isolated_interpreter
+======================== 1 failed, 237 passed in 23.47s ========================
