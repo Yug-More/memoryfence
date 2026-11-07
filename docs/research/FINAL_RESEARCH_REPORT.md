@@ -13,8 +13,7 @@ The original full confirmatory program remains incomplete.
 ## Method and evidence
 
 The [full empirical report](COMPLETION_REPORT.md) remains the detailed record.
-The [LaTeX manuscript](../../paper/main.tex) and [PDF](../../paper/memoryfence-paper.pdf)
-provide the academic synthesis. Both genuine accessions were independently
+The [LaTeX manuscript](../../paper/main.tex) provides the academic synthesis. Both genuine accessions were independently
 reverified in a fresh Python 3.12.12 environment; their analysis JSON matched the
 committed results byte for byte. No new inference or model download occurred.
 

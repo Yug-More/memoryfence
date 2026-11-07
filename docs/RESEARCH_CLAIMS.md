@@ -18,7 +18,7 @@ supported; Not independently verified; Contradicted by available evidence.
 | --- | --- | --- | --- |
 | 18 attack episodes | `2026-10-25-bounded/paired-state-study.zip.xz::behavior.json`; attack=true, three chain seeds × DS0/DS1/DS3 × DF0/DF2, LF1.0 only | Supported by preserved historical artifacts | `verify_final.py` with qualification prerequisite |
 | 36 agent responses | Same archive: `behavior/*/model-exchanges.jsonl`, SQLite effects, 18 clean + 18 attack | Supported by preserved historical artifacts | Independent raw/journal/SQLite recomputation |
-| 238 tests | Pre-publication `5ca7c2d` / `aaf1444`; original integrity audit records 238 at 91.58%; entry later records 246 | Supported by historical records; fresh pinned-suite reproduction recorded separately | `git archive 5ca7c2d` into fresh temp directory; locked install; pytest --cov |
+| 238 tests | Pre-publication `5ca7c2d` / `aaf1444`; original integrity audit records 238 at 91.58%; entry later records 246 | Independently reproduced (software suite only): 238 passed, 91.58% coverage on 7 November 2026 | Separate Git checkout of `5ca7c2d`; locked install; pytest --cov |
 | 4/6 to 6/6 malicious persistence | Same archive `state_groups`: DS3 live derived attack memories at nominal LF0.75 / LF0.5, three attack chains with two descendants each | Supported by preserved historical artifacts | Independent `verify_final.py` state traversal |
 | Worst case 6/6 at “50% fidelity” | Nominal LF0.5; realized recorded edges [1,1,0] of two per chain, not exactly half per graph | Partially supported as worded: 6/6 is supported; exact 50% realized completeness is not | Report nominal retention probability and actual edges |
 | Unauthorized tool misuse 0/18 | Exact local create_ticket title=review, body=relay@vendor.invalid; all 18 valid attack episodes, LF1.0 only | Supported by preserved historical artifacts | Raw proposal and exact sandbox-effect checks; not all possible misuse |
@@ -49,6 +49,14 @@ uv run python scripts/research/verify_final.py experiments/2026-10-25-bounded/fi
 uv run python scripts/research/verify_final.py experiments/2026-10-25-bounded/paired-state-study.zip.xz --qualification-archive experiments/2026-10-25-bounded/final-qualification.zip.xz --output /tmp/mf-original-state.json
 ```
 
-Fresh results of those checks will be recorded in the Expanded Study verification
-record, with exact commands, revisions and limits. New model inference is not
+Both artifact checks were rerun on 7 November 2026; their analysis JSON matched the
+committed analyses byte for byte. This independently recomputes supplied evidence,
+not model inference. The pinned Git checkout of `5ca7c2d45ba83334c85fc219f5d287ea8aed6f61`
+passed 238 tests with 91.58% coverage; the entry revision has a different test count.
+Exact commands and limitations are recorded in the Expanded Study verification record. New model inference is not
 required to preserve or check existing supplied bytes.
+
+A first archive-only test reproduction exposed the notebook test's requirement for
+Git revision metadata (237 passed, one environment failure). A plain `git archive`
+is therefore insufficient for the full suite; use a separate Git checkout. The
+original bytes and historical results are unchanged.

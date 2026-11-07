@@ -14,7 +14,7 @@ legitimate tickets, including 18 poisoned-memory episodes, without an objective
 attack effect. Missing recorded ancestry still left poisoned descendants retrievable.
 The [report](docs/research/COMPLETION_REPORT.md) separates these findings and their limits.
 
-**Research manuscript:** [When Memory Outlives Its Source](paper/memoryfence-paper.pdf)
+**Research manuscript:** [When Memory Outlives Its Source](paper/main.tex)
 ([LaTeX and build instructions](paper/README.md)). Ten pages of main text plus
 references and a reproducibility appendix; not submitted or peer reviewed. The
 [publication audit](docs/research/FINAL_PUBLICATION_AUDIT.md) and
