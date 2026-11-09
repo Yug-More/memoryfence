@@ -96,3 +96,26 @@ The broad candidate questions reduce to lifecycle persistence, security/utility
 tradeoffs and observable-versus-silent missingness in this fixed design. Cross-model,
 architecture-wide and stochastic generalization remain unresolved. Tests are software
 evidence, not scientific validation. See the final validation for executed results.
+
+## Metrics-freeze cycle — 9 November 2026
+
+Remote PR28 was merged as4b6ce59; no open PR existed at inspection. The final branch
+starts at that remote baseline. Historical65 pinned files still match; the local
+historical PDF deletion remains untouched. Existing correct storage/lineage/defense
+components will not be rewritten. The current gaps are actual inference availability,
+independent validation of future model probe outputs, and a single authoritative
+application metrics document rather than repeatedly changing historical counts.
+
+Hardware inspection: Apple M2 Pro,16GiB RAM,10 logical CPUs,approximately7.3GiB free
+local disk. No installed Ollama executable, cached model directory or approved API
+credentials were found. Environment inspection recorded presence booleans only;
+no secrets were read. A free temporary local runtime/model download is technically
+plausible, but substantial downloads require the owner's explicit approval under
+this cycle's instructions. That approval is requested before any weight download.
+
+Priority: add an independent journal/SQLite verifier before genuine inference; run
+the existing predeclared74-call gated protocol if approved/available; preserve gate
+failures without tuning; freeze only evidence-supported metrics after validation;
+consolidate README scope caveats; keep the existing compiled manuscript unless new
+verified outcomes require a small addendum. Merge only with green checks and no
+major unresolved blocker; unavailable behavioral research is not silently complete.

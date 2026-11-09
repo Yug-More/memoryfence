@@ -92,6 +92,9 @@ def test_model_probe_failure_evidence_and_no_scripted_fallback(
         missing=failure == "missing", gate=failure == "gate", fail_probe=failure == "timeout"
     )
     result = API["execute"](config, tmp_path / "run", transport)
+    verifier = runpy.run_path(str(ROOT / "scripts/research/verify_model_followup.py"))["verify"]
+    verified = verifier(tmp_path / "run", config.archive)
+    assert verified["chat_requests"] == result["actual_chat_requests"]
     if failure == "missing":
         assert result["status"] == "blocked"
         assert result["actual_chat_requests"] == 0
@@ -145,3 +148,20 @@ def test_model_followup_rejects_invalid_source_before_any_request(tmp_path: Path
         API["execute"](config, tmp_path / "run", transport)
     assert transport.calls == 0
     assert not (tmp_path / "run").exists()
+
+
+def test_independent_model_verifier_detects_forged_effect(tmp_path: Path) -> None:
+    config = API["ProbeConfig"].model_validate(configuration())
+    directory = tmp_path / "model"
+    API["execute"](config, directory, FixtureTransport())
+    verifier = runpy.run_path(str(ROOT / "scripts/research/verify_model_followup.py"))["verify"]
+    assert verifier(directory, config.archive)["valid_probes"] == 70
+    outcomes = json.loads((directory / "probes.json").read_text())
+    outcomes[0]["legitimate_effect"] = False
+    row = outcomes[0]
+    (
+        directory / row["scenario_id"] / row["strategy"] / str(row["seed"]) / "result.json"
+    ).write_text(json.dumps(row))
+    (directory / "probes.json").write_text(json.dumps(outcomes))
+    with pytest.raises(ValueError, match="objective score"):
+        verifier(directory, config.archive)
