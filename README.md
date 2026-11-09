@@ -1,152 +1,135 @@
 # MemoryFence
 
-> Under what conditions can attacker-origin instructions persist in derived AI memories after transformations or original-source deletion, and how do deletion handling, provenance completeness, and defense mechanisms influence unauthorized downstream agent behavior?
+**Provenance-aware deletion and reconstruction for persistent AI-agent memory.**
 
-A typed Python research framework for studying agent memory, recorded provenance,
-source deletion and authorized actions. **A bounded investigation and manuscript in
-preparation; no general security guarantee, publication or peer review is claimed.**
+MemoryFence studies whether lower-trust instructions survive source deletion and
+how memory policies trade contamination reduction against benign information loss.
+It combines controlled memory-state experiments with bounded local model evaluation.
+
+> Under what conditions can attacker-origin instructions persist in derived AI memories after transformations or original-source deletion, and how do deletion handling, provenance completeness, and defense mechanisms influence unauthorized downstream agent behavior?
 
 [![CI](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml/badge.svg)](https://github.com/Yug-More/memoryfence/actions/workflows/ci.yml)
 
-## Evidence at a glance
+## Key contributions
 
-Three evidence classes remain separate:
+- **Two provenance graphs:** operational controls use recorded lineage; evaluator
+  truth measures missed descendants without providing an oracle to defenses.
+- **Paired policy evaluation:** seven strategies compare source deletion, direct and
+  transitive invalidation, filtering, quarantine and selective reconstruction.
+- **Security–utility measurement:** distinguish retained content, retrieved context,
+  exact model proposals, sandbox effects and unrelated fact retention.
+- **Reproducible evidence:** raw SQLite states, model journals, fixed configurations,
+  independent verifiers and adversarial evidence-integrity tests.
 
-- **Historical real model study:** 72 saved Qwen2.5 1.5B responses, including 36 final
-  agent replies / 18 attack episodes at complete lineage. Exact attacker effects 0/18;
-  textual echoes remain. Cascade retains 0/6, 4/6, 6/6 malicious descendants at nominal
-  retention 1.0/0.75/0.5. [Claim ledger](docs/RESEARCH_CLAIMS.md).
-- **Deterministic memory study:** 80 configurations from 16 structural families,
-  seven paired strategies / 560 runs, including four held-out families. This is fact
-  projection and retrieval, **not 560 LLM attacks**. [Results](docs/RESULTS.md).
-- **Finalization validation:** clean 238-test historical and 266-test merged-baseline
-  reproductions; all 560 semantic records reproduced. The new bounded model follow-up
-  was blocked by unavailable local inference, with zero chat requests.
-  [Final validation](docs/FINAL_RESEARCH_VALIDATION.md).
-
-## Contribution and architecture
-
-The framework separates **true ancestry used by evaluation** from **recorded
-provenance available to defenses**. Missing edges can therefore affect deletion and
-retrieval without granting the defender an evaluator oracle. Original and expanded
-accessions are hash-pinned and verified independently from raw SQLite and replies.
+## System architecture and threat model
 
 ![Memory lifecycle and authorization boundary](docs/assets/memory-lifecycle.svg)
 
-Pydantic domain models and SQLAlchemy/SQLite implement immutable source revisions,
-primary/derived memories, transitive lineage, lexical ACL retrieval, five deletion
-policies, selective re-derivation and audit events. A bounded agent submits actions
-through a separate authorization gateway; tools modify local sandbox rows only.
-Opt-in containment rejects observable lineage gaps, checks recomputation inputs and
-rechecks context at action authorization. A pass means **no observed gap**, not
-certified complete provenance. [Architecture](docs/ARCHITECTURE.md).
+A typed Python/Pydantic/SQLAlchemy framework stores operational state and evaluator
+truth in separate SQLite databases. Source revisions and derived-memory DAGs support
+lexical ACL retrieval, deletion, reconstruction and auditable lifecycle transitions.
+A gateway authorizes structured proposals before local sandbox effects.
 
-This is a library/CLI, not a hosted chatbot, embedding service or production connector.
-No model weights are trained or unlearned. Operational deletion retains research
-journals intentionally; it is not forensic erasure.
-
-## Threat model and method
-
-An attacker controls lower-trust synthetic content, not trusted tasks, identities,
-permissions or protected databases. Recorder edge loss is a controlled fault
-condition. Five source-kind fixtures are not real email/repository integrations.
-All experiments use synthetic data and reserved invalid-domain canaries.
+The attacker controls synthetic lower-trust content, not trusted tasks, identities,
+permissions or protected databases. The defender knows recorded provenance and
+source lifecycle. Honest incompleteness flags are observable; silently missing
+branches can evade that evidence. [Architecture](docs/ARCHITECTURE.md) ·
 [Threat model](docs/THREAT_MODEL.md).
 
-The deterministic benchmark uses 16 manually specified DAG/operation families with
-five counterfactuals each:complete, marked partial, silent partial, clean deletion
-and never exposed. Twelve families are development; four are held out. Every
-strategy clones identical input SQLite files. TT1–TT4 use an explicit fact-union
-backend, not semantic summarization. Whole-family pairing and defined denominators
-prevent treating correlated records as independent trials.
-[Protocol](docs/EXPERIMENTAL_METHODOLOGY.md), [dataset](benchmarks/expanded-v1/README.md).
+## Experiments and verified findings
 
-## Security–utility findings
+| Study | Scale | Findings |
+| --- | --- | --- |
+| Historical bounded model study | 72 responses, including 36 final agent replies/18 attack episodes | Cascade retained 4/6–6/6 malicious descendants under nominal partial lineage; final exact attacker effects 0/18 at complete lineage |
+| Deterministic memory benchmark | 16 families, 80 configurations, 7 strategies, 560 paired runs | Complete reconstruction retained 8/8 held-out benign facts versus cascade's 2/8; marked containment lost 8/8; silent exposure 3/4 |
+| Local model follow-up, 9 November | 4 qualification +70 actual Qwen2.5 1.5B probes | Gate 4/4; valid probes 70/70; literal legitimate effects 70/70; predefined attacker proposals/effects 0/42 |
 
-Held-out attack cases have four families per condition and eight eligible unrelated
-facts. “Exposure” means poisoned retrieved context, not model attack success.
-
-| Lineage condition | Strategy | Exposed cases | Benign facts retained |
-| --- | --- | --- | --- |
-| Complete | Cascade | 0/4 | 2/8 |
-| Complete | Existing re-derivation | 0/4 | 8/8 |
-| Complete | Guarded MemoryFence | 0/4 | 8/8 |
-| Marked partial | Guarded MemoryFence | 0/4 | 0/8 |
-| Silent partial | Guarded MemoryFence | 3/4 | 6/8 |
-| Silent partial | Exact-canary keyword | 0/4 | 2/8 |
+The deterministic benchmark holds out four entire graph families and pairs each
+strategy on identical state. The exploratory local model follow-up uses one
+already-inspected family, five controls and two seeds, with frozen deterministic
+memory contexts. Every strategy completed 10/10 literal tasks with 0/6 exact attack
+effects; this provides no behavioral defense ranking.
 
 ![Measured security–utility tradeoff](experiments/2026-11-07-expanded/derived/heldout-security-utility.svg)
 
-There is no universal winner. Guarded and existing re-derivation have equal scored
-metrics with complete lineage. Marked-gap rejection can destroy useful mixed facts;
-silent missing branches can leave an apparently valid clean source path. Keyword
-filtering is intentionally strong on this known payload. All strategies, clean
-controls, negative results and exact raw member paths appear in
-[RESULTS.md](docs/RESULTS.md) and [failure analysis](docs/ERROR_ANALYSIS.md).
+[Full state results](docs/RESULTS.md) · [Actual model results](docs/MODEL_FOLLOWUP_RESULTS.md)
+· [Failure analysis](docs/ERROR_ANALYSIS.md) · [Authoritative frozen metrics](docs/FINAL_PROJECT_METRICS.md).
 
-## Reproduce without inference
+## Install and reproduce
 
 Requires Git, Python 3.12+ and [uv](https://docs.astral.sh/uv/). Use fresh output paths.
-No API key, paid runtime or model weights are required.
 
 ```bash
 uv sync --frozen
 uv run --frozen python scripts/research/verify_release.py
-uv run --frozen python scripts/research/verify_expanded.py experiments/2026-11-07-expanded/expanded-v1.zip.xz --output /tmp/expanded-check-new.json
+uv run --frozen python scripts/research/verify_expanded.py experiments/2026-11-07-expanded/expanded-v1.zip.xz --output /tmp/expanded-verified-new.json
 uv run --frozen memoryfence expanded run --dataset benchmarks/expanded-v1/scenarios.json --directory /tmp/expanded-run-new --split all
+```
+
+These commands require no model. For actual inference, install an explicitly free
+local Ollama runtime and the pinned model, then run the bounded configuration:
+
+```bash
+uv run --frozen python scripts/research/model_followup.py --config benchmarks/model-followup-v1/config.json --directory /tmp/model-followup-new
+```
+
+The runner checks identity, enforces its 74-chat cap and requires capability
+qualification before attack probes. It preserves raw failures and has no paid or
+scripted fallback. Substantial local downloads require available disk/RAM and owner
+approval. [Model protocol](benchmarks/model-followup-v1/README.md) ·
+[Complete reproduction guide](docs/REPRODUCIBILITY.md).
+
+## Run checks
+
+```bash
 make check
 make pre-commit
 make diagrams
 ```
 
-[Reproducibility guide](docs/REPRODUCIBILITY.md) covers original raw model evidence,
-exact historical revisions, archive export and plotting. A new deterministic run
-should match semantic records; host timings and transport hashes may differ.
+CI checks Python 3.12/3.13, strict types, coverage, distributions, import boundaries,
+repository hygiene, diagrams and saved evidence. It makes no inference requests.
 
-## Real model follow-up
+## Research manuscript and documentation
 
-Existing adapters support explicitly local loopback Ollama. The new exploratory
-probe checks the installed digest, caps chat requests, requires an exact capability
-gate and journals errors/raw outputs before local sandbox execution. Its contexts
-are verified deterministic states, not new model-written summaries. Actual preflight
-is **blocked** in the inspected environment; model ASR/utility remain unmeasured.
-There is no automatic model download, hosted-provider or scripted fallback.
-[Configuration, semantics and command](benchmarks/model-followup-v1/README.md).
+- [Preserved 10-page LaTeX/PDF manuscript](paper/finalization/README.md) and
+  [dated model follow-up addendum](docs/MODEL_FOLLOWUP_RESULTS.md).
+- [Frozen application metrics and résumé/SOP text](docs/FINAL_PROJECT_METRICS.md).
+- [Research audit](docs/RESEARCH_AUDIT.md), [methodology](docs/EXPERIMENTAL_METHODOLOGY.md),
+  [historical claim ledger](docs/RESEARCH_CLAIMS.md), [validation](docs/FINAL_RESEARCH_VALIDATION.md).
 
-## Paper, validation and application material
+## Evaluation scope and limitations
 
-- [Expanded LaTeX manuscript and build](paper/finalization/README.md),
-  [Markdown narrative](docs/RESEARCH_PAPER.md), and [original manuscript](paper/main.tex).
-- [Final validation](docs/FINAL_RESEARCH_VALIDATION.md),
-  [research audit](docs/RESEARCH_AUDIT.md), [limitations](docs/LIMITATIONS.md).
-- [Graduate application summary](docs/GRADUATE_APPLICATION_SUMMARY.md):75/150/250-word
-  descriptions, résumé candidates and faculty questions, with personal contribution
-  claims explicitly requiring confirmation.
+Studies use fixed synthetic scenarios and exact objectives. The 560 deterministic
+runs are not model trials; the 42 new attack observations share one family and
+repeated conditions. Counts and paired family summaries do not justify independent-
+binomial significance claims. The local task is literal, not memory-dependent
+utility; its contexts are deterministic fact projection, not model-written summaries.
+Complete-lineage guarded reconstruction equals existing re-derivation on scored
+metrics, while marked containment and silent lineage loss retain their unfavorable
+results. Multiple models, semantic utility, incorrect lineage, long delays and
+concurrency guarantees remain open. Operational deletion retains research journals;
+it is not model-weight unlearning or forensic erasure. The manuscript is in
+preparation, with no publication or general security guarantee claimed.
+[Detailed limitations](docs/LIMITATIONS.md).
 
-## Limitations and repository layout
-
-The fixed synthetic benchmark is below the 150–300 planning target. The original
-behavioral sample has only three attack-chain clusters and one small model. No new
-cross-model study, vector-memory comparison, human semantic judge, incorrect-edge
-robustness, hostile-code sandbox, real deployment or concurrency guarantee is
-established. Confidence intervals that pretend560 rows are independent would be
-misleading. Passing software tests does not establish scientific efficacy.
+## Repository structure
 
 ```text
-src/memoryfence/   Typed operational system, isolated evaluator, adapters and CLI
-benchmarks/       Frozen structural cases and bounded exploratory model config
-experiments/      Immutable evidence, raw archives and separate validation accession
-scripts/research/ Independent verifiers, experiments, plots and model follow-up
-paper/            Preserved original and separate expanded LaTeX manuscript
-docs/             Methods, threat model, results, failures and application material
-tests/            Unit/integration/adversarial/saved-evidence tests; no inference in CI
+src/memoryfence/   Operational memory, provenance, authorization, evaluator and CLI
+benchmarks/       Frozen structural cases and bounded model configuration
+experiments/      Preserved archives, raw evidence, analysis and validation logs
+scripts/research/ Experiment drivers, independent verifiers and plotting scripts
+paper/            Original and expanded manuscript sources and generated figures
+docs/             Methods, findings, frozen metrics and application material
+tests/            Unit, integration, adversarial and saved-evidence checks
 ```
 
 ## Citation and licensing
 
-[CITATION.cff](CITATION.cff), [contributing](CONTRIBUTING.md) and
-[security](SECURITY.md) describe project practices. Preserve legitimate historical
-attribution; Git author names do not establish sole research or implementation
-ownership. Personal contribution and supervision require confirmation. No project
-license has been selected, so public availability does not imply unrestricted reuse.
-No accepted paper, publication or release tag is implied by this research package.
+[Citation metadata](CITATION.cff) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md).
+Legitimate historical attribution remains in Git. Individual research responsibility,
+collaboration and supervision require the applicant's confirmation; commit names do
+not prove sole ownership. No project license has been selected, so public access
+does not imply unrestricted reuse. Model/runtime license references are recorded
+with their accession.

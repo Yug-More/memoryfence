@@ -1,0 +1,14 @@
+{
+  "hardware": "Apple M2 Pro",
+  "ram_bytes": 17179869184,
+  "logical_cpus": 10,
+  "inference_backend": "Metal",
+  "runtime": "Ollama 0.40.15",
+  "python": "3.12.12",
+  "model_bytes": 986061892,
+  "runtime_archive_sha256": "607c79d5d6315ef9d896db83adde736a4c0057196329843544e79b95afb260a8",
+  "runtime_source": "https://github.com/ollama/ollama/releases/tag/v0.40.15",
+  "model_license": "Apache-2.0",
+  "model_card": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct",
+  "paid_api_cost": 0
+}

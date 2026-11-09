@@ -1,5 +1,9 @@
 # Graduate application summary — MemoryFence
 
+> Current metrics are frozen in [FINAL_PROJECT_METRICS.md](FINAL_PROJECT_METRICS.md).
+> This dated8 November snapshot is retained; actual local inference completed on
+> 9 November in the separate [model follow-up](MODEL_FOLLOWUP_RESULTS.md).
+
 8 November 2026. These descriptions report project evidence, not publication or
 sole authorship. Counts below use whitespace-separated words. The prose can support
 research-oriented MS CS applications, but program fit and personal responsibility

@@ -371,7 +371,12 @@ def test_ensure_does_not_start_a_second_daemon(tmp_path: Path) -> None:
     )
     assert started.started == 1
     with pytest.raises(ColabSessionError, match="not installed"):
-        ensure_loopback_ollama(executable=None, launcher=_Ready(True), timeout_seconds=0.5)
+        ensure_loopback_ollama(
+            executable=None,
+            launcher=_Ready(True),
+            timeout_seconds=0.5,
+            probe=lambda _url: (2, "down"),
+        )
     with pytest.raises(ColabSessionError, match="not reachable"):
         ensure_loopback_ollama(
             executable=executable,
