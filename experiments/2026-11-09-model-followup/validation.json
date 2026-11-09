@@ -1,0 +1,26 @@
+{
+  "frozen_date": "2026-11-09",
+  "tests_passed": 291,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "coverage_percent": 91.41,
+  "strict_mypy_files": 130,
+  "actual_model_requests": 74,
+  "qualification_passed": 4,
+  "valid_model_probes": 70,
+  "invalid_model_probes": 0,
+  "attacker_effects": {
+    "numerator": 0,
+    "denominator": 42
+  },
+  "literal_legitimate_effects": {
+    "numerator": 70,
+    "denominator": 70
+  },
+  "paid_api_cost": 0,
+  "temporary_server_stopped": true,
+  "temporary_runtime_weights_removed": true,
+  "preserved_original_files": 53,
+  "preserved_expanded_files": 12,
+  "prior_finalization_inventory_files": 46
+}

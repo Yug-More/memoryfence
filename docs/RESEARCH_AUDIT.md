@@ -119,3 +119,15 @@ failures without tuning; freeze only evidence-supported metrics after validation
 consolidate README scope caveats; keep the existing compiled manuscript unless new
 verified outcomes require a small addendum. Merge only with green checks and no
 major unresolved blocker; unavailable behavioral research is not silently complete.
+
+Cycle outcome:owner approved the temporary free download; exact historical Qwen
+1.5B digest loaded under Ollama0.40.15/Metal. Unchanged protocol passed4/4 gate
+calls and completed70/70 valid probes,with0/42 exact attacker proposals/effects.
+The independently frozen verifier matched raw requests,contexts and SQLite effects.
+All strategies succeeded equally on the literal task; no new defense ranking or
+semantic memory utility claim is made. Runtime/weights were removed after evidence
+export. The live-server environment exposed a non-hermetic missing-binary test;
+its probe is now injected without weakening the error assertion. Final checks:
+291 pass,91.41% coverage; prior65-file and46-file inventories unchanged. Current
+application claims are frozen in FINAL_PROJECT_METRICS.md. Remaining generalization
+limits are explicit scope,not an unresolved high-severity release blocker.

@@ -54,3 +54,35 @@ not justify general efficacy CIs or independent-trial significance tests.
 `tests/test_model_followup.py` uses labeled transport fixtures to challenge local
 configuration, missing model, failed qualification and timeout retention. Their
 synthetic responses are **software tests only**, not an empirical model evaluation.
+
+## Verified local setup — 9 November 2026
+
+The approved local run used Ollama0.40.15 and the unchanged pinned Qwen1.5B artifact
+on an M2 Pro/Metal,16GiB machine. Runtime download~186MB;weights986061892 bytes;
+allow roughly2–3GB peak free disk. Request approval before substantial downloads.
+The runtime is MIT-licensed; the linked Qwen model card declares Apache-2.0.
+Use the official runtime release:
+https://github.com/ollama/ollama/releases/tag/v0.40.15
+
+The downloaded `ollama-darwin.tgz` SHA256 was
+`607c79d5d6315ef9d896db83adde736a4c0057196329843544e79b95afb260a8`.
+After extracting the official binary to a fresh temporary directory, start it in
+one terminal, without changing global PATH or creating model files in the repo:
+
+```bash
+OLLAMA_MODELS=/tmp/memoryfence-local-new/models OLLAMA_HOST=127.0.0.1:11434 OLLAMA_NO_CLOUD=1 /tmp/memoryfence-local-new/runtime/ollama serve
+```
+
+In another terminal, with the same isolated loopback host/storage:
+
+```bash
+OLLAMA_MODELS=/tmp/memoryfence-local-new/models OLLAMA_HOST=127.0.0.1:11434 /tmp/memoryfence-local-new/runtime/ollama pull qwen2.5:1.5b
+uv run --frozen memoryfence model doctor
+uv run --frozen python scripts/research/model_followup.py --config benchmarks/model-followup-v1/config.json --directory /tmp/model-followup-new
+uv run --frozen python scripts/research/verify_model_followup.py /tmp/model-followup-new --source experiments/2026-11-07-expanded/expanded-v1.zip.xz --output /tmp/model-verified-new.json
+```
+
+The configured digest check rejects a changed tag. Stop the temporary server after
+the finite run; preserve the run evidence before removing temporary weights. No
+hosted provider or paid API is involved. Existing8 November blocked records remain
+historical facts;9 November actual outcomes are a separate accession and addendum.

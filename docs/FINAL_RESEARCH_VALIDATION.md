@@ -1,5 +1,9 @@
 # Final research validation — 8 November 2026
 
+> Current metrics are frozen in [FINAL_PROJECT_METRICS.md](FINAL_PROJECT_METRICS.md).
+> This dated8 November snapshot is retained; actual local inference completed on
+> 9 November in the separate [model follow-up](MODEL_FOLLOWUP_RESULTS.md).
+
 ## Executive assessment and baseline
 
 MemoryFence is an independently inspectable research framework with a bounded
