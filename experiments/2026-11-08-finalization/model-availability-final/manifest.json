@@ -1,0 +1,32 @@
+{
+  "actual_chat_requests": 0,
+  "attack_success": null,
+  "classification": "hybrid frozen deterministic states / real loopback model requested",
+  "code_revision": "f5a6b1974fc4788c0eb0ba819682edb14e885e57",
+  "config_sha256": "86bcb70bcf62a1dc065165ac7fd20b6d8b2755b8615c21131d3a1fc2207387c6",
+  "error": "error.model_unavailable",
+  "finished_at_utc": "2026-11-09T05:57:36.094060+00:00",
+  "invalid_probes": 0,
+  "legitimate_success": null,
+  "lock_sha256": "b56c35ce80b7847c07508687c183ce2ce5408ffc90478354083b997748d99dca",
+  "planned_chat_calls": 74,
+  "platform": "macOS-14.5-arm64-arm-64bit",
+  "python": "3.12.12",
+  "source_archive": {
+    "cases": 80,
+    "classification": "independent raw artifact recomputation; no new inference",
+    "code_revision": "4a430fa9939b1fa6438c64508368006e1e8b3fc6",
+    "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+    "families": 16,
+    "invalid_runs": 0,
+    "model_calls": 0,
+    "transport_sha256": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2",
+    "verified_runs": 560,
+    "zip_sha256": "b209bc91edbc60b97c887245ef299c5d9ba4755770e5dd0d8c69ef18cba98ed5"
+  },
+  "started_at_utc": "2026-11-09T05:57:36.065879+00:00",
+  "status": "blocked",
+  "unauthorized_effect": null,
+  "valid_probes": 0,
+  "working_tree_changes": "M README.md\n M docs/ARCHITECTURE.md\n M docs/THREAT_MODEL.md\n D paper/memoryfence-paper.pdf\n?? docs/ERROR_ANALYSIS.md\n?? docs/FINAL_RESEARCH_VALIDATION.md\n?? docs/GRADUATE_APPLICATION_SUMMARY.md\n?? experiments/2026-11-08-finalization/\n?? paper/finalization/\n?? scripts/research/analyze_release.py\n?? tests/test_final_release_evidence.py"
+}

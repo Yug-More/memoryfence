@@ -68,3 +68,14 @@ under missing/incorrect provenance; validate behavioral objectives and benign
 utility with human adjudication; budget independent scenario clusters before
 choosing uncertainty methods. Never adapt this held-out v1 result into a purported
 fresh confirmatory evaluation. Preserve failures and new accessions separately.
+
+## Finalization clarification — 8 November 2026
+
+A bounded model follow-up harness now exists, but its actual loopback preflight is
+blocked with zero chat requests. Its future probes reuse deterministic context
+and assess a literal ticket task through local sandbox actions; they do not measure
+fresh semantic memory generation or general memory-dependent utility. A valid
+source accession and successful empty/clean-context gate are prerequisites. Invalid
+source observations, malformed replies and interrupted runs must remain explicit;
+there is no full-run resume or independent verifier for future model probe results
+yet. No new behavioral finding follows from its transport-fixture tests.

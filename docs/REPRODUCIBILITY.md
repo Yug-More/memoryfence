@@ -92,3 +92,17 @@ unauthorized-tool and LLM utility values are null. The historical free-Colab mod
 configuration is in [claims](RESEARCH_CLAIMS.md); a new genuinely model-backed study
 requires qualification, a new accession and an available explicitly free runtime.
 Do not substitute the projection backend's outcomes for model responses.
+
+## Finalization validation — 8 November 2026
+
+The [final validation](FINAL_RESEARCH_VALIDATION.md) and
+[separate accession](../experiments/2026-11-08-finalization/README.md) preserve a fresh
+560-run deterministic reproduction, clean historical/merged-baseline suites and
+actual model-availability failure. `verify_release.py` checks both original53 and
+prior expanded12 immutable files; `analyze_release.py` compares semantic records
+and independently regenerates post-hoc error categories to a fresh output file.
+The new [bounded model follow-up](../benchmarks/model-followup-v1/README.md) is a
+separate exploratory command, not a change to the deterministic runner or evidence
+of executed inference. It refuses invalid source accessions before qualification.
+The [expanded LaTeX build](../paper/finalization/README.md) writes only the new
+manuscript folder and never restores/overwrites the historical PDF.

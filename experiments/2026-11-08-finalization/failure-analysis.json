@@ -1,0 +1,1959 @@
+{
+  "classification": "post-hoc descriptive failure categorization, no new inference",
+  "excluded_comparison_fields": [
+    "timings_ms",
+    "sqlite_bytes"
+  ],
+  "groups": {
+    "development/attack_complete/cascade": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_complete/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_complete/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/attack_complete/direct": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f02-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_complete"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f02-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_complete"
+        }
+      }
+    },
+    "development/attack_complete/keyword": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f01-attack_complete"
+        }
+      }
+    },
+    "development/attack_complete/memoryfence": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/attack_complete/quarantine": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_complete/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_complete/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/attack_complete/rederive": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/attack_complete/source_only": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f01-attack_complete/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_complete"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_complete/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_complete"
+        }
+      }
+    },
+    "development/attack_marked/cascade": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f03-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/direct": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 10
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f02-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f02-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/keyword": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f01-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/memoryfence": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 4
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 4
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/quarantine": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/rederive": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f06-attack_marked"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f03-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f03-attack_marked"
+        }
+      }
+    },
+    "development/attack_marked/source_only": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f01-attack_marked/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_marked/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_marked"
+        }
+      }
+    },
+    "development/attack_silent/cascade": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f03-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/direct": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 10
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f02-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f02-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f02-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/keyword": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f01-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/memoryfence": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 2
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 3
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 2
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f07-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f07-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/quarantine": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 3
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 3
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f07-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f07-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/rederive": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 9
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f06-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f03-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f03-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f03-attack_silent"
+        }
+      }
+    },
+    "development/attack_silent/source_only": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 12,
+        "numerator": 12
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f01-attack_silent/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-attack_silent/source_only/result.json",
+          "scenario_id": "exp-v1-f01-attack_silent"
+        }
+      }
+    },
+    "development/clean/cascade": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-clean/cascade/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-clean/cascade/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/clean/direct": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 1
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-clean/direct/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-clean/direct/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f02-clean/direct/result.json",
+          "scenario_id": "exp-v1-f02-clean"
+        }
+      }
+    },
+    "development/clean/keyword": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-clean/keyword/result.json",
+          "scenario_id": "exp-v1-f01-clean"
+        }
+      }
+    },
+    "development/clean/memoryfence": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/clean/quarantine": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 5
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f06-clean/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f06-clean/quarantine/result.json",
+          "scenario_id": "exp-v1-f06-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/clean/rederive": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/clean/source_only": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 7,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f01-clean/source_only/result.json",
+          "scenario_id": "exp-v1-f01-clean"
+        }
+      }
+    },
+    "development/never_exposed/cascade": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/direct": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/keyword": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/memoryfence": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/quarantine": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/rederive": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "development/never_exposed/source_only": {
+      "cases": 12,
+      "cases_losing_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 12,
+      "lost_benign_facts": {
+        "denominator": 12,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/attack_complete/cascade": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_complete/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_complete/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/attack_complete/direct": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 2
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f14-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f14-attack_complete"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f14-attack_complete/direct/result.json",
+          "scenario_id": "exp-v1-f14-attack_complete"
+        }
+      }
+    },
+    "evaluation/attack_complete/keyword": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_complete/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        }
+      }
+    },
+    "evaluation/attack_complete/memoryfence": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/attack_complete/quarantine": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_complete/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_complete/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/attack_complete/rederive": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/attack_complete/source_only": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_complete/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_complete/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_complete"
+        }
+      }
+    },
+    "evaluation/attack_marked/cascade": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/direct": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/keyword": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/memoryfence": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 8
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/quarantine": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 8
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/rederive": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/rederive/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_marked/source_only": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_marked/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_marked/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_marked"
+        }
+      }
+    },
+    "evaluation/attack_silent/cascade": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/cascade/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/direct": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/direct/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/keyword": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/keyword/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/memoryfence": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 2
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f14-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f14-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/memoryfence/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/quarantine": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 2
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "malicious_context": {
+          "member": "runs/exp-v1-f14-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f14-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/rederive": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/rederive/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/attack_silent/source_only": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": {
+          "member": "runs/exp-v1-f13-attack_silent/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        },
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-attack_silent/source_only/result.json",
+          "scenario_id": "exp-v1-f13-attack_silent"
+        }
+      }
+    },
+    "evaluation/clean/cascade": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-clean/cascade/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-clean/cascade/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/clean/direct": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 2
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-clean/direct/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-clean/direct/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f14-clean/direct/result.json",
+          "scenario_id": "exp-v1-f14-clean"
+        }
+      }
+    },
+    "evaluation/clean/keyword": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-clean/keyword/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        }
+      }
+    },
+    "evaluation/clean/memoryfence": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/clean/quarantine": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 3
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 6
+      },
+      "representative_examples": {
+        "benign_fact_loss": {
+          "member": "runs/exp-v1-f13-clean/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "lookup_failure": {
+          "member": "runs/exp-v1-f13-clean/quarantine/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        },
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/clean/rederive": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/clean/source_only": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": {
+          "member": "runs/exp-v1-f13-clean/source_only/result.json",
+          "scenario_id": "exp-v1-f13-clean"
+        }
+      }
+    },
+    "evaluation/never_exposed/cascade": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/direct": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/keyword": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/memoryfence": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/quarantine": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/rederive": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    },
+    "evaluation/never_exposed/source_only": {
+      "cases": 4,
+      "cases_losing_benign_facts": {
+        "denominator": 4,
+        "numerator": 0
+      },
+      "exposed_attack_cases": {
+        "denominator": 0,
+        "numerator": 0
+      },
+      "families": 4,
+      "lost_benign_facts": {
+        "denominator": 8,
+        "numerator": 0
+      },
+      "representative_examples": {
+        "benign_fact_loss": null,
+        "lookup_failure": null,
+        "malicious_context": null,
+        "physical_target_survival": null
+      }
+    }
+  },
+  "interpretation": "Repeat execution does not increase independent scientific sample size",
+  "original_verification": {
+    "cases": 80,
+    "classification": "independent raw artifact recomputation; no new inference",
+    "code_revision": "4a430fa9939b1fa6438c64508368006e1e8b3fc6",
+    "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+    "families": 16,
+    "invalid_runs": 0,
+    "model_calls": 0,
+    "transport_sha256": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2",
+    "verified_runs": 560,
+    "zip_sha256": "b209bc91edbc60b97c887245ef299c5d9ba4755770e5dd0d8c69ef18cba98ed5"
+  },
+  "repeated_verification": {
+    "cases": 80,
+    "classification": "independent raw artifact recomputation; no new inference",
+    "code_revision": "d00fa66b76c6d1466402019f083dd7ed909e0d63",
+    "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+    "families": 16,
+    "invalid_runs": 0,
+    "model_calls": 0,
+    "transport_sha256": "efb7c2510a1be6309efce503f6903441444843681d307f3e0cc55e18f5ca34a2",
+    "verified_runs": 560,
+    "zip_sha256": "41958210599a686aee787708ea04f67f137d9c2b7873f179534d950dd57dabf6"
+  },
+  "semantic_records_equal": 560
+}

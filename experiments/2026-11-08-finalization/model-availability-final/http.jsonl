@@ -1,0 +1,2 @@
+{"event": "request", "method": "GET", "payload": null, "recorded_at_utc": "2026-11-09T05:57:36.087812+00:00", "sequence": 1, "timeout_seconds": 3, "url": "http://127.0.0.1:11434/api/tags"}
+{"event": "error", "reason": "error.model_unavailable", "recorded_at_utc": "2026-11-09T05:57:36.093909+00:00", "sequence": 1}

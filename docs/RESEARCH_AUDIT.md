@@ -55,3 +55,44 @@ constitute new model inference or independent execution-host attestation.
 No broad architectural rewrite or runtime dependency is justified. New model-backed
 behavior, human semantic validation, large stochastic generalization and production
 overhead claims cannot be substituted by passing tests or deterministic fixtures.
+
+## Finalization audit — 8 November 2026
+
+Fetched all remote branches and inspected open PRs: none; PR27 was merged by the
+remote owner on 7 November. New baseline is origin/main1ecdb16, containing261d156.
+Work continues on codex/final-research-release; no main merge is authorized. The
+user's existing PDF deletion remains unstaged. The expanded accession and frozen
+dataset now have an additional byte manifest, separate from the original53 files.
+
+Actual inspection reconfirms a typed CLI/library, SQLite true/recorded DAGs, ACLs,
+DS0–DS4, DF0–DF5, bounded agents, loopback Ollama and opt-in containment. The80/16/560
+expansion is deterministic fact union; no semantic paraphrasing, vector memory,
+production connector, concurrent safety guarantee or new model ASR is implemented.
+The historical model study remains bounded to one model and its qualified interface.
+
+Environment: Ollama executable/server and cached weights absent; torch, transformers,
+mlx and llama_cpp absent in the inspected system interpreter. Hugging Face CLI alone
+is not a usable model. No credentials are assumed/read, paid provider used or weights
+downloaded to the Mac. New actual inference is unavailable in this environment.
+
+Priorities following skeptical code review:
+
+1. Harden summaries against unknown/missing strategy cells, mismatched case metadata,
+   nonfinite or inconsistent metric fractions, partial/corrupt manifests. Row count
+   alone does not prove a complete matched comparison. Preserve valid old summaries.
+2. Reject symlinks in archive input trees to avoid exporting unrelated local files.
+   Do not claim race-free hostile-filesystem isolation.
+3. Add a configurable, call-budgeted loopback model behavioral follow-up with a
+   capability gate, raw transport journaling, structured errors and null blocked
+   metrics. Reuse existing storage/gateway rather than inventing simulated LLM results.
+4. Independently recompute both historical accessions and all560 deterministic cells;
+   rerun the deterministic matrix and compare semantic records; reproduce historical
+   and current suites in separate clean Git environments.
+5. Add systematic failure categorization, exact graduate-application text, a distinct
+   reproducible expanded LaTeX manuscript and final validation/evidence map. Narrow
+   claims instead of padding the dataset or mechanically adding statistical tests.
+
+The broad candidate questions reduce to lifecycle persistence, security/utility
+tradeoffs and observable-versus-silent missingness in this fixed design. Cross-model,
+architecture-wide and stochastic generalization remain unresolved. Tests are software
+evidence, not scientific validation. See the final validation for executed results.

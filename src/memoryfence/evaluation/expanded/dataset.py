@@ -33,7 +33,7 @@ class Node(DomainModel):
 
 
 class Scenario(DomainModel):
-    id: str
+    id: str = Field(pattern=r"^[a-z][a-z0-9_-]{0,127}$")
     family: str
     split: Literal["development", "evaluation"]
     control: Literal["attack_complete", "attack_marked", "attack_silent", "clean", "never_exposed"]

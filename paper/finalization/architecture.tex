@@ -1,0 +1,17 @@
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=4mm,>=Stealth,
+box/.style={draw,align=center,text width=2.05cm,minimum height=9mm,font=\small}]
+\node[box] (s) {Lower-trust\\source};
+\node[box,right=of s] (m) {Derived memory\\recorded DAG};
+\node[box,right=of m] (r) {ACL retrieval\\containment};
+\node[box,right=of r] (a) {Model proposal\\gateway};
+\node[box,right=of a] (t) {Local sandbox\\effect};
+\node[box,below=12mm of r] (g) {Evaluator-only\\true DAG};
+\draw[->] (s)--(m);\draw[->] (m)--(r);\draw[->] (r)--(a);\draw[->] (a)--(t);
+\draw[->,dashed] (m.south) |- node[below,pos=.7,font=\scriptsize] {write lineage} (g.west);
+\end{tikzpicture}
+\caption{Operational decisions use recorded provenance. The evaluator receives true
+lineage but supplies no oracle to deletion, retrieval or action authorization.
+Model proposals are mediated before local effects. This is trusted-harness
+separation, not an enclave against malicious Python code.}
+\end{figure}

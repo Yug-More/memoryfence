@@ -60,3 +60,15 @@ A first archive-only test reproduction exposed the notebook test's requirement f
 Git revision metadata (237 passed, one environment failure). A plain `git archive`
 is therefore insufficient for the full suite; use a separate Git checkout. The
 original bytes and historical results are unchanged.
+
+## Additional finalization verification — 8 November 2026
+
+Original qualification/state raw analyses were independently recomputed again and
+matched historical JSON bytes. A fresh isolated Git checkout again passed238 tests
+at91.58%; a clean merged-baseline clone passed266 at91.64%. All560 expanded semantic
+records also reproduced; this is repeated deterministic execution, not new model
+inference or additional independent scenario clusters. The new12-file expanded
+preservation manifest and finalization evidence are linked from
+[FINAL_RESEARCH_VALIDATION.md](FINAL_RESEARCH_VALIDATION.md). The original nominal-
+fidelity and three-chain/ six-descendant caveats remain necessary for application
+claims. No unfavorable historical result or original evidence byte was changed.

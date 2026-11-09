@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,booktabs,graphicx,amsmath,microtype}
+\usepackage{enumitem,float,tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+\emergencystretch=3em
+\sloppy
+\widowpenalty=10000
+\clubpenalty=10000
+\title{MemoryFence: Investigating Persistent Prompt Injection in LLM Agent Memory After Source Deletion}
+\author{MemoryFence project manuscript\\\small Individual contribution attribution requires author confirmation}
+\date{8 November 2026\\\small Manuscript in preparation; not submitted, accepted or peer reviewed}
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{generated/abstract.tex}
+\end{abstract}
+\input{generated/body.tex}
+\clearpage
+\section{Measured security--utility results}
+The following tables are generated from the independently verified raw accession,
+not manually entered measurements. These are deterministic memory-system outcomes;
+they contain no new LLM responses. Each lineage condition has four paired families.
+\input{generated/heldout-tables.tex}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{generated/heldout-security-utility.png}
+\caption{Held-out security--utility tradeoffs. Four fixed families per condition; the
+benign fact denominator is eight. Connecting strategy points aids comparison and
+is not an interpolation over a continuous treatment. No population confidence
+interval is claimed. Source: verified Expanded v1 accession, 7 November 2026.}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{generated/observed-latency.png}
+\caption{Observed local phase latency over eighty paired runs per strategy. Bars
+show medians and whiskers show inclusive IQR, not confidence intervals. Timing
+includes auditing and mixed workloads; it is not a production overhead estimate.}
+\end{figure}
+\section{Finalization, error analysis and environmental limits}
+On 8 November, the saved evidence was recomputed and the deterministic matrix rerun
+from a separately committed revision. Semantic record equality is checked without
+conflating repeated deterministic executions with additional independent trials.
+A machine-readable failure analysis reports exposure, inaccessible benign facts,
+physical survival, lookup failure and baseline-specific representative cases.
+
+Skeptical implementation review found that a row-count-only summary could accept
+an invented strategy and that archive export could follow a symbolic link to an
+unrelated file. The finalization rejects undeclared/missing strategy cells,
+inconsistent cohort metadata, malformed fraction counts, nonfinite rates, fabricated
+behavioral metrics and unsafe scenario path components. Export rejects symbolic
+links. These are local integrity fixes, not new scientific defense efficacy.
+They do not provide race-free isolation against a hostile concurrent filesystem.
+
+A bounded exploratory follow-up now verifies the frozen states, enforces a local
+model digest and a seventy-four-chat budget, and gates seventy planned probes on
+four successful empty/clean-context qualifications. Its actual preflight was blocked:
+no usable local runtime or cached weights were available, and zero chat requests
+were made. The raw availability failure and null behavioral results are retained.
+Transport-fixture tests of the harness are not model experiments. The prospective
+probe uses deterministic memory states and a real model-to-sandbox step, not fresh
+model-written summaries or general memory-dependent task utility.
+
+\section{Ethical considerations}
+All adversarial content is synthetic, tools modify only local sandbox rows and
+canary addresses use a reserved invalid domain. No credential theft, destructive
+operation, external account attack, message delivery, paid endpoint or model-weight
+download is part of this finalization. Research archives retain deleted-source
+content intentionally for audit; this is operational deletion, not forensic erasure.
+Model and dataset licenses must be respected in any future execution. No project
+license, individual sole authorship, institutional supervision or publication is
+inferred from commit metadata.
+
+\section{Conclusion}
+The evidence supports a bounded investigation, not universal protection. Complete
+recorded lineage permits precise invalidation and selective benign recovery in the
+fixture workload. Marked gaps permit conservative containment at substantial utility
+cost. Silent missing branches can leave poisoned context apparently valid. The next
+scientific step is a separately versioned, capability-qualified model study over
+more independent semantic and graph families, with explicit outcome adjudication.
+
+\begin{thebibliography}{9}
+\bibitem{greshake} K. Greshake et al. \emph{Not what you've signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection}. 2023. \url{https://arxiv.org/abs/2302.12173}.
+\bibitem{agentpoison} Z. Chen, Z. Xiang, C. Xiao, D. Song and B. Li. \emph{AgentPoison: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases}. 2024. \url{https://arxiv.org/abs/2407.12784}.
+\bibitem{injecagent} Q. Zhan, Z. Liang, Z. Ying and D. Kang. \emph{InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents}. Findings of ACL, pp.10471--10506, 2024. \url{https://aclanthology.org/2024.findings-acl.624/}.
+\bibitem{crossuser} A. S. Patlan et al. \emph{Cross-User Poisoning: User-Task Boundary Failures in Multi-User Collaborative Language Agents}. arXiv2511.17671v2, 2026. \url{https://arxiv.org/abs/2511.17671}.
+\bibitem{laundering} J. Xu et al. \emph{Memory Provenance Laundering in LLM Agents: A Non-Amplification Firewall for Persistent Memory}. Preprint, 2026. \url{https://arxiv.org/abs/2607.29167}.
+\bibitem{mpbench} P. Dash et al. \emph{From Untrusted Input to Trusted Memory: A Systematic Study of Memory Poisoning Attacks in LLM Agents}. arXiv2606.04329v2, 2026. \url{https://arxiv.org/abs/2606.04329}.
+\bibitem{unlearning} L. Bourtoule et al. \emph{Machine Unlearning}. arXiv1912.03817v3, 2020. \url{https://arxiv.org/abs/1912.03817}.
+\end{thebibliography}
+\clearpage
+\appendix
+\section{Reproducibility and claim traceability}
+Run from the repository root with the unchanged locked environment. Before paper
+compilation, run \texttt{python paper/finalization/generate.py}. The generator checks
+both immutable byte manifests and independently recomputes the expanded raw SQLite
+metrics before generating narrative, table rows and source hashes. Compile using
+Tectonic0.17.0 with a fresh temporary output directory. The old
+\texttt{paper/main.tex} and its historical evidence remain separate.
+
+Exact commands, software/model configuration, artifact checksums, test logs,
+reproduction comparisons and research readiness are in
+\texttt{docs/FINAL\_RESEARCH\_VALIDATION.md}. Every scientific count traces to
+\texttt{experiments/2026-10-25-bounded} or
+\texttt{experiments/2026-11-07-expanded}. The finalization evidence lives separately
+under \texttt{experiments/2026-11-08-finalization}. Source availability logs cannot
+be promoted to inference outcomes. Binary PDF metadata is not expected to be
+byte-identical across different TeX bundle versions or compilation dates.
+\end{document}

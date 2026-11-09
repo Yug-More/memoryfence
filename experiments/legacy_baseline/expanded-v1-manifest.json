@@ -1,0 +1,67 @@
+{
+  "baseline_revision": "1ecdb16",
+  "created": "2026-11-08",
+  "classification": "immutable prior deterministic accession; zero inference",
+  "files": [
+    {
+      "path": "experiments/2026-11-07-expanded/README.md",
+      "bytes": 2009,
+      "sha256": "9cf4784b1ea875e23b92f530b289a5c8bd70d5dd6cd5827e48cd2c7d08d2c7d1"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/aggregates.json",
+      "bytes": 122771,
+      "sha256": "197e7d353fa2322eb70c5f00eae1428eb71d5077b9b480b368c5ca45e115a479"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/count-tables.md",
+      "bytes": 5313,
+      "sha256": "a8cd96e3eb66a08e7932a994898c27bfa300138e48dd21a45004006506747253"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/heldout-security-utility.png",
+      "bytes": 168196,
+      "sha256": "4f60be29ab9c631e1e8c8892bbef19c8354dfe39d72d105a497fbbf4e208cfe7"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/heldout-security-utility.svg",
+      "bytes": 85080,
+      "sha256": "af1f86a298f1daf5b20254b3e81d613b6df5741706979bdef3d1d5b51403a32f"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/observed-latency.png",
+      "bytes": 70903,
+      "sha256": "e1f5f715717f9e666645e4298ad49c4dd9e47f14c20a06ed331e42de8e111b73"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/derived/observed-latency.svg",
+      "bytes": 62122,
+      "sha256": "29c969a940e04039efc7008d83e91dc7b29516dcfc0f38cedf4b7e927ce3a9f4"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/execution-manifest.json",
+      "bytes": 966,
+      "sha256": "bab6d1ec67059160cf70fa93a37d3f33761d87c92f90bec4458ef7d272b7af58"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/expanded-v1.zip.xz",
+      "bytes": 216328,
+      "sha256": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/independent-verification.json",
+      "bytes": 506,
+      "sha256": "fd7260813cfc99cbbd2840eb82af2c6709feef709b361bca409160acbf5360df"
+    },
+    {
+      "path": "experiments/2026-11-07-expanded/summary.json",
+      "bytes": 232873,
+      "sha256": "017b23be03c757cfaf2efe347acc8ff123aee7760afe4806a5e1a38f5ff0e677"
+    },
+    {
+      "path": "benchmarks/expanded-v1/scenarios.json",
+      "bytes": 122915,
+      "sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34"
+    }
+  ]
+}

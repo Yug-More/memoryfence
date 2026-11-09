@@ -1,0 +1,12 @@
+{
+  "classification": "independent raw artifact recomputation; no new inference",
+  "transport_sha256": "efb7c2510a1be6309efce503f6903441444843681d307f3e0cc55e18f5ca34a2",
+  "zip_sha256": "41958210599a686aee787708ea04f67f137d9c2b7873f179534d950dd57dabf6",
+  "verified_runs": 560,
+  "invalid_runs": 0,
+  "cases": 80,
+  "families": 16,
+  "model_calls": 0,
+  "code_revision": "d00fa66b76c6d1466402019f083dd7ed909e0d63",
+  "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34"
+}
