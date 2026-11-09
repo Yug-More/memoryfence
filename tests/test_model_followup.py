@@ -111,3 +111,37 @@ def test_model_probe_failure_evidence_and_no_scripted_fallback(
         assert result["legitimate_success"] == {"numerator": 69, "denominator": 69}
         with pytest.raises(FileExistsError):
             API["execute"](config, tmp_path / "run", transport)
+
+
+def test_model_followup_rejects_invalid_source_before_any_request(tmp_path: Path) -> None:
+    import io
+    import lzma
+    import zipfile
+
+    source = ROOT / "experiments/2026-11-07-expanded/expanded-v1.zip.xz"
+    stream = io.BytesIO()
+    with (
+        zipfile.ZipFile(io.BytesIO(lzma.decompress(source.read_bytes()))) as saved,
+        zipfile.ZipFile(stream, "w") as changed,
+    ):
+        records = json.loads(saved.read("records.json"))
+        first = records[0]
+        first.update(status="invalid", error="fixture failure", metrics=None)
+        member = f"runs/{first['scenario_id']}/{first['strategy']}/result.json"
+        for name in saved.namelist():
+            payload = saved.read(name)
+            if name == "records.json":
+                payload = json.dumps(records).encode()
+            elif name == member:
+                payload = json.dumps(first).encode()
+            changed.writestr(name, payload)
+    archive = tmp_path / "invalid.zip.xz"
+    archive.write_bytes(lzma.compress(stream.getvalue()))
+    data = configuration()
+    data["archive"] = archive
+    config = API["ProbeConfig"].model_validate(data)
+    transport = FixtureTransport()
+    with pytest.raises(ValueError, match="valid source"):
+        API["execute"](config, tmp_path / "run", transport)
+    assert transport.calls == 0
+    assert not (tmp_path / "run").exists()

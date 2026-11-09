@@ -94,6 +94,8 @@ def execute(
     verification = runpy.run_path(str(ROOT / "scripts/research/verify_expanded.py"))["verify"](
         config.archive
     )
+    if verification["invalid_runs"]:
+        raise ValueError("model follow-up requires a complete valid source accession")
     with zipfile.ZipFile(io.BytesIO(lzma.decompress(config.archive.read_bytes()))) as archive:
         Benchmark.model_validate_json(archive.read("dataset.json"))
         records = json.loads(archive.read("records.json"))
