@@ -6,6 +6,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from .validation import validate_records
+
 METRICS = (
     "persistence",
     "accessible_persistence",
@@ -25,8 +27,7 @@ METRICS = (
 def summarize(directory: Path) -> dict[str, Any]:
     records = json.loads((directory / "records.json").read_text())
     manifest = json.loads((directory / "manifest.json").read_text())
-    if len(records) != manifest["planned_runs"]:
-        raise ValueError("partial Expanded Study: preserve records and report incomplete")
+    validate_records(records, manifest, directory)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     by_case: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
     for r in records:
