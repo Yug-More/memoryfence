@@ -1,0 +1,23 @@
+{
+  "expanded_verification": {
+    "cases": 80,
+    "classification": "independent raw artifact recomputation; no new inference",
+    "code_revision": "4a430fa9939b1fa6438c64508368006e1e8b3fc6",
+    "dataset_sha256": "6470b3c2ae3cb8fdf702bf797ea6cf63237db99c1e6a2ac5efdaf145ca140b34",
+    "families": 16,
+    "invalid_runs": 0,
+    "model_calls": 0,
+    "transport_sha256": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2",
+    "verified_runs": 560,
+    "zip_sha256": "b209bc91edbc60b97c887245ef299c5d9ba4755770e5dd0d8c69ef18cba98ed5"
+  },
+  "figure_sha256": {
+    "heldout-security-utility.png": "1d03a8ebd94ebc78668adccb5079d8475feaa06873c8d4e36d6c9b93c4be8de0",
+    "observed-latency.png": "9f992198911d98da34d9ff3c5823239943f4a3fc16fb02ffe18cc1071fa8dfe0"
+  },
+  "narrative_sha256": "9f001ba106a06b0aede1d7bff224a2ad1584e53b8e7738c1c5db767a037fbf02",
+  "preserved": {
+    "expanded": 12,
+    "original": 53
+  }
+}

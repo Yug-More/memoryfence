@@ -1,0 +1,19 @@
+{
+  "archive": "experiments/2026-11-07-expanded/expanded-v1.zip.xz",
+  "endpoint": "http://127.0.0.1:11434",
+  "expected_digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+  "families": [
+    "f06-experiment-register"
+  ],
+  "max_calls": 74,
+  "model_tag": "qwen2.5:1.5b",
+  "num_ctx": 2048,
+  "num_predict": 256,
+  "seeds": [
+    2101,
+    2102
+  ],
+  "temperature": 0.0,
+  "timeout": 120.0,
+  "version": "model-followup-v1"
+}

@@ -1,0 +1,12 @@
+{
+  "classification": "repeat deterministic execution, not additional independent trials",
+  "compared_records": 560,
+  "matching_records": 560,
+  "same_grid": true,
+  "excluded_fields": [
+    "timings_ms",
+    "sqlite_bytes"
+  ],
+  "executed_revision": "d00fa66",
+  "new_model_calls": 0
+}

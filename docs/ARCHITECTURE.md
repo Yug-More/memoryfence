@@ -103,3 +103,21 @@ outputs. A ZIP/XZ archive contains full raw input/after pairs, not just summary 
 Existing loopback Ollama adapters and raw request journals remain available; the
 Expanded Study does not use them. Original model-backed and new deterministic
 evidence have separate accessions and interpretations.
+
+## Compared representations and finalization — 8 November 2026
+
+The historical genuine experiment transforms natural-language memory with one local
+model; the expanded benchmark uses structured JSON fact records projected through
+the same services. Raw primary source text, derived memory and reconstructed memory
+exist, but **no matched architecture-wide comparison** of conversation history,
+vector RAG, semantic summaries and key-value stores has been performed. Provenance
+and uncertainty are metadata/control variants of the existing store, not separate
+production architectures invented for this release.
+
+Finalization adds declared-grid/fraction validation before summary generation,
+CLI domain errors for malformed artifacts, path-safe scenario IDs and symlink-free
+export. `scripts/research/model_followup.py` implements a bounded exploratory
+state-to-action probe with preflight identity, capability gate, durable HTTP evidence,
+atomic result checkpoints and actual local gateway effects. It has no resume,
+hosted provider or model-download path. The availability check is blocked. Model
+outputs, exact evaluator predicates and research interpretation remain separate.

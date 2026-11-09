@@ -34,3 +34,23 @@ and explicitly labeled run. No paid endpoint, external side effect or weight
 unlearning is implemented. Deletion does not erase research logs, model-call journals
 or model parameters. Isolation is application/SQL/import isolation for trusted
 harness code, not an OS enclave against hostile application code.
+
+## Terminology and finalization scope — 8 November 2026
+
+Direct prompt injection changes the immediate user-facing instruction channel;
+it is not the main study treatment. Persistent contamination stores lower-trust
+content in memory; propagation copies or derives it into another artifact.
+Retrieval-time injection concerns the moment such content enters model context.
+Tool-output injection is a possible ingestion surface represented by a synthetic
+fixture, not a live tool compromise. Source-deletion persistence is survival after
+an explicit operational lifecycle action. Direct tool misuse requires a separate
+objective-matching proposal/effect, not merely a stored canary. Benign corruption
+or loss can occur without any attack and requires utility measurements.
+
+The finalization's exploratory model probe reuses verified deterministic states,
+performs a real model request only if a free local model qualifies, and sends any
+structured action through the existing local gateway. It does not create fresh
+LLM-written summaries. The actual availability check was blocked, so no new
+behavioral security or model-utility outcome is established. Trusted harness code
+and filesystem inputs remain assumptions; path checks and symlink rejection do
+not establish adversarial concurrency or hostile-process isolation.
