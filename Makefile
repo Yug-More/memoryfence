@@ -61,10 +61,10 @@ clean: ## Remove caches and build artifacts
 
 TECTONIC ?= tectonic
 .PHONY: paper-data paper
-paper-data: ## Verify genuine archives and regenerate paper tables/figures (optional Matplotlib)
-	$(UV) run --no-project --with matplotlib==3.10.7 --python .venv/bin/python paper/generate.py
+paper-data: ## Independently verify all manuscript evidence and regenerate current tables
+	$(UV) run --frozen python paper/revised/generate.py
 
-paper: paper-data ## Build the manuscript with the optional free Tectonic compiler
-	mkdir -p .paper-build
-	$(TECTONIC) --keep-logs --outdir .paper-build paper/main.tex
-	cp .paper-build/main.pdf paper/memoryfence-paper.pdf
+paper: paper-data ## Build the current unpublished manuscript with optional free Tectonic
+	mkdir -p .paper-build/revised
+	$(TECTONIC) --keep-logs --outdir .paper-build/revised paper/revised/main.tex
+	cp .paper-build/revised/main.pdf paper/revised/memoryfence-manuscript.pdf

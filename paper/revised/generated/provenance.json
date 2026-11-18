@@ -1,0 +1,21 @@
+{
+  "classification": "deterministic verification of supplied evidence; no new inference or host attestation",
+  "generated_sha256": {
+    "behavior-rows.tex": "df13476a99735d183940a2e90dc9ee21dd855b88d3ce1e81b1e48a9f5cfbd923",
+    "expanded-rows.tex": "4e636c747fa7863af87872c97c41c9dabec909c67f8fd2967c4887712d82dbe1",
+    "facts.json": "eb00df3f156bcb856b61e4b9bf79163628babf9eb79951c9d2fd748e52773d46",
+    "qualification-rows.tex": "2450349ba4e9fd031c01f13fec45a240d32f8e97c64981154b91ac960a1cb8c1",
+    "state-rows.tex": "6607b8774a3736fffe7101bfc5f042bc075a156dea308859b2447e96329b0e73"
+  },
+  "inputs_sha256": {
+    "experiments/2026-10-25-bounded/final-qualification.zip.xz": "b5ed668600a2b84a627e28996df9679f26d3eeda4f008cdd8eb3dec61491320f",
+    "experiments/2026-10-25-bounded/paired-state-study.zip.xz": "1a6bb6d23252629ce11744b1f12817abc88ce4e2c1d67972236c64115116f88c",
+    "experiments/2026-11-07-expanded/expanded-v1.zip.xz": "bf9d2e5f1df71d2c97d668f62b734c1a644f9a7e4045c3624295c3616570cea2",
+    "experiments/2026-11-08-finalization/reproduction.zip.xz": "efb7c2510a1be6309efce503f6903441444843681d307f3e0cc55e18f5ca34a2",
+    "experiments/2026-11-09-model-followup/model-followup.zip.xz": "c0bbc910437fe9f7bf574b45df630fc17ca198a4d717dc62e536dd086cb4ea56",
+    "paper/generated/chain-sensitivity.json": "cfd1389f08519e3d46d9a25cdb7ee21b4f2edd392279dedaceb8be183a80cd01",
+    "paper/revised/generate.py": "eff395918a8fdd8b0de8a75816f982b70d15aa713d9cdfc1c979ca33a8650732",
+    "paper/revised/main.tex": "646fbee2ee532295afb90dfac78b9bcabc3ee226b5e5d59099fc9af02dcf511f",
+    "paper/revised/references.bib": "4eec06aa23b2ec878d522b0f6ded945a180160b46d3196d1ca291eba7f973f99"
+  }
+}

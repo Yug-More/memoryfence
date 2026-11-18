@@ -1,0 +1,52 @@
+{
+  "classification": "source checks and primary-record metadata review; not a full-text systematic review",
+  "references": [
+    {
+      "key": "greshake2023",
+      "primary_url": "https://arxiv.org/abs/2302.12173v2",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "chen2024",
+      "primary_url": "https://arxiv.org/abs/2407.12784v1",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "zhan2024",
+      "primary_url": "https://aclanthology.org/2024.findings-acl.624/",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "patlan2026",
+      "primary_url": "https://arxiv.org/abs/2511.17671v2",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "xu2026",
+      "primary_url": "https://arxiv.org/abs/2607.29167v1",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "dash2026",
+      "primary_url": "https://arxiv.org/abs/2606.04329v2",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    },
+    {
+      "key": "bourtoule2020",
+      "primary_url": "https://arxiv.org/abs/1912.03817v3",
+      "checked": "2026-11-18",
+      "scope": "primary landing-page title, authors, version and abstract; ACL bibliographic metadata where applicable"
+    }
+  ],
+  "cited_keys_match_bibliography": true,
+  "labels_resolve": true,
+  "figure_table_inputs_exist": true,
+  "editorial_placeholders": 0,
+  "author_account": "Owner-confirmed research leadership/oversight, independent project and AI assistance on 18 November 2026"
+}

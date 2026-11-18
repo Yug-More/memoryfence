@@ -106,3 +106,28 @@ separate exploratory command, not a change to the deterministic runner or eviden
 of executed inference. It refuses invalid source accessions before qualification.
 The [expanded LaTeX build](../paper/finalization/README.md) writes only the new
 manuscript folder and never restores/overwrites the historical PDF.
+
+## Current manuscript verification — 18 November 2026
+
+The earlier availability failures above remain historical. The separately preserved
+9 November follow-up actually completed 74 model requests; do not reinterpret a
+blocked run as that completed run or pool their denominators.
+
+```bash
+uv sync --frozen
+uv run --frozen python paper/revised/generate.py
+make paper TECTONIC=/path/to/tectonic
+make check
+```
+
+The current generator recomputes both bounded-study analyses, all 278 abstract graph
+masks, 560 expanded raw records, the saved semantic reproduction and all 74 later
+model requests/sandbox outcomes. It writes only new manuscript tables/hash ledgers,
+uses no model and needs no plotting dependency. Tectonic is optional and free; the
+compiler may fetch TeX resources on first use. `make paper` now builds the revised
+paper and never restores the deleted historical PDF. Numerical verification does
+not require TeX. Raw archives and pinned historical inventories remain unchanged.
+
+[Verification summary](MANUSCRIPT_VERIFICATION_2026_11_18.md) ·
+[Build instructions](../paper/revised/README.md) ·
+[Authorship and disclosure](AUTHORSHIP_AND_DISCLOSURE.md).

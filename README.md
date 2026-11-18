@@ -92,8 +92,12 @@ repository hygiene, diagrams and saved evidence. It makes no inference requests.
 
 ## Research manuscript and documentation
 
-- [Preserved 10-page LaTeX/PDF manuscript](paper/finalization/README.md) and
-  [dated model follow-up addendum](docs/MODEL_FOLLOWUP_RESULTS.md).
+- [Current research manuscript: PDF, LaTeX and build instructions](paper/revised/README.md),
+  integrating all three separately defined studies.
+- [Manuscript verification](docs/MANUSCRIPT_VERIFICATION_2026_11_18.md) and
+  [confirmed contributions and AI assistance](docs/AUTHORSHIP_AND_DISCLOSURE.md).
+- [Preserved earlier manuscript](paper/finalization/README.md) and
+  [dated model follow-up results](docs/MODEL_FOLLOWUP_RESULTS.md).
 - [Frozen application metrics and résumé/SOP text](docs/FINAL_PROJECT_METRICS.md).
 - [Research audit](docs/RESEARCH_AUDIT.md), [methodology](docs/EXPERIMENTAL_METHODOLOGY.md),
   [historical claim ledger](docs/RESEARCH_CLAIMS.md), [validation](docs/FINAL_RESEARCH_VALIDATION.md).
@@ -128,8 +132,10 @@ tests/            Unit, integration, adversarial and saved-evidence checks
 ## Citation and licensing
 
 [Citation metadata](CITATION.cff) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md).
-Legitimate historical attribution remains in Git. Individual research responsibility,
-collaboration and supervision require the applicant's confirmation; commit names do
-not prove sole ownership. No project license has been selected, so public access
+Legitimate historical attribution remains in Git. The author has confirmed an
+independent project involving research direction, development oversight and evaluation
+coordination; [the contribution record](docs/AUTHORSHIP_AND_DISCLOSURE.md) distinguishes
+those roles from unaided implementation and discloses AI assistance. No project
+license has been selected, so public access
 does not imply unrestricted reuse. Model/runtime license references are recorded
 with their accession.

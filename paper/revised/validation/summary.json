@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-18",
+  "classification": "recomputed supplied evidence; no new model inference",
+  "base_revision": "135fc0254e3bfce1f1b70e4be2cbb6495e71b0ce",
+  "new_model_requests": 0,
+  "tests_passed": 293,
+  "coverage_percent": 91.41,
+  "coverage_kind": "combined line and branch",
+  "mypy_files": 130,
+  "import_contracts_kept": 6,
+  "pdf_pages": 12,
+  "pdf_sha256": "b27e5be65f3a84b7fc887f4429f6bb3bbbdb0c46ad28f907c7062dd8230a8dbb",
+  "compiler": "Tectonic 0.17.0",
+  "visual_review": "All 12 final pages rendered with Poppler and inspected; no clipping/overlap, missing glyphs or unresolved references observed.",
+  "source_review": "Seven primary reference records; cited keys/labels/assets resolve; no current-paper editorial placeholders.",
+  "preservation": "53 original, 12 expanded, 46 prior-finalization entries match; historical user PDF deletion unchanged.",
+  "fresh_deterministic_runs_verified": 560,
+  "fresh_semantic_records_equal": 560,
+  "reproduction_sha256": "027fd2641f7425fdddf7b9900c549c659ee7054ec7c0186e46ae1dd8e5a07b66",
+  "repository_hooks": "all passed"
+}

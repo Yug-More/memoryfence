@@ -1,0 +1,32 @@
+uv run --frozen python paper/revised/generate.py
+{
+  "original": {
+    "qualification_calls": 24,
+    "chains": 6,
+    "transformation_responses": 12,
+    "declared_state_views": 108,
+    "off_protocol_state_views": 36,
+    "behavior_responses": 36,
+    "attack_episodes": 18,
+    "legitimate_effects": 36,
+    "attacker_effects": 0,
+    "text_echoes": 3
+  },
+  "graph_masks": 278,
+  "expanded_runs": 560,
+  "model_requests": 74,
+  "valid_model_probes": 70,
+  "new_inference": false
+}
+mkdir -p .paper-build/revised
+/tmp/memoryfence-refinement-2026-11-18/tectonic --keep-logs --outdir .paper-build/revised paper/revised/main.tex
+note: Running TeX ...
+note: Running BibTeX on main.aux ...
+note: Rerunning TeX because bibtex was run ...
+note: Rerunning TeX because "main.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `.paper-build/revised/main.blg` (194 B)
+note: Writing `.paper-build/revised/main.pdf` (218.2451171875 KiB)
+note: Writing `.paper-build/revised/main.log` (25.712890625 KiB)
+note: Skipped writing 3 intermediate files (use --keep-intermediates to keep them)
+cp .paper-build/revised/main.pdf paper/revised/memoryfence-manuscript.pdf

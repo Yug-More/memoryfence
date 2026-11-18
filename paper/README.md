@@ -1,67 +1,35 @@
-# Research manuscript
+# MemoryFence research manuscripts
 
-**When Memory Outlives Its Source: A Bounded Empirical Study of Provenance Gaps in
-Persistent AI-Agent Memory**
+The current work sample is **MemoryFence: Provenance Gaps, Source Deletion, and
+Information Retention in Agent Memory**, by **Yug Amol More**, revised 18 November 2026.
 
-[Compiled PDF](memoryfence-paper.pdf) · [LaTeX](main.tex) ·
-[Bibliography](references.bib) · [Claim map](../docs/research/CLAIM_EVIDENCE_MATRIX.md)
+[Current PDF](revised/memoryfence-manuscript.pdf) · [LaTeX](revised/main.tex) ·
+[Build instructions](revised/README.md) ·
+[Evidence verification](../docs/MANUSCRIPT_VERIFICATION_2026_11_18.md) ·
+[Authorship and AI assistance](../docs/AUTHORSHIP_AND_DISCLOSURE.md)
 
-This is a project manuscript, not a published, accepted or peer-reviewed paper.
-Its author line intentionally does not assert unconfirmed individual contributions
-or an institutional affiliation. The owner must confirm authorship and any venue's
-submission/disclosure requirements before submitting. No project license is established.
-
-## Regenerate verified tables and figures
-
-From the repository root, with Git, uv and Python 3.12+:
+This is an unpublished research manuscript, not an accepted or peer-reviewed paper.
+The current synthesis separates model-generated chains, deterministic memory-state
+comparisons and the later exploratory local-model follow-up. Its tables are
+regenerated from independently verified supplied evidence; no new inference is
+required to build it.
 
 ```bash
 uv sync --frozen
-uv run python scripts/research/sensitivity.py --output /tmp/mf-sensitivity.json
-uv run --no-project --with matplotlib==3.10.7 --python .venv/bin/python paper/generate.py
+make paper TECTONIC=/path/to/tectonic
 ```
 
-`generate.py` independently verifies both genuine archives, requires equality with
-committed analyses, generates both numerical result tables and `generated/facts.json`,
-recomputes all 278 abstract graph masks, and writes three PNG figures. Two figures
-are exact copies of the verified accession figures. To regenerate those originals:
+Tectonic 0.17.0 is an optional free LaTeX compiler. Its first run may fetch TeX
+resources. The current build does not restore the deleted historical PDF, alter
+raw experiments or rewrite historical manuscript sources.
 
-```bash
-uv run --no-project --with matplotlib==3.10.7 --python .venv/bin/python experiments/2026-10-25-bounded/plot_final.py
-uv run --no-project --with matplotlib==3.10.7 --python .venv/bin/python paper/generate.py
-```
+## Historical versions
 
-Architecture, threat boundary, lifecycle/workflow and actual missing-edge example
-are editable TikZ figures in `main.tex`; the question/evidence table is there too.
-All numerical main-result rows are generated from independently verified evidence.
-Plots use Matplotlib 3.10.7 and its DejaVu Sans font. No model weights or inference.
+- [October bounded-study source](main.tex), original [bibliography](references.bib)
+  and [claim map](../docs/research/CLAIM_EVIDENCE_MATRIX.md).
+- [Preserved 8 November synthesis](finalization/README.md), including its ten-page PDF.
 
-## Build the PDF
-
-Install [Tectonic 0.17.0 from its official releases](https://github.com/tectonic-typesetting/tectonic/releases/tag/tectonic%400.17.0)
-for your platform. It is a free local compiler, not a paid API. The first run needs
-network access to fetch the TeX bundle and fonts; subsequent runs can use its cache.
-From the repository root:
-
-```bash
-mkdir -p /tmp/mf-paper-build
-tectonic --keep-logs --outdir /tmp/mf-paper-build paper/main.tex
-cp /tmp/mf-paper-build/main.pdf paper/memoryfence-paper.pdf
-```
-
-No shell escape is required.
-Tectonic runs BibTeX and the necessary passes automatically. TeX bundle versions can
-change; this is source reproducibility, not a promise of byte-identical PDF metadata.
-A conventional XeLaTeX + BibTeX toolchain can also build the source inside `paper/`.
-The project package itself needs neither Matplotlib nor TeX; optional authoring tools
-are kept out of the application lockfile.
-
-## Evidence boundaries
-
-The 72 real responses belong to the preserved 25 October bounded cycle; this pass
-adds zero inference. Six generated chains are three clean and three attack chains,
-with two derived memories each. The 108 primary and 36 off-protocol views are
-conditional state observations, not independent model trials. The new 278 masks
-are abstract graph configurations, not generated chains or DF2 behavioral trials.
-See the [reproduction record](../docs/research/REPRODUCIBILITY_REPORT.md) and
-[publication audit](../docs/research/FINAL_PUBLICATION_AUDIT.md).
+Historical versions retain dated limitations and contribution notes. The dated
+confirmation in the current authorship record establishes the author-reported
+research roles without implying unaided implementation. No project license has
+been selected.

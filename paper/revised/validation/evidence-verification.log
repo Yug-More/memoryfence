@@ -1,0 +1,19 @@
+{
+  "original": {
+    "qualification_calls": 24,
+    "chains": 6,
+    "transformation_responses": 12,
+    "declared_state_views": 108,
+    "off_protocol_state_views": 36,
+    "behavior_responses": 36,
+    "attack_episodes": 18,
+    "legitimate_effects": 36,
+    "attacker_effects": 0,
+    "text_echoes": 3
+  },
+  "graph_masks": 278,
+  "expanded_runs": 560,
+  "model_requests": 74,
+  "valid_model_probes": 70,
+  "new_inference": false
+}
